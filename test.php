@@ -23,7 +23,7 @@
                 <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
                   <img src="../HRM/src/assets/images/logos/logo.svg" alt="">
                 </a>
-                <h5 class="text-center">Hệ thống quản lí nhân sự - Bảo cc</h5>
+                <h5 class="text-center">Hệ thống quản lí nhân sự - Bảo ngu</h5>
                 <form>
                     <div class="form-floating mb-3">
                       <input type="text" class="form-control border border-info" placeholder="Username">
