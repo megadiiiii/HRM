@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Matdash Free</title>
+  <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/favicon.png" />
+  <link rel="stylesheet" href="../HRM/src/assets/css/styles.min.css" />
+  <link rel="stylesheet" href="../HRM/src/assets/css/ov_style.css">
+</head>
+
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./index.html" class="text-nowrap logo-img">
+            <img src="../HRM/src/assets/images/logos/logo.svg" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="../HRM/Homepage.php" aria-expanded="false">
+                <iconify-icon icon="solar:layers-minimalistic-bold-duotone"></iconify-icon>
+                <span class="hide-menu">Trang chủ</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+                <iconify-icon icon="solar:danger-circle-line-duotone"></iconify-icon>
+                <span class="hide-menu">Quản lý nhân viên</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">
+                <iconify-icon icon="solar:bookmark-square-minimalistic-line-duotone"></iconify-icon>
+                <span class="hide-menu">Quản lý phòng ban</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                <iconify-icon icon="solar:file-text-line-duotone"></iconify-icon>
+                <span class="hide-menu">Quản lý tài khoản</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <!--  Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <li class="nav-item dropdown">
+                <a class="nav-link " href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="../HRM/src/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
+                      <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-mail fs-6"></i>
+                      <p class="mb-0 fs-3">My Account</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-list-check fs-6"></i>
+                      <p class="mb-0 fs-3">My Task</p>
+                    </a>
+                    <a href="./authentication-login.html" class="btn btn-outline-secondary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+      <div class="body-wrapper-inner">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body">
+                    <div class="alert alert-secondary" role="alert">
+                        <b>Chào mừng bạn đến vối Hệ thống Quản lí Nhân sự - HMR!</b>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">  
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                <h5 class="card-title">Quản lí nhân viên</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                                    the
+                                    card's content.</p>
+                                <a href="#" class="btn btn-outline-info">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                <h5 class="card-title">Quản lí phòng ban</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                                    the
+                                    card's content.</p>
+                                <a href="#" class="btn btn-outline-info">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                <h5 class="card-title">Quản lí tài khoản</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                                    the
+                                    card's content.</p>
+                                <a href="#" class="btn btn-outline-info">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                <h5 class="card-title">Quản lí tài khoản</h5>
+                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                                    the
+                                    card's content.</p>
+                                <a href="#" class="btn btn-outline-info">Go somewhere</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </dir>
+            </div>                  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../HRM/src/assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../HRM/src/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../HRM/src/assets/js/sidebarmenu.js"></script>
+  <script src="../HRM/src/assets/js/app.min.js"></script>
+  <script src="../HRM/src/assets/libs/simplebar/dist/simplebar.js"></script>
+  <!-- solar icons -->
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+</body>
+
+</html>

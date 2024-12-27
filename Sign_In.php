@@ -14,7 +14,7 @@
 
     if(mysqli_num_rows($result) > 0) {
       // Login successful
-      header('Location: Homepage.php');
+      header('Location: ../HRM/Homepage.php');
     } else {
       // Login failed
       echo "<script>alert('Sai tên đăng nhập hoặc mật khẩu, vui lòng kiểm tra lại!')</script>";
@@ -31,6 +31,11 @@
   <title>Matdash Free</title>
   <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="../HRM/src/assets/css/styles.min.css" />
+  <style>
+    body {
+      background-image: url('../HRM/src/assets/images/backgrounds/background_login.jpg');
+    }
+  </style>
 </head>
 
 <body>
@@ -43,7 +48,7 @@
         <div class="row justify-content-center w-100">
           <div class="col-md-8 col-lg-6 col-xxl-3">
             <div class="card mb-0">
-              <div class="card-body">
+              <div class="card-body"> 
                 <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
                   <img src="../HRM/src/assets/images/logos/logo.svg" alt="">
                 </a>
