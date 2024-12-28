@@ -2,15 +2,15 @@
     include_once '../HRM/dbConnect.php';
 
     $username = $_GET['username'];
-    $admin_name = '';
+    $staff_name = '';
 
-    $sql_admin = "SELECT `admin_name` FROM `account` WHERE username = '$username'";
+    $sql_admin = "SELECT `staff_name` FROM `account` WHERE username = '$username'";
     $result_admin = mysqli_query($con, $sql_admin);
 
     // Kiểm tra kết quả truy vấn
     if ($result_admin && mysqli_num_rows($result_admin) > 0) {
         $row = mysqli_fetch_assoc($result_admin);
-        $admin_name = $row['admin_name']; // Lấy giá trị admin_name
+        $staff_name = $row['staff_name']; // Lấy giá trị staff_name
     }
 ?>
 <!doctype html>
@@ -98,7 +98,7 @@
                     <div class="d-flex align-items-center mb-3 pb-3 border-bottom gap-6">
                         <img src="../HRM/src/assets/images/profile/user-1.jpg" class="rounded-circle" width="56" height="56" alt="matdash-img">
                         <div>
-                        <h5 class="mb-0 fs-12"> <?php echo $admin_name?></h5>
+                        <h5 class="mb-0 fs-12"> <?php echo $staff_name?></h5>
                         <p class="mb-0 text-dark"> <?php echo $username?></p>
                         <span class="text-success fs-11">Admin</span>                        
                         </div>
@@ -115,7 +115,7 @@
                       <i class="ti ti-list-check fs-6"></i>
                       <p class="mb-0 fs-3">My Task</p>
                     </a>
-                    <a href="./Sign_In.php" class="btn btn-outline-secondary mx-3 mt-2 d-block">Đăng xuất</a>
+                    <a href="./Sign_In.php" class="btn btn-outline-info mx-3 mt-2 d-block">Đăng xuất</a>
                   </div>
                 </div>
               </li>
@@ -128,8 +128,8 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
-                    <div class="alert alert-secondary" role="alert">
-                        <b>Chào mừng <?php echo $admin_name?> đến với Hệ thống Quản lí Nhân sự - HRM!</b>
+                    <div class="alert alert-info" role="alert">
+                        <b>Chào mừng <?php echo $staff_name?> đến với Hệ thống Quản lí Nhân sự - HRM!</b>
                     </div>
                 </div>
             </div>

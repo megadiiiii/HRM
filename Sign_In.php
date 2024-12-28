@@ -30,11 +30,6 @@
   <title>Matdash Free</title>
   <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="../HRM/src/assets/css/styles.min.css" />
-  <style>
-    body {
-      background-image: url('../HRM/src/assets/images/backgrounds/background_login.jpg');
-    }
-  </style>
 </head>
 
 <body>
@@ -49,7 +44,7 @@
             <div class="card mb-0">
               <div class="card-body"> 
                 <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                  <img src="../HRM/src/assets/images/logos/logo.svg" alt="">
+                <img src="../HRM/src/assets/images/logos/Logo.png" alt="" style="width: 150px; transform: translateX(5%);">
                 </a>
                 <h5 class="text-center">Hệ thống quản lí nhân sự - HRM</h5>
                 <form method="post">
