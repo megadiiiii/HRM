@@ -19,8 +19,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Trang chủ</title>
-  <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/favicon.png" />
+  <title>Quản lý phòng ban</title>
+  <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/Logo.png" style="width: 32px;" />
   <link rel="stylesheet" href="../HRM/src/assets/css/styles.min.css" />
   <link rel="stylesheet" href="../HRM/src/assets/css/ov_style.css">
 </head>
@@ -57,7 +57,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../HRM/Department.php" aria-expanded="false">
+              <a class="sidebar-link" href="./Department.php" aria-expanded="false">
                 <iconify-icon icon="solar:bookmark-square-minimalistic-line-duotone"></iconify-icon>
                 <span class="hide-menu">Quản lý phòng ban</span>
               </a>
@@ -69,7 +69,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="../HRM/Training.php" aria-expanded="false">
+              <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
                 <iconify-icon icon="solar:file-text-line-duotone"></iconify-icon>
                 <span class="hide-menu">Quản lý tài khoản</span>
               </a>
@@ -97,11 +97,9 @@
                   <div class="message-body">
                     <div class="d-flex align-items-center mb-3 pb-3 border-bottom gap-6">
                         <img src="../HRM/src/assets/images/profile/user-1.jpg" class="rounded-circle" width="56" height="56" alt="matdash-img">
-                        <div>
                         <h5 class="mb-0 fs-12"> <?php echo $admin_name?></h5>
                         <p class="mb-0 text-dark"> <?php echo $username?></p>
                         <span class="text-success fs-11">Admin</span>                        
-                        </div>
                     </div>
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-user fs-6"></i>
@@ -126,58 +124,27 @@
       <!--  Header End -->
       <div class="body-wrapper-inner">
         <div class="container-fluid">
+            <!-- NỘI DUNG PAGE TỪ ĐÂY -->
+            <nav aria-label="breadcrumb" class="mb-3">
+                <ol class="breadcrumb bg-info-subtle-light px-3 py-2 rounded">
+                    <li class="breadcrumb-item">
+                        <a href="../HRM/Homepage.php" class="text-info d-flex align-items-center">
+                        <i class="ti ti-home fs-4 mt-1"></i>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active text-info " aria-current="page">Quản lí phòng ban</li>
+                </ol>
+            </nav>
             <div class="card">
                 <div class="card-body">
-                    <div class="alert alert-secondary" role="alert">
-                        <b>Chào mừng <?php echo $admin_name?> đến với Hệ thống Quản lí Nhân sự - HRM!</b>
-                    </div>
                 </div>
             </div>
-
-            <!-- NỘI DUNG PAGE TỪ ĐÂY -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="row">  
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                <h5 class="card-title">Quản lí nhân viên</h5>
-                                <p class="card-text">Danh sách nhân viên, Thông tin nhân viên,...</p>
-                                <a href="../HRM/Staff.php" class="btn btn-outline-info">Chuyển tới Quản lí Nhân viên</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                <h5 class="card-title">Quản lí Phòng ban</h5>
-                                <p class="card-text">Danh sách phòng ban, Mã phòng ban,...</p>
-                                <a href="../HRM/Department.php" class="btn btn-outline-info">Chuyển tới Quản lí Phòng ban</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                <h5 class="card-title">Quản lí Đào tạo</h5>
-                                <p class="card-text">Danh sách nhân sự đào tạo, ...</p>
-                                <a href="../HRM/Training.php" class="btn btn-outline-info">Chuyển tới Quản lí Đào tạo</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                <h5 class="card-title">Quản lí Tài khoản</h5>
-                                <p class="card-text">Danh sách Tài khoản, Mã Tài khoản,...</p>
-                                <a href="../HRM/Account.php" class="btn btn-outline-info">Chuyển tới Quản lí Tài khoản</a>
-                                </div>
-                            </div>
-                        </div>
-                        
+            <div class="card">
+                <div class="card-body">
+                    
                 </div>
-            </div>                  
-          </div>
+            </div>
+        
         </div>
       </div>
     </div>
