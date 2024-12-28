@@ -35,7 +35,7 @@
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="../HRM/Homepage.php" class="text-nowrap logo-img">
-            <img src="../HRM/src/assets/images/logos/logo.svg" alt="" />
+          <img src="../HRM/src/assets/images/logos/Logo.png" alt="" /, style="width: 150px; transform: translateX(25%);">
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>
@@ -137,6 +137,7 @@
             </nav>
             <div class="card">
                 <div class="card-body">
+                    <h5 class="card-title">Danh sách tài khoản</h5>
                 </div>
             </div>
             <div class="card">
