@@ -1,10 +1,25 @@
+<?php 
+    include_once '../HRM/dbConnect.php';
+
+    $username = $_GET['username'];
+    $admin_name = '';
+
+    $sql_admin = "SELECT `admin_name` FROM `account` WHERE username = '$username'";
+    $result_admin = mysqli_query($con, $sql_admin);
+
+    // Kiểm tra kết quả truy vấn
+    if ($result_admin && mysqli_num_rows($result_admin) > 0) {
+        $row = mysqli_fetch_assoc($result_admin);
+        $admin_name = $row['admin_name']; // Lấy giá trị admin_name
+    }
+?>
 <!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Matdash Free</title>
+  <title>Trang chủ</title>
   <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="../HRM/src/assets/css/styles.min.css" />
   <link rel="stylesheet" href="../HRM/src/assets/css/ov_style.css">
@@ -74,6 +89,14 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
+                    <div class="d-flex align-items-center mb-3 pb-3 border-bottom gap-6">
+                        <img src="../HRM/src/assets/images/profile/user-1.jpg" class="rounded-circle" width="56" height="56" alt="matdash-img">
+                        <div>
+                        <h5 class="mb-0 fs-12"> <?php echo $admin_name?></h5>
+                        <p class="mb-0 text-dark"> <?php echo $username?></p>
+                        <span class="text-success fs-11">Admin</span>                        
+                        </div>
+                    </div>
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-user fs-6"></i>
                       <p class="mb-0 fs-3">My Profile</p>
@@ -100,7 +123,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="alert alert-secondary" role="alert">
-                        <b>Chào mừng bạn đến vối Hệ thống Quản lí Nhân sự - HMR!</b>
+                        <b>Chào mừng <?php echo $admin_name?> đến với Hệ thống Quản lí Nhân sự - HRM!</b>
                     </div>
                 </div>
             </div>
