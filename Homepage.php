@@ -177,7 +177,7 @@
                             </div>
                         </div>
                     </div>
-                </dir>
+                </div>
             </div>                  
           </div>
         </div>
