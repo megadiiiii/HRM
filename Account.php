@@ -62,32 +62,32 @@
           <ul id="sidebarnav">
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Homepage.php" aria-expanded="false">
-                <iconify-icon icon="solar:layers-minimalistic-bold-duotone"></iconify-icon>
+                <iconify-icon icon="material-symbols:home"></iconify-icon>
                 <span class="hide-menu">Trang chủ</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Staff.php" aria-expanded="false">
-                <iconify-icon icon="solar:danger-circle-line-duotone"></iconify-icon>
-                <span class="hide-menu">Quản lý nhân viên</span>
+              <iconify-icon icon="ic:baseline-people"></iconify-icon>
+              <span class="hide-menu">Quản lý nhân viên</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="./Department.php" aria-expanded="false">
-                <iconify-icon icon="solar:bookmark-square-minimalistic-line-duotone"></iconify-icon>
-                <span class="hide-menu">Quản lý phòng ban</span>
+              <iconify-icon icon="mingcute:department-fill"></iconify-icon>
+              <span class="hide-menu">Quản lý phòng ban</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Training.php" aria-expanded="false">
-                <iconify-icon icon="solar:bookmark-square-minimalistic-line-duotone"></iconify-icon>
-                <span class="hide-menu">Quản lý đào tạo</span>
+              <iconify-icon icon="oui:training"></iconify-icon>
+              <span class="hide-menu">Quản lý đào tạo</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
-                <iconify-icon icon="solar:file-text-line-duotone"></iconify-icon>
-                <span class="hide-menu">Quản lý tài khoản</span>
+              <iconify-icon icon="mdi:account-wrench"></iconify-icon>
+              <span class="hide-menu">Quản lý tài khoản</span>
               </a>
             </li>
           </ul>
@@ -216,6 +216,10 @@
                         <button type="submit" name="btnAdd" class="btn btn-info text-light ms-6">
                           <i class="ti ti-circle-plus"></i>
                           Tạo mới
+                        </button>
+                        <button type="submit" name="btnExportExcel" class="btn btn-info text-light ms-6">
+                          <i class="ti ti-file-arrow-right"></i>
+                          Xuất Excel
                         </button>
                       </div>
                     </div>

@@ -95,32 +95,32 @@
           <ul id="sidebarnav">
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Homepage.php" aria-expanded="false">
-                <iconify-icon icon="solar:layers-minimalistic-bold-duotone"></iconify-icon>
-                <span class="hide-menu">Trang chủ</span>
+              <iconify-icon icon="material-symbols:home"></iconify-icon>
+              <span class="hide-menu">Trang chủ</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Staff.php" aria-expanded="false">
-                <iconify-icon icon="solar:danger-circle-line-duotone"></iconify-icon>
-                <span class="hide-menu">Quản lý nhân viên</span>
+              <iconify-icon icon="ic:baseline-people"></iconify-icon>
+              <span class="hide-menu">Quản lý nhân viên</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="./Department.php" aria-expanded="false">
-                <iconify-icon icon="solar:bookmark-square-minimalistic-line-duotone"></iconify-icon>
-                <span class="hide-menu">Quản lý phòng ban</span>
+              <iconify-icon icon="mingcute:department-fill"></iconify-icon>
+              <span class="hide-menu">Quản lý phòng ban</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Training.php" aria-expanded="false">
-                <iconify-icon icon="solar:bookmark-square-minimalistic-line-duotone"></iconify-icon>
-                <span class="hide-menu">Quản lý đào tạo</span>
+              <iconify-icon icon="oui:training"></iconify-icon>
+              <span class="hide-menu">Quản lý đào tạo</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
-                <iconify-icon icon="solar:file-text-line-duotone"></iconify-icon>
-                <span class="hide-menu">Quản lý tài khoản</span>
+              <iconify-icon icon="mdi:account-wrench"></iconify-icon>
+              <span class="hide-menu">Quản lý tài khoản</span>
               </a>
             </li>
           </ul>
@@ -235,7 +235,6 @@
                               <option value="Category 2" <?php if($department == 'Category 2') echo 'selected'; ?>>Category 2</option>
                               <option value="Category 3" <?php if($department == 'Category 3') echo 'selected'; ?>>Category 3</option>
                               <option value="Category 4" <?php if($department == 'Category 4') echo 'selected'; ?>>Category 4</option>
-                              
                             </select>
                           </div>
                         </div>

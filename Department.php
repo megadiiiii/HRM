@@ -1,17 +1,7 @@
 <?php 
     include_once '../HRM/dbConnect.php';
 
-    $username = $_GET['username'];
-    $admin_name = '';
-
-    $sql_admin = "SELECT `admin_name` FROM `account` WHERE username = '$username'";
-    $result_admin = mysqli_query($con, $sql_admin);
-
-    // Kiểm tra kết quả truy vấn
-    if ($result_admin && mysqli_num_rows($result_admin) > 0) {
-        $row = mysqli_fetch_assoc($result_admin);
-        $admin_name = $row['admin_name']; // Lấy giá trị admin_name
-    }
+    
 ?>
 <!doctype html>
 <html lang="en">
@@ -46,32 +36,32 @@
           <ul id="sidebarnav">
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Homepage.php" aria-expanded="false">
-                <iconify-icon icon="solar:layers-minimalistic-bold-duotone"></iconify-icon>
-                <span class="hide-menu">Trang chủ</span>
+              <iconify-icon icon="material-symbols:home"></iconify-icon>
+              <span class="hide-menu">Trang chủ</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Staff.php" aria-expanded="false">
-                <iconify-icon icon="solar:danger-circle-line-duotone"></iconify-icon>
-                <span class="hide-menu">Quản lý nhân viên</span>
+              <iconify-icon icon="ic:baseline-people"></iconify-icon>
+              <span class="hide-menu">Quản lý nhân viên</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="./Department.php" aria-expanded="false">
-                <iconify-icon icon="solar:bookmark-square-minimalistic-line-duotone"></iconify-icon>
-                <span class="hide-menu">Quản lý phòng ban</span>
+              <iconify-icon icon="mingcute:department-fill"></iconify-icon>
+              <span class="hide-menu">Quản lý phòng ban</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Training.php" aria-expanded="false">
-                <iconify-icon icon="solar:bookmark-square-minimalistic-line-duotone"></iconify-icon>
-                <span class="hide-menu">Quản lý đào tạo</span>
+              <iconify-icon icon="oui:training"></iconify-icon>
+              <span class="hide-menu">Quản lý đào tạo</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
-                <iconify-icon icon="solar:file-text-line-duotone"></iconify-icon>
-                <span class="hide-menu">Quản lý tài khoản</span>
+              <iconify-icon icon="mdi:account-wrench"></iconify-icon>
+              <span class="hide-menu">Quản lý tài khoản</span>
               </a>
             </li>
           </ul>
