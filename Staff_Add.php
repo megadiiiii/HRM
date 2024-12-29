@@ -15,13 +15,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $status = $_POST['status'];
     // cho anh vao uploads
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
-        $profile_image = 'uploads/' . $_FILES['profile_image']['name'];
-        move_uploaded_file($_FILES['profile_image']['tmp_name'], $profile_image);
+        $upload_dir = '../HRM/Upload/';
+    
+        // Lấy thông tin staff_id và staff_name (giả sử bạn nhận từ POST)
+        $staff_id = isset($_POST['staff_id']) ? $_POST['staff_id'] : '';
+        $staff_name = isset($_POST['staff_name']) ? $_POST['staff_name'] : '';
+        
+        // Kiểm tra staff_id và staff_name không rỗng
+        if (empty($staff_id) || empty($staff_name)) {
+            echo "<script>alert('Vui lòng cung cấp staff_id và staff_name!');</script>";
+            $profile_image = null;
+        } else {
+            // Xử lý tên file
+            $file_extension = strtolower(pathinfo($_FILES['profile_image']['name'], PATHINFO_EXTENSION));
+            $file_name = $staff_id . '-' . $staff_name . '.' . $file_extension; 
+            $target_file = $upload_dir . $file_name;
+    
+            // Kiểm tra và tạo thư mục nếu chưa tồn tại
+            if (!file_exists($upload_dir)) {
+                mkdir($upload_dir, 0777, true); // Tạo thư mục với quyền ghi
+            }
+    
+            // Kiểm tra định dạng tệp (ví dụ: chỉ cho phép JPG, PNG)
+            $allowed_extensions = ['jpg', 'jpeg', 'png'];
+    
+            if (!in_array($file_extension, $allowed_extensions)) {
+                echo "<script>alert('Định dạng tệp không hợp lệ! Chỉ chấp nhận JPG, PNG.');</script>";
+                $profile_image = null;
+            } else {
+                // Di chuyển tệp đến thư mục đích
+                if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $target_file)) {
+                    $profile_image = $target_file;
+                } else {
+                    echo "<script>alert('Lỗi khi tải lên tệp. Vui lòng thử lại!');</script>";
+                    $profile_image = null;
+                }
+            }
+        }
     } else {
         $profile_image = null;
     }
+    
     // check xem co chua
-    $check = "SELECT * FROM staff WHERE `staff_id` = $staff_id";
+    $check = "SELECT * FROM staff WHERE `staff_id` = '$staff_id'";
     $result = mysqli_query($con, $check);
     if (mysqli_num_rows($result) > 0) {
         echo "<script>alert('Mã nhân viên đã tồn tại. Vui lòng kiểm tra.');</script>";
@@ -169,11 +205,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </ol>
             </nav> 
             <div class="card">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                   <div>
                     <div class="card-body">
                       <h4 class="card-title">Thêm nhân viên mới</h4>
-                      <div class="row pt-3">
+                      <div class="row col-8">
                           <div class="col-md-6">
                             <div class="mb-3 has-danger">
                               <label class="form-label">Mã nhân viên</label>
@@ -199,8 +235,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <div class="mb-3">
                             <label class="form-label">Giới tính</label>
                             <select name="gender" class="form-select" data-placeholder="Giói tính" tabindex="1">
-                              <option value="Nam">Nam</option>
-                              <option value="Nữ">Nữ</option>
+                              <option value="Nam" <?php if($gender == 'Nam') echo 'selected'; ?>>Nam</option>
+                              <option value="Nữ" <?php if($gender == 'Nữ') echo 'selected'; ?>>Nữ</option>
                             </select>
                           </div>
                         </div>
@@ -212,10 +248,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <div class="mb-3">
                             <label class="form-label">Phòng ban</label>
                             <select name="department" class="form-select" data-placeholder="Choose a Category" tabindex="1">
-                              <option value="Category 1">Category 1</option>
-                              <option value="Category 2">Category 2</option>
-                              <option value="Category 3">Category 3</option>
-                              <option value="Category 4">Category 4</option>
+                                <option value="Category 1">Category 1</option>
+                                <option value="Category 2">Category 2</option>
+                                <option value="Category 3">Category 3</option>
+                                <option value="Category 4">Category 4</option>
                             </select>
                           </div>
                         </div>
@@ -223,12 +259,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Vị trí</label>
-                            <select name="role" class="form-select"tabindex="1">
-                                <option value="">--Chọn vị trí--</option>
-                                <option value="Giám đốc">Giám đốc</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Trưởng phòng">Trưởng phòng</option>
-                                <option value="Nhân viên/Kỹ thuật viên">Nhân viên/Kỹ thuật viên</option>
+                            <select name="position" class="form-select"tabindex="1">
+                                <option value="Giám đốc" <?php if($position == 'Giám đốc') echo 'selected'; ?>>Giám đốc</option>
+                                <option value="Admin" <?php if($position == 'Admin') echo 'selected'; ?>>Admin</option>
+                                <option value="Trưởng phòng" <?php if($position == 'Trưởng phòng') echo 'selected'; ?>>Trưởng phòng</option>
+                                <option value="Nhân viên/Kỹ thuật viên" <?php if($position == 'Nhân viên/Kỹ thuật viên') echo 'selected'; ?>>Nhân viên/Kỹ thuật viên</option>
                             </select>
                           </div>
                         </div>
@@ -270,7 +305,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
 
                         <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <div class="mb-3">
                             <label class="form-label">Trạng thái</label>
                             <select name="status" class="form-select" data-placeholder="Giói tính" tabindex="1">

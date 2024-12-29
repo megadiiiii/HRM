@@ -24,7 +24,11 @@
         header('location: ../HRM/Staff_Add.php');
     }
 
-    mysqli_close($con);
+    if(isset($_POST['btnExportExcel'])) {
+      header('location: ../HRM/Staff_Export.php');
+  }
+
+  mysqli_close($con);
 
 ?>
 <!doctype html>
@@ -247,8 +251,8 @@
                       ?>
                           <tr>
                                   <td><?php echo $i++ ?></td>
-                                  <td><?php echo $row['staff_name'] ?></td>
                                   <td><?php echo $row['staff_id'] ?></td>
+                                  <td><?php echo $row['staff_name'] ?></td>
                                   <td><?php echo $row['department'] ?></td>
                                   <td><?php echo $row['position'] ?></td>
                                   <td><?php echo $row['status'] ?></td>

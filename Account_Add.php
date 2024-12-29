@@ -23,7 +23,7 @@
         if (mysqli_num_rows($result_check) > 0) {
             echo "<script>alert('Tên đăng nhập đã tồn tại! Vui lòng kiểm tra lại.')</script>";
         } else {
-            // Chèn dữ liệu vào bảng student
+            // Chèn dữ liệu vào bảng account
             $sql_insert = "INSERT INTO `account`(`username`, `password`, `staff_name`, `role`, `staff_id`, `department`) 
                             VALUES ('$username','$password','$staff_name','$role','$staff_id','$department')";
             $data = mysqli_query($con, $sql_insert);
