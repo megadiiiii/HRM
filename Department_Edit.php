@@ -1,31 +1,59 @@
 <?php 
     include_once '../HRM/dbConnect.php';
 
-    $department_id = '';
     $department = '';
-    $description = '';
+    $department_id = '';
+    $floor = '';
     $status = '';
-    
-    if(isset($_POST['btnSearch'])) {
-        $department_id = $_POST['department_id'];
-        $department = $_POST['department'];
-        $status = $_POST['status'];
-    }        
-        // Search SQL
-        $sql_search = "SELECT * FROM department";
-        $data_search = mysqli_query($con, $sql_search);
 
-    if(isset($_POST['btnAdd'])) {
-        header('location: ../HRM/Department_Add.php');
+    if (isset($_GET['department_id'])) {
+        $department_id = $_GET['department_id'];
+    
+        // Lấy thông tin sinh viên từ cơ sở dữ liệu
+        $sql_select = "SELECT * FROM `department` WHERE department_id = '$department_id'";
+        $result_select = mysqli_query($con, $sql_select);
+    
+        if ($row = mysqli_fetch_assoc($result_select)) {
+            $floor = $row['floor'];
+            $department_id = $row['department_id'];
+            $department = $row['department'];
+            $status = $row['status'];
+        } else {
+            echo "<script>alert('Không tìm thấy nhân viên!'); window.location='Department.php';</script>";
+            exit();
+        }
     }
 
-    if(isset($_POST['btnExportExcel'])) {
-        header('location: ../HRM/Department_Export.php');
+    // Xử lý khi người dùng nhấn nút Lưu
+    if (isset($_POST['btnSave'])) {
+        $department = $_POST['department'];
+        $floor = $_POST['floor'];
+        $status = $_POST['status'];
+
+        // Cập nhật thông tin phòng ban
+        $sql_update = "UPDATE department 
+                       SET `floor` = '$floor',
+                           `department` = '$department',
+                           `status` = '$status'
+                       WHERE department_id = '$department_id'";
+
+        $data = mysqli_query($con, $sql_update);
+
+        if ($data) {
+            echo "<script>alert('Cập nhật thông tin thành công!'); window.location='Department.php';</script>";
+        } else {
+            echo "<script>alert('Cập nhật thông tin thất bại!')</script>";
+        }
+    }
+
+    // Xử lý khi người dùng nhấn nút Hủy
+    if (isset($_POST['btnBack'])) {
+        header('location: ../HRM/Department.php');
     }
 
     mysqli_close($con);
-
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -59,8 +87,8 @@
           <ul id="sidebarnav">
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Homepage.php" aria-expanded="false">
-                <iconify-icon icon="material-symbols:home"></iconify-icon>
-                <span class="hide-menu">Trang chủ</span>
+              <iconify-icon icon="material-symbols:home"></iconify-icon>
+              <span class="hide-menu">Trang chủ</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -79,9 +107,9 @@
               <a class="sidebar-link" href="../HRM/Training.php" aria-expanded="false">
               <iconify-icon icon="oui:training"></iconify-icon>
               <span class="hide-menu">Quản lý đào tạo nhân sự</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
+              </a>
+            </li>
+            <li class="sidebar-item">
             <a class="sidebar-link" href="../HRM/Diligent.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
               <span class="hide-menu">Quản lý chuyên cần</span>
@@ -117,7 +145,7 @@
                     <div class="d-flex align-items-center mb-3 pb-3 border-bottom gap-6">
                         <img src="../HRM/src/assets/images/profile/user-1.jpg" class="rounded-circle" width="56" height="56" alt="matdash-img">
                         <h5 class="mb-0 fs-12"> <?php echo $admin_name?></h5>
-                        <p class="mb-0 text-dark"> <?php echo $username?></p>
+                        <p class="mb-0 text-dark"> <?php echo $floor?></p>
                         <span class="text-success fs-11">Admin</span>                        
                     </div>
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
@@ -132,7 +160,7 @@
                       <i class="ti ti-list-check fs-6"></i>
                       <p class="mb-0 fs-3">My Task</p>
                     </a>
-                    <a href="./Sign_In.php" class="btn btn-outline-info mx-3 mt-2 d-block">Đăng xuất</a>
+                    <a href="./Sign_In.php" class="btn btn-outline-secondary mx-3 mt-2 d-block">Đăng xuất</a>
                   </div>
                 </div>
               </li>
@@ -151,112 +179,63 @@
                         <i class="ti ti-home fs-4 mt-1"></i>
                         </a>
                     </li>
-                    <li class="breadcrumb-item active text-info " aria-current="page">Quản lí phòng ban</li>
+                    <li class="breadcrumb-item">
+                        <a href="../HRM/Account.php" class="text-info d-flex align-items-center">
+                        Quản lý phòng ban
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active text-info " aria-current="page">Chỉnh sửa phòng ban</li>
                 </ol>
-            </nav>
-            <div class="row">
-                <div class="card">
+            </nav> 
+            <div class="card">
                 <form method="post">
                   <div>
                     <div class="card-body">
-                      <h4 class="card-title">Tìm kiếm phòng ban</h4>
+                      <h4 class="card-title">Chỉnh sửa phòng ban</h4>
                       <div class="row pt-3">
                         <div class="col-md-6">
                           <div class="mb-3">
                             <label class="form-label">Tên phòng</label>
-                            <input type="text" name="department" class="form-control" placeholder="Tên phòng" >
+                            <input type="text" name="department" class="form-control" placeholder="Tên phòng" value="<?php echo $department ?>">
                           </div>
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="mb-3 has-danger">
                             <label class="form-label">Mã phòng</label>
-                            <input type="text" name="department_id" class="form-control form-control-danger" placeholder="Mã phòng" >
+                            <input type="text" name="department_id" class="form-control form-control-danger" placeholder="Mã phòng" value="<?php echo $department_id?>" readonly>
                           </div>
                         </div>
-                        
+                        <!--/span-->
                         <div class="col-md-6">
-                          <div class="mb-3">
-                            <label class="form-label">Trạng thái</label>
-                              <select name="status" class="form-select" data-placeholder="Giói tính" tabindex="1">
-                                <option value="Đang hoạt động">Đang hoạt động</option>
-                                <option value="Dừng hoạt động">Dừng hoạt động</option>
-                            </select>
+                          <div class="mb-3 has-danger">
+                            <label class="form-label">Tầng</label>
+                            <input type="text" name="floor" class="form-control form-control-danger" placeholder="Tầng" value="<?php echo $floor?>">
                           </div>
-                        </div>                        
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="mb-3 has-danger">
+                              <label class="form-label">Trạng thái</label>
+                              <select name="status" class="form-select" data-placeholder="Giói tính" tabindex="1">
+                                <option value="Đang hoạt động" <?php if($status == 'Đang hoạt động') echo 'selected'; ?>>Đang hoạt động</option>
+                                <option value="Dừng hoạt động" <?php if($status == 'Dừng hoạt động') echo 'selected'; ?>>Dừng hoạt động</option>
+                              </select>
+                            </div>
+                        </div>
+                        <!--/span-->
                       </div>
                     </div>
                     
                     <div class="form-actions">
                       <div class="card-body border-top">
-                        <button type="submit" name="btnSearch" class="btn btn-info text-light">
-                          <i class="ti ti-search"></i>
-                          Tìm kiếm
-                        </button>
-                        <button type="submit" name="btnAdd" class="btn btn-info text-light ms-6">
-                          <i class="ti ti-circle-plus"></i>
-                          Tạo mới
-                        </button>
-                        <button type="submit" name="btnExportExcel" class="btn btn-info text-light ms-6">
-                          <i class="ti ti-file-arrow-right"></i>
-                          Xuất Excel
-                        </button>
+                        <button type="submit" name="btnSave" class="btn btn-secondary text-light">Cập nhật</button>
+                        <button type="submit" name="btnBack" class="btn bg-danger-subtle text-danger ms-6">Huỷ</button>
                       </div>
                     </div>
                   </div>
                 </form>
-                </div>
               </div>
-
-              <div class="card">
-                  <div class="card-body">
-                  <h5 class="card-title">Danh sách phòng ban</h5>
-                  <div class="table-responsive mb-4 border rounded-1">  
-                    <table class="table table-hover mb-0 align-middle">
-                    <thead class="table-info">
-                        <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Mã phòng</th>
-                            <th scope="col">Tên phòng</th>
-                            <th scope="col">Tầng</th>
-                            <th scope="col">Trạng thái</th>
-                            <th scope="col">Chức năng</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                      if (isset($data_search) && mysqli_num_rows($data_search) > 0) {
-                      $i = 1;
-                      while ($row = mysqli_fetch_array($data_search)) {
-                      ?>
-                          <tr>
-                                  <td><?php echo $i++ ?></td>
-                                  <td><?php echo $row['department_id'] ?></td>
-                                  <td><?php echo $row['department'] ?></td>
-                                  <td><?php echo $row['floor'] ?></td>
-                                  <td><?php echo $row['status'] ?></td>
-                                  <td>
-                                      <a class="btn btn-warning" href="Department_Edit.php?department_id=<?php echo $row['department_id']; ?>">
-                                        <i class="ti ti-edit"></i>
-                                      </a>
-                                      <a class="btn btn-danger" href="Department_Del.php?department_id=<?php echo $row['department_id']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa phòng này?')">
-                                        <i class="ti ti-trash"></i>
-                                      </a>
-                                  </td>
-                          </tr>
-                      <?php
-                              }
-                          } else {
-                              echo "<tr><td colspan='10'>Không tìm thấy dữ liệu</td></tr>";
-                          }
-                      ?>
-                    </tbody>
-                  </table>
-                </div>  
-              </div>
-              </div>
-        
-        </div>
       </div>
     </div>
   </div>
@@ -269,4 +248,4 @@
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
 
-</html>
+</html> 
