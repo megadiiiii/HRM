@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 29, 2024 lúc 06:57 PM
+-- Thời gian đã tạo: Th12 29, 2024 lúc 08:09 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -28,11 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `daotao` (
-  `Id` varchar(10) NOT NULL,
-  `Name` varchar(50) DEFAULT NULL,
+  `Department_id` varchar(10) NOT NULL,
+  `Department` varchar(50) DEFAULT NULL,
   `Trainer` varchar(50) NOT NULL,
   `Date` date DEFAULT NULL,
-  `Department` varchar(50) DEFAULT NULL,
   `Status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -40,9 +39,9 @@ CREATE TABLE `daotao` (
 -- Đang đổ dữ liệu cho bảng `daotao`
 --
 
-INSERT INTO `daotao` (`Id`, `Name`, `Trainer`, `Date`, `Department`, `Status`) VALUES
-('11101', 'Công Nghệ Thông Tin', 'Triệu Đình Mạnh', '0000-00-00', 'VP 1 cửa', 'Đang đào tạo'),
-('11103', 'Kinh Tế', 'Lã Phong Lâm', '0000-00-00', 'Phòng gddt', 'Đang đào tạo');
+INSERT INTO `daotao` (`Department_id`, `Department`, `Trainer`, `Date`, `Status`) VALUES
+('11101', 'VP 1 cửa', 'Triệu Đình Mạnh', '0000-00-00', 'Đang đào tạo'),
+('11103', 'Phòng gddt', 'Lã Phong Lâm', '0000-00-00', 'Đang đào tạo');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -52,7 +51,7 @@ INSERT INTO `daotao` (`Id`, `Name`, `Trainer`, `Date`, `Department`, `Status`) V
 -- Chỉ mục cho bảng `daotao`
 --
 ALTER TABLE `daotao`
-  ADD PRIMARY KEY (`Id`);
+  ADD PRIMARY KEY (`Department_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

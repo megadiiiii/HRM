@@ -1,8 +1,7 @@
 <?php 
-    include_once "dbConnect.php";
+    include_once "../HRM/Ql_daotao/dbConnect.php";
 
     $Id = '';
-    $Name = '';
     $Trainer = '';
     $Date = '';
     $Department = '';
@@ -10,7 +9,6 @@
     
     if(isset($_POST['btnAdd'])) {
         $Id = $_POST['Id'];
-        $Name = $_POST['Name'];
         $Date = $_POST['Date'];
         $Trainer = $_POST['Trainer'];
         $Department = $_POST['Department'];
@@ -27,10 +25,10 @@
         if($result_check->num_rows > 0) {
             echo "<script>alert('Trùng Id! Vui lòng kiểm tra lại!')</script>";
         } else {
-            $sql_insert = "INSERT INTO `daotao`(`Id`, `Name`, `Trainer`, `Date`, `Department`, `Status`) 
+            $sql_insert = "INSERT INTO `daotao`(`Id`, `Trainer`, `Date`, `Department`, `Status`) 
                      VALUES (?, ?, ?, ?, ?, ?)";
             $stmt_insert = $con->prepare($sql_insert);
-            $stmt_insert->bind_param("ssssss", $Id, $Name, $Trainer, $Date, $Department, $Status);
+            $stmt_insert->bind_param("ssssss", $Id,  $Trainer, $Date, $Department, $Status);
             $data_insert = $stmt_insert->execute();
         }
         
@@ -62,14 +60,12 @@
             <div class="form-inline">
             <label for="id">ID:</label>
                 <input type="text" class="form-control" name="Id" value="<?php echo $Id;?>">
-                <label for="Name:">Tên khoa:</label>
-                <input type="text" class="form-control" name="Name" value="<?php echo $Name;?>">
+                <label for="Department">Phòng ban:</label>
+                <input type="text" class="form-control" name="Department" value="<?php echo $Department;?>">
                 <label for="Trainer">Người đào tạo:</label>
                 <input type="text" class="form-control" name="Trainer" value="<?php echo $Trainer;?>">
                 <label for="Date">Date:</label>
                 <input type="text" class="form-control" name="Date" value="<?php echo $Date;?>">
-                <label for="Department">Phòng ban:</label>
-                <input type="text" class="form-control" name="Department" value="<?php echo $Department;?>">
                 <label for="Status">Status:</label>
                 <select name="Status" class="form-control">
                     <option value="">---Chọn status---</option>
