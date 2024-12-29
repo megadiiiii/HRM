@@ -9,7 +9,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quản lý đào tạo</title>
+  <title>Quản lý đào tạo nhân sự</title>
   <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/Logo.png" style="width: 32px;" />
   <link rel="stylesheet" href="../HRM/src/assets/css/styles.min.css" />
   <link rel="stylesheet" href="../HRM/src/assets/css/ov_style.css">
@@ -55,7 +55,13 @@
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Training.php" aria-expanded="false">
               <iconify-icon icon="oui:training"></iconify-icon>
-              <span class="hide-menu">Quản lý đào tạo</span>
+              <span class="hide-menu">Quản lý đào tạo nhân sự</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+            <a class="sidebar-link" href="../HRM/Diligent.php" aria-expanded="false">
+              <iconify-icon icon="ph:calendar-bold"></iconify-icon>
+              <span class="hide-menu">Quản lý chuyên cần</span>
               </a>
             </li>
             <li class="sidebar-item">

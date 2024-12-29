@@ -1,7 +1,17 @@
 <?php 
-    include_once '../HRM/dbConnect.php';
+    include_once '../dbConnect.php';
 
-  
+    $username = $_GET['username'];
+    $admin_name = '';
+
+    $sql_admin = "SELECT `admin_name` FROM `account` WHERE username = '$username'";
+    $result_admin = mysqli_query($con, $sql_admin);
+
+    // Kiểm tra kết quả truy vấn
+    if ($result_admin && mysqli_num_rows($result_admin) > 0) {
+        $row = mysqli_fetch_assoc($result_admin);
+        $admin_name = $row['admin_name']; // Lấy giá trị admin_name
+    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -9,10 +19,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quản lý nhân viên</title>
-  <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/Logo.png" style="width: 32px;" />
-  <link rel="stylesheet" href="../HRM/src/assets/css/styles.min.css" />
-  <link rel="stylesheet" href="../HRM/src/assets/css/ov_style.css">
+  <title>Quản lý tài khoản</title>
+  <link rel="shortcut icon" type="image/png" href="/HRM/src/assets/images/logos/Logo.png" style="width: 32px;" />
+  <link rel="stylesheet" href="/HRM/src/assets/css/style" />
+  <link rel="stylesheet" href="/HRM/src/assets/css/ov_style.css">
 </head>
 
 <body>
@@ -25,7 +35,7 @@
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="../HRM/Homepage.php" class="text-nowrap logo-img">
-             <img src="../HRM/src/assets/images/logos/Logo.png" alt="" /, style="width: 150px; transform: translateX(25%);">
+          <img src="../HRM/src/assets/images/logos/Logo.png" alt="" /, style="width: 150px; transform: translateX(25%);">
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>
@@ -36,38 +46,32 @@
           <ul id="sidebarnav">
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Homepage.php" aria-expanded="false">
-              <iconify-icon icon="material-symbols:home"></iconify-icon>
-              <span class="hide-menu">Trang chủ</span>
+                <iconify-icon icon="solar:layers-minimalistic-bold-duotone"></iconify-icon>
+                <span class="hide-menu">Trang chủ</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Staff.php" aria-expanded="false">
-              <iconify-icon icon="ic:baseline-people"></iconify-icon>
-              <span class="hide-menu">Quản lý nhân viên</span>
+                <iconify-icon icon="solar:danger-circle-line-duotone"></iconify-icon>
+                <span class="hide-menu">Quản lý nhân viên</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="./Department.php" aria-expanded="false">
-              <iconify-icon icon="mingcute:department-fill"></iconify-icon>
-              <span class="hide-menu">Quản lý phòng ban</span>
+                <iconify-icon icon="solar:bookmark-square-minimalistic-line-duotone"></iconify-icon>
+                <span class="hide-menu">Quản lý phòng ban</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Training.php" aria-expanded="false">
-              <iconify-icon icon="oui:training"></iconify-icon>
-              <span class="hide-menu">Quản lý đào tạo nhân sự</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-            <a class="sidebar-link" href="../HRM/Diligent.php" aria-expanded="false">
-              <iconify-icon icon="ph:calendar-bold"></iconify-icon>
-              <span class="hide-menu">Quản lý chuyên cần</span>
+                <iconify-icon icon="solar:bookmark-square-minimalistic-line-duotone"></iconify-icon>
+                <span class="hide-menu">Quản lý đào tạo</span>
               </a>
             </li>
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
-              <iconify-icon icon="mdi:account-wrench"></iconify-icon>
-              <span class="hide-menu">Quản lý tài khoản</span>
+                <iconify-icon icon="solar:file-text-line-duotone"></iconify-icon>
+                <span class="hide-menu">Quản lý tài khoản</span>
               </a>
             </li>
           </ul>
@@ -118,7 +122,7 @@
         </nav>
       </header>
       <!--  Header End -->
-      <div class="body-wrapper-inner">
+    <div class="body-wrapper-inner">
         <div class="container-fluid">
             <!-- NỘI DUNG PAGE TỪ ĐÂY -->
             <nav aria-label="breadcrumb" class="mb-3">
@@ -128,23 +132,16 @@
                         <i class="ti ti-home fs-4 mt-1"></i>
                         </a>
                     </li>
-                    <li class="breadcrumb-item active text-info " aria-current="page">Quản lí nhân viên</li>
+                    <li class="breadcrumb-item active text-info " aria-current="page">Quản lí tài khoản</li>
                 </ol>
             </nav>
             <div class="card">
                 <div class="card-body">
+                    <h5 class="card-title">Thêm tài khoản</h5>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-body">
-                    
-                </div>
-            </div>
-        
         </div>
-      </div>
     </div>
-  </div>
   <script src="../HRM/src/assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="../HRM/src/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../HRM/src/assets/js/sidebarmenu.js"></script>

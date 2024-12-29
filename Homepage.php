@@ -65,7 +65,13 @@
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Training.php" aria-expanded="false">
               <iconify-icon icon="oui:training"></iconify-icon>
-              <span class="hide-menu">Quản lý đào tạo</span>
+              <span class="hide-menu">Quản lý đào tạo nhân sự</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+            <a class="sidebar-link" href="../HRM/Diligent.php" aria-expanded="false">
+              <iconify-icon icon="ph:calendar-bold"></iconify-icon>
+              <span class="hide-menu">Quản lý chuyên cần</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -126,14 +132,9 @@
       <!--  Header End -->
       <div class="body-wrapper-inner">
         <div class="container-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <div class="alert alert-info" role="alert">
-                        <b>Chào mừng <?php echo $staff_name?> đến với Hệ thống Quản lí Nhân sự - HRM!</b>
-                    </div>
-                </div>
-            </div>
-
+          <div class="alert alert-info" role="alert">
+              <b>Chào mừng <?php echo $staff_name?> đến với Hệ thống Quản lí Nhân sự - HRM!</b>
+          </div>
             <!-- NỘI DUNG PAGE TỪ ĐÂY -->
             <div class="row">
                 <div class="col-lg-12">
@@ -159,13 +160,22 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                <h5 class="card-title">Quản lí Đào tạo</h5>
+                                <h5 class="card-title">Quản lí Đào tạo nhân sự</h5>
                                 <p class="card-text">Danh sách nhân sự đào tạo, ...</p>
                                 <a href="../HRM/Training.php" class="btn btn-outline-info">Chuyển tới Quản lí Đào tạo</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                <h5 class="card-title">Quản lí Chuyên cần</h5>
+                                <p class="card-text">Danh sách ngày công,...</p>
+                                <a href="../HRM/Diligent.php" class="btn btn-outline-info">Chuyển tới Quản lí Chuyên cần </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="card-body">
                                 <h5 class="card-title">Quản lí Tài khoản</h5>

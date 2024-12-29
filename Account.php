@@ -81,7 +81,13 @@
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Training.php" aria-expanded="false">
               <iconify-icon icon="oui:training"></iconify-icon>
-              <span class="hide-menu">Quản lý đào tạo</span>
+              <span class="hide-menu">Quản lý đào tạo nhân sự</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a class="sidebar-link" href="../HRM/Diligent.php" aria-expanded="false">
+              <iconify-icon icon="ph:calendar-bold"></iconify-icon>
+              <span class="hide-menu">Quản lý chuyên cần</span>
               </a>
             </li>
             <li class="sidebar-item">
