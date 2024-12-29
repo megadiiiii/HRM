@@ -126,6 +126,8 @@ if (isset($_POST['btnPreview'])) {
         echo "<script>alert('Vui lòng nhập mã nhân viên');</script>";
     }
 }
+    $sql = "SELECT * FROM department";
+    $data = mysqli_query($con, $sql);
 
 ?>
 
@@ -307,10 +309,17 @@ if (isset($_POST['btnPreview'])) {
                           <div class="mb-3">
                             <label class="form-label">Phòng ban</label>
                             <select name="department" class="form-select" data-placeholder="Choose a Category" tabindex="1">
-                                <option value="Category 1" <?php if($department == 'Category 1') echo 'selected'; ?>>Category 1</option>
-                                <option value="Category 2" <?php if($department == 'Category 2') echo 'selected'; ?>>Category 2</option>
-                                <option value="Category 3" <?php if($department == 'Category 3') echo 'selected'; ?>>Category 3</option>
-                                <option value="Category 4" <?php if($department == 'Category 4') echo 'selected'; ?>>Category 4</option>
+                            <?php 
+                                  if(isset($data)&&mysqli_num_rows($data)>0){
+                                      while($row=mysqli_fetch_assoc($data)){
+                              ?>
+                                          <option value="<?php echo $row['department'] ?>" <?php if($department==$row['department']) echo 'selected' ?>>
+                                              <?php echo $row['department'] ?>
+                                          </option>
+                              <?php
+                                      }
+                                  }
+                              ?>                               
                             </select>
                           </div>
                         </div>

@@ -1,7 +1,20 @@
 <?php  
 include_once 'dbConnect.php';
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+$staff_id = '';
+$staff_name = '';
+$dob = '';
+$gender = '';
+$department = '';
+$position = '';
+$start_date = '';
+$address = '';
+$email = '';
+$phone = '';
+$status = '';
+$profile_image = '';
+
+if (isset($_POST['btnAdd'])) {
     $staff_id = $_POST['staff_id'];
     $staff_name = $_POST['staff_name'];
     $dob = $_POST['dob'];
@@ -69,7 +82,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: ../HRM/Staff.php");
         } 
     }
-}
+}    
+    if (isset($_POST["btnBack"])) {
+        header("Location: ../HRM/Staff.php");
+    }
+
+    $sql = "SELECT * FROM department";
+    $data = mysqli_query($con, $sql);
 ?>
 <!doctype html>
 <html lang="en">
@@ -209,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   <div>
                     <div class="card-body">
                       <h4 class="card-title">Thêm nhân viên mới</h4>
-                      <div class="row col-8">
+                      <div class="row">
                           <div class="col-md-6">
                             <div class="mb-3 has-danger">
                               <label class="form-label">Mã nhân viên</label>
@@ -235,8 +254,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <div class="mb-3">
                             <label class="form-label">Giới tính</label>
                             <select name="gender" class="form-select" data-placeholder="Giói tính" tabindex="1">
-                              <option value="Nam" <?php if($gender == 'Nam') echo 'selected'; ?>>Nam</option>
-                              <option value="Nữ" <?php if($gender == 'Nữ') echo 'selected'; ?>>Nữ</option>
+                              <option value="">--Chọn giới tính--</option>
+                              <option value="Nam">Nam</option>
+                              <option value="Nữ" >Nữ</option>
                             </select>
                           </div>
                         </div>
@@ -248,10 +268,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           <div class="mb-3">
                             <label class="form-label">Phòng ban</label>
                             <select name="department" class="form-select" data-placeholder="Choose a Category" tabindex="1">
-                                <option value="Category 1">Category 1</option>
-                                <option value="Category 2">Category 2</option>
-                                <option value="Category 3">Category 3</option>
-                                <option value="Category 4">Category 4</option>
+                            <?php 
+                                if(isset($data)&&mysqli_num_rows($data)>0){
+                                    while($row=mysqli_fetch_assoc($data)){
+                            ?>
+                                        <option value="<?php echo $row['department'] ?>" <?php if($department==$row['department']) echo 'selected' ?>>
+                                            <?php echo $row['department'] ?>
+                                        </option>
+                            <?php
+                                    }
+                                }
+                            ?>    
                             </select>
                           </div>
                         </div>
@@ -260,6 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="mb-3">
                             <label class="form-label">Vị trí</label>
                             <select name="position" class="form-select"tabindex="1">
+                                <option value="">--Chọn vị trí--</option>
                                 <option value="Giám đốc" <?php if($position == 'Giám đốc') echo 'selected'; ?>>Giám đốc</option>
                                 <option value="Admin" <?php if($position == 'Admin') echo 'selected'; ?>>Admin</option>
                                 <option value="Trưởng phòng" <?php if($position == 'Trưởng phòng') echo 'selected'; ?>>Trưởng phòng</option>
@@ -305,7 +333,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
 
                         <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                           <div class="mb-3">
                             <label class="form-label">Trạng thái</label>
                             <select name="status" class="form-select" data-placeholder="Giói tính" tabindex="1">

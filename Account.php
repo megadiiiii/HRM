@@ -19,7 +19,7 @@
                                                 AND `staff_name` LIKE '%$staff_name%'        
                                                 AND `staff_id` LIKE '%$staff_id%'        
                                                 AND `role` LIKE '%$role%'        
-                                                AND `department` LIKE '%$hoten%'";
+                                                AND `department` LIKE '%$department%'";
         $data_search = mysqli_query($con, $sql_search);
 
     if(isset($_POST['btnAdd'])) {
@@ -30,9 +30,12 @@
         header('location: ../HRM/Account_Export.php');
     }
 
+    $sql = "SELECT * FROM `department`";
+    $data = mysqli_query($con, $sql);
+
     mysqli_close($con);
 
-?>
+?>  
 <!doctype html>
 <html lang="en">
 
@@ -193,10 +196,18 @@
                           <div class="mb-3">
                             <label class="form-label">Phòng ban</label>
                             <select name="department" class="form-select" data-placeholder="Choose a Category" tabindex="1" >
-                              <option value="Category 1">Category 1</option>
-                              <option value="Category 2">Category 2</option>
-                              <option value="Category 3">Category 3</option>
-                              <option value="Category 4">Category 4</option>
+                              <option value="">--Chọn phòng ban--</option>
+                              <?php 
+                                if(isset($data) && mysqli_num_rows($data) > 0) {
+                                    while($row = mysqli_fetch_assoc($data)) {
+                                ?>
+                                        <option value="<?php echo $row['department']; ?>">
+                                            <?php echo $row['department']; ?>
+                                        </option>
+                                <?php
+                                    }
+                                }
+                              ?>
                             </select>
                           </div>
                         </div>

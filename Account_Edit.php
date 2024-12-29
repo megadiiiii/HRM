@@ -37,12 +37,12 @@
         $role = $_POST['role'];
     
         // Cập nhật thông tin sinh viên
-        $sql_update = "UPDATE student 
+        $sql_update = "UPDATE account 
                        SET `staff_name` = '$staff_name',
                            `staff_id` = '$staff_id',
                            `password` = '$password',
                            `department` = '$department',
-                           `role` = '$role',
+                           `role` = '$role'
                        WHERE username = '$username'";
     
         $data = mysqli_query($con, $sql_update);
@@ -56,11 +56,14 @@
     
         $sql = "SELECT * FROM account";
         $class = mysqli_query($con, $sql);
+        
+        if (isset($_POST['btnBack'])) {
+          header('location: ../HRM/Account.php');
+        }
+        
+        $sql = "SELECT * FROM department";
+        $data = mysqli_query($con, $sql);
         mysqli_close($con);
-
-    if (isset($_POST['btnBack'])) {
-        header('location: ../HRM/Account.php');
-    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -237,10 +240,17 @@
                           <div class="mb-3">
                             <label class="form-label">Phòng ban</label>
                             <select name="department" class="form-select" data-placeholder="Choose a Category" tabindex="1">
-                              <option value="Category 1" <?php if($department == 'Category 1') echo 'selected'; ?>>Category 1</option>
-                              <option value="Category 2" <?php if($department == 'Category 2') echo 'selected'; ?>>Category 2</option>
-                              <option value="Category 3" <?php if($department == 'Category 3') echo 'selected'; ?>>Category 3</option>
-                              <option value="Category 4" <?php if($department == 'Category 4') echo 'selected'; ?>>Category 4</option>
+                            <?php 
+                                  if(isset($data)&&mysqli_num_rows($data)>0){
+                                      while($row=mysqli_fetch_assoc($data)){
+                              ?>
+                                          <option value="<?php echo $row['department'] ?>" <?php if($department==$row['department']) echo 'selected' ?>>
+                                              <?php echo $row['department'] ?>
+                                          </option>
+                              <?php
+                                      }
+                                  }
+                              ?>   
                             </select>
                           </div>
                         </div>
@@ -249,11 +259,10 @@
                         <div class="mb-3">
                             <label class="form-label">Quyền tài khoản</label>
                             <select name="role" class="form-select"tabindex="1">
-                                <option value="">--Chọn quyền tài khoản--</option>
-                                <option value="Giám đốc">Giám đốc</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Trưởng phòng">Trưởng phòng</option>
-                                <option value="Nhân viên/Kỹ thuật viên">Nhân viên/Kỹ thuật viên</option>
+                                <option value="Giám đốc" <?php if($role == 'Giám đốc') echo 'selected'; ?>>Giám đốc</option>
+                                <option value="Admin" <?php if($role == 'Admin') echo 'selected'; ?>>Admin</option>
+                                <option value="Trưởng phòng" <?php if($role == 'Trưởng phòng') echo 'selected'; ?>>Trưởng phòng</option>
+                                <option value="Nhân viên/Kỹ thuật viên" <?php if($role == 'Nhân viên/Kỹ thuật viên') echo 'selected'; ?>>Nhân viên/Kỹ thuật viên</option>
                             </select>
                           </div>
                         </div>
@@ -263,7 +272,7 @@
                     
                     <div class="form-actions">
                       <div class="card-body border-top">
-                        <button type="submit" name="btnAdd" class="btn btn-secondary text-light">Cập nhật</button>
+                        <button type="submit" name="btnSave" class="btn btn-secondary text-light">Cập nhật</button>
                         <button type="submit" name="btnBack" class="btn bg-danger-subtle text-danger ms-6">Huỷ</button>
                       </div>
                     </div>
