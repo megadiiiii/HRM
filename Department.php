@@ -12,7 +12,9 @@
         $status = $_POST['status'];
     }        
         // Search SQL
-        $sql_search = "SELECT * FROM department";
+        $sql_search = "SELECT * FROM department WHERE `status` LIKE '%$status%' 
+                                                AND `department_id` LIKE '%$department_id%'        
+                                                AND `department` LIKE '%$department%'";
         $data_search = mysqli_query($con, $sql_search);
 
     if(isset($_POST['btnAdd'])) {
