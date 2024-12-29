@@ -5,8 +5,11 @@ include_once 'dbConnect.php';
 if (isset($_GET['id'])) {
     $id = mysqli_real_escape_string($con, $_GET['id']);
 
-    // Truy vấn thông tin chi tiết của nhân viên
-    $sql = "SELECT * FROM employees WHERE id = $id";
+    // Truy vấn thông tin chi tiết của nhân viên cùng với tên phòng ban
+    $sql = "SELECT e.*, p.department_name 
+            FROM employees e
+            LEFT JOIN phongban p ON e.department = p.id
+            WHERE e.id = $id";
     $result = mysqli_query($con, $sql);
 
     if (mysqli_num_rows($result) > 0) {
@@ -15,7 +18,7 @@ if (isset($_GET['id'])) {
         echo "Không tìm thấy nhân viên với ID này.";
         exit;
     }
-} 
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,14 +55,14 @@ if (isset($_GET['id'])) {
             <p><strong>Tên:</strong> <?php echo $employee['last_name']; ?></p>
             <p><strong>Email:</strong> <?php echo $employee['email']; ?></p>
             <p><strong>Số điện thoại:</strong> <?php echo $employee['phone']; ?></p>
-            <p><strong>Phòng ban:</strong> <?php echo $employee['department']; ?></p>
+            <p><strong>Phòng ban:</strong> <?php echo $employee['department_name']; ?></p> <!-- Hiển thị tên phòng ban -->
             <p><strong>Vị trí:</strong> <?php echo $employee['position']; ?></p>
             <p><strong>Mức lương:</strong> <?php echo $employee['salary']; ?></p>
             <p><strong>Ngày gia nhập:</strong> <?php echo $employee['date_of_joining']; ?></p>
         </div>
     </div>
     <div class="mt-4 text-center">
-        <a href="manage_employees.php" class="btn btn-primary">Quay lại được nhé</a>
+        <a href="manage_employees.php" class="btn btn-primary">Quay lại</a>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

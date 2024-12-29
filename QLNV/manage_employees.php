@@ -1,17 +1,20 @@
 <?php
 include_once 'dbConnect.php';
-//Xuat execl 
+// Xuất Excel
 if (isset($_GET['export_excel'])) {
     header("Content-Type: application/vnd.ms-excel");
     header("Content-Disposition: attachment; filename=danh_sach_nhan_vien.xls");
     echo "ID\tHọ\tTên\tEmail\tPhòng Ban\tVị trí\tSố điện thoại\tMức lương\tNgày gia nhập\n";
-    $sql = "SELECT * FROM employees";
+    $sql = "SELECT e.id, e.first_name, e.last_name, e.email, p.department_name AS department, e.position, e.phone, e.salary, e.date_of_joining 
+            FROM employees e
+            LEFT JOIN phongban p ON e.department = p.id";
     $result = mysqli_query($con, $sql);
     while ($row = mysqli_fetch_assoc($result)) {
         echo $row['id'] . "\t" . $row['first_name'] . "\t" . $row['last_name'] . "\t" . $row['email'] . "\t" . $row['department'] . "\t" . $row['position'] . "\t" . $row['phone'] . "\t" . $row['salary'] . "\t" . $row['date_of_joining'] . "\n";
     }
     exit;
 }
+
 // Xử lý xóa nhân viên
 if (isset($_GET['delete_id'])) {
     $id = $_GET['delete_id'];
@@ -22,15 +25,18 @@ if (isset($_GET['delete_id'])) {
         echo "Lỗi: " . mysqli_error($con);
     }
 }
+
 // Lấy từ khóa tìm kiếm
 $search = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
-$sql = "SELECT * FROM employees";
+$sql = "SELECT e.id, e.first_name, e.last_name, e.email, p.department_name AS department, e.position, e.phone, e.salary, e.date_of_joining, e.profile_image
+        FROM employees e
+        LEFT JOIN phongban p ON e.department = p.id";
 if ($search) {
-    $sql .= " WHERE first_name LIKE '%$search%' 
-              OR last_name LIKE '%$search%' 
-              OR email LIKE '%$search%' 
-              OR department LIKE '%$search%' 
-              OR position LIKE '%$search%'";
+    $sql .= " WHERE e.first_name LIKE '%$search%' 
+              OR e.last_name LIKE '%$search%' 
+              OR e.email LIKE '%$search%' 
+              OR p.department_name LIKE '%$search%' 
+              OR e.position LIKE '%$search%'";
 }
 $result = mysqli_query($con, $sql);
 ?>
@@ -92,7 +98,7 @@ $result = mysqli_query($con, $sql);
                         <tr>
                             <td><?php echo $row['id']; ?></td>
                             <td>
-                                <?php if ($row['profile_image']) { ?>
+                                <?php if (!empty($row['profile_image']) && file_exists($row['profile_image'])) { ?>
                                     <img src="<?php echo $row['profile_image']; ?>" class="profile-img">
                                 <?php } else { ?>
                                     Không có ảnh

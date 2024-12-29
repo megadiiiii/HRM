@@ -1,51 +1,64 @@
 <?php
-// giai thich ki line 24
-
 include_once 'dbConnect.php';
+
+// Lấy thông tin nhân viên từ cơ sở dữ liệu
 if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    // Lấy thông tin nhân viên từ cơ sở dữ liệu
+    $id = mysqli_real_escape_string($con, $_GET['id']);
     $sql = "SELECT * FROM employees WHERE id = $id";
     $result = mysqli_query($con, $sql);
-    $row = mysqli_fetch_assoc($result);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+    } else {
+        echo "Không tìm thấy nhân viên với ID này.";
+        exit;
+    }
+} else {
+    echo "ID nhân viên không được cung cấp.";
+    exit;
 }
 
+// Lấy danh sách phòng ban từ bảng phongban
+$departments_sql = "SELECT id, department_name FROM phongban";
+$departments_result = mysqli_query($con, $departments_sql);
+
+// Cập nhật thông tin nhân viên
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Lấy dữ liệu từ form
-    $id = $_POST['id'];
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $position = $_POST['position'];// vi tri
-    $salary = $_POST['salary'];// muc luong
-    $date_of_joining = $_POST['date_of_joining'];
-    $department = $_POST['department'];// phong ban
-    // xử lý hình ảnh
-    // tao bien file luu tru xong de sua
+    $id = mysqli_real_escape_string($con, $_POST['id']);
+    $first_name = mysqli_real_escape_string($con, $_POST['first_name']);
+    $last_name = mysqli_real_escape_string($con, $_POST['last_name']);
+    $email = mysqli_real_escape_string($con, $_POST['email']);
+    $phone = mysqli_real_escape_string($con, $_POST['phone']);
+    $position = mysqli_real_escape_string($con, $_POST['position']);
+    $salary = mysqli_real_escape_string($con, $_POST['salary']);
+    $date_of_joining = mysqli_real_escape_string($con, $_POST['date_of_joining']);
+    $department = mysqli_real_escape_string($con, $_POST['department']);
+
+    // Xử lý hình ảnh
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
-        $profile_image = 'uploads/' . $_FILES['profile_image']['name'];
+        $profile_image = 'uploads/' . basename($_FILES['profile_image']['name']);
         move_uploaded_file($_FILES['profile_image']['tmp_name'], $profile_image);
     } else {
         $profile_image = $row['profile_image']; // Giữ lại ảnh cũ nếu không upload ảnh mới
     }
-    // Kiểm tra nếu ID mới đã tồn tại
-    $check_id_sql = "SELECT * FROM employees WHERE id = $id AND id != $id";
-    $check_id_result = mysqli_query($con, $check_id_sql);
 
-    if (mysqli_num_rows($check_id_result) > 0) {
-        echo "<script>alert('ID đã tồn tại. Vui lòng sử dụng ID khác.');</script>";
+    // Cập nhật cơ sở dữ liệu
+    $update_sql = "UPDATE employees SET 
+                    first_name = '$first_name', 
+                    last_name = '$last_name', 
+                    email = '$email', 
+                    phone = '$phone', 
+                    position = '$position', 
+                    salary = '$salary', 
+                    date_of_joining = '$date_of_joining', 
+                    department = '$department', 
+                    profile_image = '$profile_image' 
+                    WHERE id = $id";
+
+    if (mysqli_query($con, $update_sql)) {
+        header("Location: manage_employees.php");
+        exit;
     } else {
-        // lenh update xong ktra luon
-        $sql = "UPDATE employees SET id = '$id', first_name = '$first_name', last_name = '$last_name', 
-                email = '$email', phone = '$phone', position = '$position', salary = '$salary', 
-                date_of_joining = '$date_of_joining', department = '$department', profile_image = '$profile_image' 
-                WHERE id = $id";
-        if (mysqli_query($con, $sql)) {
-            header("Location: manage_employees.php");
-        } else {
-            echo "Lỗi: " . mysqli_error($con);
-        }
+        echo "Lỗi: " . mysqli_error($con);
     }
 }
 ?>
@@ -63,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form action="edit_employee.php?id=<?php echo $row['id']; ?>" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="id" class="form-label">ID</label>
-            <input type="number" name="id" class="form-control" value="<?php echo $row['id']; ?>" required>
+            <input type="number" name="id" class="form-control" value="<?php echo $row['id']; ?>" readonly>
         </div>
         <div class="mb-3">
             <label for="first_name" class="form-label">Họ</label>
@@ -95,7 +108,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <div class="mb-3">
             <label for="department" class="form-label">Phòng ban</label>
-            <input type="text" name="department" class="form-control" value="<?php echo $row['department']; ?>" required>
+            <select name="department" class="form-control" required>
+                <?php while ($dept = mysqli_fetch_assoc($departments_result)) { ?>
+                    <option value="<?php echo $dept['id']; ?>" <?php if ($row['department'] == $dept['id']) echo 'selected'; ?>>
+                        <?php echo $dept['department_name']; ?>
+                    </option>
+                <?php } ?>
+            </select>
         </div>
         <div class="mb-3">
             <label for="profile_image" class="form-label">Hình ảnh</label>
