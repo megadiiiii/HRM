@@ -83,6 +83,12 @@
               </a>
             </li>
             <li class="sidebar-item">
+            <a class="sidebar-link" href="../HRM/Diligent.php" aria-expanded="false">
+              <iconify-icon icon="ph:calendar-bold"></iconify-icon>
+              <span class="hide-menu">Quản lý chuyên cần</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
               <iconify-icon icon="mdi:account-wrench"></iconify-icon>
               <span class="hide-menu">Quản lý tài khoản</span>
