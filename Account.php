@@ -26,6 +26,10 @@
         header('location: ../HRM/Account_add.php');
     }
 
+    if(isset($_POST['btnExportExcel'])) {
+        header('location: ../HRM/Account_Export.php');
+    }
+
     mysqli_close($con);
 
 ?>

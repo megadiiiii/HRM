@@ -128,7 +128,7 @@
                         <i class="ti ti-home fs-4 mt-1"></i>
                         </a>
                     </li>
-                    <li class="breadcrumb-item active text-info " aria-current="page">Quản lí đào tạo</li>
+                    <li class="breadcrumb-item active text-info " aria-current="page">Quản lí đào tạo nhân sự</li>
                 </ol>
             </nav>
             <div class="card">
