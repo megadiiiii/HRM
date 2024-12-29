@@ -1,33 +1,39 @@
-<?php 
-    include_once '../HRM/dbConnect.php';
+<?php  
+include_once 'dbConnect.php';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $username = '';
-    $staff_name = '';
-    $staff_id = '';
-    $role = '';
-    $department = '';
-    
-    if(isset($_POST['btnSearch'])) {
-        $username = $_POST['username'];
-        $staff_name = $_POST['staff_name'];
-        $staff_id = $_POST['staff_id'];
-        $department = $_POST['department'];
-        $role = $_POST['role'];
-    }        
-        // Search SQL
-        $sql_search = "SELECT * FROM `account` WHERE `username` LIKE '%$username%' 
-                                                AND `staff_name` LIKE '%$staff_name%'        
-                                                AND `staff_id` LIKE '%$staff_id%'        
-                                                AND `role` LIKE '%$role%'        
-                                                AND `department` LIKE '%$hoten%'";
-        $data_search = mysqli_query($con, $sql_search);
-
-    if(isset($_POST['btnAdd'])) {
-        header('location: ../HRM/Account_add.php');
+    $staff_id = $_POST['staff_id'];
+    $staff_name = $_POST['staff_name'];
+    $dob = $_POST['dob'];
+    $gender = $_POST['gender'];
+    $department = $_POST['department'];
+    $position = $_POST['position'];
+    $start_date = $_POST['start_date'];
+    $address = $_POST['address'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $status = $_POST['status'];
+    // cho anh vao uploads
+    if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
+        $profile_image = 'uploads/' . $_FILES['profile_image']['name'];
+        move_uploaded_file($_FILES['profile_image']['tmp_name'], $profile_image);
+    } else {
+        $profile_image = null;
     }
-
-    mysqli_close($con);
-
+    // check xem co chua
+    $check = "SELECT * FROM staff WHERE `staff_id` = $staff_id";
+    $result = mysqli_query($con, $check);
+    if (mysqli_num_rows($result) > 0) {
+        echo "<script>alert('Mã nhân viên đã tồn tại. Vui lòng kiểm tra.');</script>";
+    } else {
+        // lenh de them vao database
+        $sql = "INSERT INTO `staff`(`staff_id`, `staff_name`, `dob`, `gender`, `department`, `position`, `address`, `email`, `phone`, `start_date`, `status`, `profile_image`) 
+                VALUES ('$staff_id','$staff_name','$dob','$gender','$department','$position','$address','$email','$phone','$start_date','$status','$profile_image')";
+        if (mysqli_query($con, $sql)) {
+            header("Location: ../HRM/Staff.php");
+        } 
+    }
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -62,8 +68,8 @@
           <ul id="sidebarnav">
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Homepage.php" aria-expanded="false">
-                <iconify-icon icon="material-symbols:home"></iconify-icon>
-                <span class="hide-menu">Trang chủ</span>
+              <iconify-icon icon="material-symbols:home-outline"></iconify-icon>
+              <span class="hide-menu">Trang chủ</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -82,9 +88,9 @@
               <a class="sidebar-link" href="../HRM/Training.php" aria-expanded="false">
               <iconify-icon icon="oui:training"></iconify-icon>
               <span class="hide-menu">Quản lý đào tạo nhân sự</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
+              </a>
+            </li>
+            <li class="sidebar-item">
             <a class="sidebar-link" href="../HRM/Diligent.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
               <span class="hide-menu">Quản lý chuyên cần</span>
@@ -135,7 +141,7 @@
                       <i class="ti ti-list-check fs-6"></i>
                       <p class="mb-0 fs-3">My Task</p>
                     </a>
-                    <a href="./Sign_In.php" class="btn btn-outline-info mx-3 mt-2 d-block">Đăng xuất</a>
+                    <a href="./Sign_In.php" class="btn btn-outline-secondary mx-3 mt-2 d-block">Đăng xuất</a>
                   </div>
                 </div>
               </li>
@@ -154,41 +160,58 @@
                         <i class="ti ti-home fs-4 mt-1"></i>
                         </a>
                     </li>
-                    <li class="breadcrumb-item active text-info " aria-current="page">Quản lí tài khoản</li>
+                    <li class="breadcrumb-item">
+                        <a href="../HRM/Account.php" class="text-info d-flex align-items-center">
+                        Quản lý tài khoản
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active text-info " aria-current="page">Thêm nhân viên mới</li>
                 </ol>
-            </nav>
-            <div class="row">
-                <div class="card">
+            </nav> 
+            <div class="card">
                 <form method="post">
                   <div>
                     <div class="card-body">
-                      <h4 class="card-title">Tìm kiếm tài khoản</h4>
+                      <h4 class="card-title">Thêm nhân viên mới</h4>
                       <div class="row pt-3">
+                          <div class="col-md-6">
+                            <div class="mb-3 has-danger">
+                              <label class="form-label">Mã nhân viên</label>
+                              <input type="text" name="staff_id" class="form-control form-control-danger" placeholder="Mã nhân viên">
+                            </div>
+                          </div>
+                          <!--/span-->
                         <div class="col-md-6">
                           <div class="mb-3">
                             <label class="form-label">Họ và tên</label>
-                            <input type="text" name="staff_name" class="form-control" placeholder="Họ và tên" >
+                            <input type="text" name="staff_name" class="form-control" placeholder="Họ và tên">
                           </div>
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="mb-3 has-danger">
-                            <label class="form-label">Mã nhân viên</label>
-                            <input type="text" name="staff_id" class="form-control form-control-danger" placeholder="Mã nhân viên" >
+                            <label class="form-label">Ngày, tháng, năm sinh</label>
+                            <input type="date" name="dob" class="form-control form-control-danger" placeholder="Tên đăng nhập">
                           </div>
-                        </div>
+                        </div>                    
                         <!--/span-->
                         <div class="col-md-6">
-                          <div class="mb-3 has-danger">
-                            <label class="form-label">Tên đăng nhập</label>
-                            <input type="text" name="username" class="form-control form-control-danger" placeholder="Tên đăng nhập" >
+                          <div class="mb-3">
+                            <label class="form-label">Giới tính</label>
+                            <select name="gender" class="form-select" data-placeholder="Giói tính" tabindex="1">
+                              <option value="Nam">Nam</option>
+                              <option value="Nữ">Nữ</option>
+                            </select>
                           </div>
+                        </div>
                       </div>
 
+                      <!--/row-->
+                      <div class="row">
                         <div class="col-md-6">
                           <div class="mb-3">
                             <label class="form-label">Phòng ban</label>
-                            <select name="department" class="form-select" data-placeholder="Choose a Category" tabindex="1" >
+                            <select name="department" class="form-select" data-placeholder="Choose a Category" tabindex="1">
                               <option value="Category 1">Category 1</option>
                               <option value="Category 2">Category 2</option>
                               <option value="Category 3">Category 3</option>
@@ -199,94 +222,83 @@
                         <!--/span-->
                         <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label">Quyền tài khoản</label>
-                            <select name="role" class="form-select"tabindex="1" >
-                                <option value="">--Chọn quyền tài khoản--</option>
+                            <label class="form-label">Vị trí</label>
+                            <select name="role" class="form-select"tabindex="1">
+                                <option value="">--Chọn vị trí--</option>
                                 <option value="Giám đốc">Giám đốc</option>
                                 <option value="Admin">Admin</option>
                                 <option value="Trưởng phòng">Trưởng phòng</option>
-                                <option value="Nhân viên">Nhân viên/Kỹ thuật viên</option>
+                                <option value="Nhân viên/Kỹ thuật viên">Nhân viên/Kỹ thuật viên</option>
                             </select>
                           </div>
                         </div>
                         <!--/span-->
                       </div>
+                      
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="mb-3">
+                                  <label class="form-label">Địa chỉ</label>
+                                  <input type="text" name="address" class="form-control" placeholder="Địa chỉ">
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" name="email" class="form-control" placeholder="Email">
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Số điện thoại</label>
+                                    <input type="text" name="phone" class="form-control" placeholder="Số điện thoại">
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                              <div class="mb-3 has-danger">
+                                <label class="form-label">Ngày bắt đầu làm việc</label>
+                                <input type="date" name="start_date" class="form-control form-control-danger" placeholder="Ngày bắt đầu làm việc">
+                              </div>
+                            </div>                    
+                            <!--/span-->
+                        </div>
+
+                        <div class="row">
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <label class="form-label">Trạng thái</label>
+                            <select name="status" class="form-select" data-placeholder="Giói tính" tabindex="1">
+                              <option value="Đang làm việc">Đang làm việc</option>
+                              <option value="Đã nghỉ việc">Đã nghỉ việc</option>
+                            </select>
+                          </div>
+                        </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                              <div class="mb-3 has-danger">
+                                <label class="form-label">Hình ảnh nhân viên</label>
+                                <input type="file" class="form-control" name="profile_image" placeholder="Hình ảnh nhân viên">                              
+                                </div>
+                            </div>                    
+                            <!--/span-->
+                        </div>
                     </div>
                     
                     <div class="form-actions">
-                      <div class="card-body border-top">
-                        <button type="submit" name="btnSearch" class="btn btn-info text-light">
-                          <i class="ti ti-search"></i>
-                          Tìm kiếm
-                        </button>
-                        <button type="submit" name="btnAdd" class="btn btn-info text-light ms-6">
-                          <i class="ti ti-circle-plus"></i>
-                          Tạo mới
-                        </button>
-                        <button type="submit" name="btnExportExcel" class="btn btn-info text-light ms-6">
-                          <i class="ti ti-file-arrow-right"></i>
-                          Xuất Excel
-                        </button>
-                      </div>
+                        <div class="card-body border-top">
+                            <button type="submit" name="btnAdd" class="btn btn-secondary text-light">Thêm mới</button>
+                            <button type="submit" name="btnBack" class="btn bg-danger-subtle text-danger ms-6">Huỷ</button>
+                        </div>
                     </div>
                   </div>
                 </form>
-                </div>
               </div>
-
-              <div class="card">
-                  <div class="card-body">
-                  <h5 class="card-title">Danh sách tài khoản</h5>
-                  <div class="table-responsive mb-4 border rounded-1">  
-                    <table class="table table-hover mb-0 align-middle">
-                    <thead class="table-info">
-                        <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Tên nhân viên</th>
-                            <th scope="col">Tên đăng nhập</th>
-                            <th scope="col">Mật khẩu</th>
-                            <th scope="col">Mã nhân viên</th>
-                            <th scope="col">Phòng</th>
-                            <th scope="col">Quyền tài khoản</th>
-                            <th scope="col">Chức năng</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                      if (isset($data_search) && mysqli_num_rows($data_search) > 0) {
-                      $i = 1;
-                      while ($row = mysqli_fetch_array($data_search)) {
-                      ?>
-                          <tr>
-                                  <td><?php echo $i++ ?></td>
-                                  <td><?php echo $row['staff_name'] ?></td>
-                                  <td><?php echo $row['username'] ?></td>
-                                  <td><?php echo $row['password'] ?></td>
-                                  <td><?php echo $row['staff_id'] ?></td>
-                                  <td><?php echo $row['department'] ?></td>
-                                  <td><?php echo $row['role'] ?></td>
-                                  <td>
-                                      <a class="btn btn-warning" href="Account_Edit.php?username=<?php echo $row['username']; ?>">
-                                        <i class="ti ti-edit"></i>
-                                      </a>
-                                      <a class="btn btn-danger" href="Account_Del.php?username=<?php echo $row['username']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?')">
-                                        <i class="ti ti-trash"></i>
-                                      </a>
-                                  </td>
-                          </tr>
-                      <?php
-                              }
-                          } else {
-                              echo "<tr><td colspan='10'>Không tìm thấy dữ liệu</td></tr>";
-                          }
-                      ?>
-                    </tbody>
-                  </table>
-                </div>  
-              </div>
-              </div>
-        
-        </div>
       </div>
     </div>
   </div>
@@ -299,4 +311,4 @@
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
 
-</html>
+</html> 
