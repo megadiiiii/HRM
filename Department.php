@@ -208,56 +208,57 @@
                   </div>
                 </form>
                 </div>
-              </div>
-
-              <div class="card">
-                  <div class="card-body">
-                  <h5 class="card-title">Danh sách phòng ban</h5>
-                  <div class="table-responsive mb-4 border rounded-1">  
-                    <table class="table table-hover mb-0 align-middle">
-                    <thead class="table-info">
-                        <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Mã phòng</th>
-                            <th scope="col">Tên phòng</th>
-                            <th scope="col">Tầng</th>
-                            <th scope="col">Trạng thái</th>
-                            <th scope="col">Chức năng</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                      if (isset($data_search) && mysqli_num_rows($data_search) > 0) {
-                      $i = 1;
-                      while ($row = mysqli_fetch_array($data_search)) {
-                      ?>
+                <div class="card">
+                    <div class="card-body">
+                    <h5 class="card-title">Danh sách phòng ban</h5>
+                    <div class="table-responsive mb-4 border rounded-1">  
+                      <table class="table table-hover mb-0 align-middle">
+                      <thead class="table-info">
                           <tr>
-                                  <td><?php echo $i++ ?></td>
-                                  <td><?php echo $row['department_id'] ?></td>
-                                  <td><?php echo $row['department'] ?></td>
-                                  <td><?php echo $row['floor'] ?></td>
-                                  <td><?php echo $row['status'] ?></td>
-                                  <td>
-                                      <a class="btn btn-warning" href="Department_Edit.php?department_id=<?php echo $row['department_id']; ?>">
-                                        <i class="ti ti-edit"></i>
-                                      </a>
-                                      <a class="btn btn-danger" href="Department_Del.php?department_id=<?php echo $row['department_id']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa phòng này?')">
-                                        <i class="ti ti-trash"></i>
-                                      </a>
-                                  </td>
+                              <th scope="col">STT</th>
+                              <th scope="col">Mã phòng</th>
+                              <th scope="col">Tên phòng</th>
+                              <th scope="col">Tầng</th>
+                              <th scope="col">Trạng thái</th>
+                              <th scope="col">Chức năng</th>
                           </tr>
+                      </thead>
+                      <tbody>
                       <?php
-                              }
-                          } else {
-                              echo "<tr><td colspan='10'>Không tìm thấy dữ liệu</td></tr>";
-                          }
-                      ?>
-                    </tbody>
-                  </table>
-                </div>  
+                        if (isset($data_search) && mysqli_num_rows($data_search) > 0) {
+                        $i = 1;
+                        while ($row = mysqli_fetch_array($data_search)) {
+                        ?>
+                            <tr>
+                                    <td><?php echo $i++ ?></td>
+                                    <td><?php echo $row['department_id'] ?></td>
+                                    <td><?php echo $row['department'] ?></td>
+                                    <td><?php echo $row['floor'] ?></td>
+                                    <td class="<?php echo $row['status'] == 'Đang hoạt động' ? 'text-success' : 'text-danger'; ?>">
+                                        <?php echo $row['status']; ?>
+                                    </td>
+  
+                                    <td>
+                                        <a class="btn btn-warning" href="Department_Edit.php?department_id=<?php echo $row['department_id']; ?>">
+                                          <i class="ti ti-edit"></i>
+                                        </a>
+                                        <a class="btn btn-danger" href="Department_Del.php?department_id=<?php echo $row['department_id']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa phòng này?')">
+                                          <i class="ti ti-trash"></i>
+                                        </a>
+                                    </td>
+                            </tr>
+                        <?php
+                                }
+                            } else {
+                                echo "<tr><td colspan='10'>Không tìm thấy dữ liệu</td></tr>";
+                            }
+                        ?>
+                      </tbody>
+                    </table>
+                  </div>  
+                </div>
+                </div>
               </div>
-              </div>
-        
         </div>
       </div>
     </div>

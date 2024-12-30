@@ -264,9 +264,12 @@
                                   <td><?php echo $row['staff_name'] ?></td>
                                   <td><?php echo $row['department'] ?></td>
                                   <td><?php echo $row['position'] ?></td>
-                                  <td><?php echo $row['status'] ?></td>
+                                  <td class="<?php echo $row['status'] == 'Đang làm việc' ? 'text-success' : 'text-danger'; ?>">
+                                      <?php echo $row['status']; ?>
+                                  </td>
+
                                   <td>
-                                      <a class="btn btn-info" href="Staff_Info.php?username=<?php echo $row['staff_id']; ?>">
+                                      <a class="btn btn-info" href="Staff_Info.php?staff_id=<?php echo $row['staff_id']; ?>">
                                         <iconify-icon icon="hugeicons:view"></iconify-icon>
                                       </a>
                                       <a class="btn btn-warning" href="Staff_Edit.php?staff_id=<?php echo $row['staff_id']; ?>">

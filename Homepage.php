@@ -161,8 +161,8 @@
                             <div class="card">
                                 <div class="card-body">
                                 <h5 class="card-title">Quản lí Đào tạo nhân sự</h5>
-                                <p class="card-text">Danh sách nhân sự đào tạo, ...</p>
-                                <a href="../HRM/Training.php" class="btn btn-outline-info">Chuyển tới Quản lí Đào tạo</a>
+                                <p class="card-text">Danh sách khoá đào tạo nhân sự, ...</p>
+                                <a href="../HRM/Training.php" class="btn btn-outline-info">Chuyển tới Quản lí Đào tạo Nhân sự</a>
                                 </div>
                             </div>
                         </div>

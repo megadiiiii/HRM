@@ -36,7 +36,7 @@
         $sheet->setCellValue("B" . $rowCount, $data["staff_id"]);
         $sheet->setCellValue("C" . $rowCount, $data["staff_name"]);
         $sheet->setCellValue("D" . $rowCount, $data["gender"]);
-        $sheet->setCellValue("E". $rowCount, $data["dob"]);
+        $sheet->setCellValue("E" . $rowCount, $data["dob"]);
         $sheet->setCellValue("F" . $rowCount, $data["department"]);
         $sheet->setCellValue("G" . $rowCount, $data["position"]);
         $sheet->setCellValue("H" . $rowCount, $data["address"]);

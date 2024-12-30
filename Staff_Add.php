@@ -355,7 +355,7 @@ if (isset($_POST['btnAdd'])) {
                     
                     <div class="form-actions">
                         <div class="card-body border-top">
-                            <button type="submit" name="btnAdd" class="btn btn-secondary text-light">Thêm mới</button>
+                            <button type="submit" name="btnAdd" class="btn btn-info text-light">Thêm mới</button>
                             <button type="submit" name="btnBack" class="btn bg-danger-subtle text-danger ms-6">Huỷ</button>
                         </div>
                     </div>
