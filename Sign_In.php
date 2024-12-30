@@ -14,12 +14,8 @@
 
     if(mysqli_num_rows($result) > 0) {
       // Login successful
-<<<<<<< HEAD
       header('Location: ../HRM/Homepage.php');
     } else {
-=======
-      header("Location: Homepage.php?username=" . urlencode($username));    } else {
->>>>>>> Duc
       // Login failed
       echo "<script>alert('Sai tên đăng nhập hoặc mật khẩu, vui lòng kiểm tra lại!')</script>";
     }
