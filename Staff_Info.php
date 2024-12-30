@@ -47,9 +47,7 @@ if (isset($_GET['staff_id'])) {
     $sql = "SELECT * FROM department";
     $data = mysqli_query($con, $sql);
 
-    if (isset($_POST['btnBack'])) {
-        header('location: ../HRM/Account.php');
-    }
+    
 ?>
 
 <!doctype html>
@@ -304,8 +302,18 @@ if (isset($_GET['staff_id'])) {
                             <div class="mb-3">
                                 <label class="form-label">Chức năng</label>
                                 <div class="group">
-                                    <button type="submit" name="btnAdd" class="btn btn-secondary text-light">Chỉnh sửa</button>
-                                    <button type="submit" name="btnBack" class="btn bg-danger-subtle text-danger ms-6">Huỷ</button>
+                                    <a class="btn btn-info" href="Staff.php">
+                                        <iconify-icon icon="mingcute:back-fill"></iconify-icon>
+                                        Quay lại
+                                    </a>
+                                    <a class="btn btn-warning ms-6" href="Staff_Edit.php?staff_id=<?php echo $row['staff_id']; ?>">
+                                        <i class="ti ti-edit"></i>
+                                        Chỉnh sửa
+                                    </a>
+                                    <a class="btn btn-danger ms-6" href="Staff_Del.php?staff_id=<?php echo $row['staff_id']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa nhân viên này?')">
+                                        <i class="ti ti-trash"></i>
+                                        Xoá 
+                                    </a>
                                 </div>
                             </div>
                         </div>
