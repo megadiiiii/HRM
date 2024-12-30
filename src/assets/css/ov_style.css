@@ -1,0 +1,11 @@
+.sidebar-nav ul .sidebar-item>.sidebar-link.active {
+    background-color: #46caeb !important;
+    color: #fff;
+    -webkit-box-shadow: 0px 17px 20px -8px rgba(77, 91, 236, 0.231372549);
+    box-shadow: 0px 17px 20px -8px rgba(77, 91, 236, 0.231372549);
+}
+
+.sidebar-item .sidebar-link:hover {
+    color: #46caeb !important;
+    opacity: 1;
+}
