@@ -134,15 +134,6 @@
             </nav>
             <div class="card">
                 <div class="card-body">
-                  test
-                  <?php 
-                    echo "Table 1: $account_count<br>";
-                    echo "Table 2: $table2_count<br>";
-                    echo "Table 3: $table3_count<br>";
-                    echo "Table 4: $table4_count<br>";
-                    echo "Table 5: $table5_count<br>";
-                  ?>
-                  
                 </div>
             </div>
             <div class="card">
