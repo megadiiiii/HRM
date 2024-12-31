@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Matdash Free</title>
-  <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/favicon.png" />
+  <title>Đăng nhập</title>
+  <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/HRM_Favicon.png" />
   <link rel="stylesheet" href="../HRM/src/assets/css/styles.min.css" />
 </head>
 
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="card mb-0">
               <div class="card-body"> 
                 <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                <img src="../HRM/src/assets/images/logos/Logo.png" alt="" style="width: 150px; transform: translateX(5%);">
+                <img src="../HRM/src/assets/images/logos/HRM_Text.png" alt="" style="width: 150px; transform: translateX(5%);">
                 </a>
                 <h5 class="text-center">Hệ thống quản lí nhân sự - HRM</h5>
                 <form method="post">

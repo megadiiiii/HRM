@@ -11,7 +11,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Trang chủ</title>
-  <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/favicon.png" />
+  <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/HRM_favicon.png" />
   <link rel="stylesheet" href="../HRM/src/assets/css/styles.min.css" />
   <link rel="stylesheet" href="../HRM/src/assets/css/ov_style.css">
 </head>
@@ -26,7 +26,7 @@
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="../HRM/Homepage.php" class="text-nowrap logo-img">
-            <img src="../HRM/src/assets/images/logos/Logo.png" alt="" /, style="width: 150px; transform: translateX(25%);">
+            <img src="../HRM/src/assets/images/logos/HRM_Text.png" alt="" /, style="width: 150px; transform: translateX(25%);">
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>
@@ -60,9 +60,9 @@
               </a>
             </li>
             <li class="sidebar-item">
-            <a class="sidebar-link" href="../HRM/Diligent.php" aria-expanded="false">
+            <a class="sidebar-link" href="../HRM/Work_Time.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
-              <span class="hide-menu">Quản lý chuyên cần</span>
+              <span class="hide-menu">Quản lý giờ làm</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -99,18 +99,6 @@
                         <span class="text-success fs-11"><?php echo $role?></span>                                              
                         </div>
                     </div>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-user fs-6"></i>
-                      <p class="mb-0 fs-3">My Profile</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-mail fs-6"></i>
-                      <p class="mb-0 fs-3">My Account</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-list-check fs-6"></i>
-                      <p class="mb-0 fs-3">My Task</p>
-                    </a>
                     <a href="./Sign_In.php" class="btn btn-outline-info mx-3 mt-2 d-block">Đăng xuất</a>
                   </div>
                 </div>
@@ -123,28 +111,16 @@
       <div class="body-wrapper-inner">
         <div class="container-fluid">
           <div class="alert alert-info" role="alert">
-              <b>Chào mừng đến với Hệ thống Quản lý Nhân sự - HRM!</b>
+              <b>Chào mừng <?php echo $username?> đến với Hệ thống Quản lý Nhân sự - HRM!</b>
           </div>
             <!-- NỘI DUNG PAGE TỪ ĐÂY -->
              <div class="card">
                 <div class="card-body">
                 <div class="row flex-nowrap">
-                    <div class="col">
-                      <div class="card card bg-primary-subtle">
-                        <div class="card-body text-center px-9 pb-4">
-                          <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-primary flex-shrink-0 mb-3 mx-auto">
-                            <iconify-icon icon="mdi:account-wrench" class="fs-7 text-white"></iconify-icon>
-                          </div>
-                          <h6 class="fw-normal fs-3 mb-1">Tài khoản nhân viên</h6>
-                          <h3 class="mb-3 d-flex align-items-center justify-content-center gap-1"><?php echo $account_count ?></h3>
-                          <a href="../HRM/Account.php" class="btn btn-outline-primary m-1">Xem chi tiết</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="card card bg-info-subtle">
-                        <div class="card-body text-center px-9 pb-4">
-                          <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-info flex-shrink-0 mb-3 mx-auto">
+                  <div class="col">
+                    <div class="card card bg-info-subtle">
+                      <div class="card-body text-center px-9 pb-4">
+                        <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-info flex-shrink-0 mb-3 mx-auto">
                             <iconify-icon icon="ic:baseline-people" class="fs-7 text-white"></iconify-icon>
                           </div>
                           <h6 class="fw-normal fs-3 mb-1">Tổng số nhân viên</h6>
@@ -162,9 +138,9 @@
                             <h6 class="fw-normal fs-3 mb-1">Tổng số phòng ban</h6>
                             <h3 class="mb-3 d-flex align-items-center justify-content-center gap-1"><?php echo $department_count?></h3>
                             <a href="../HRM/Staff.php" class="btn btn-outline-success m-1">Xem chi tiết</a>
+                          </div>
                         </div>
                       </div>
-                    </div>
                     <div class="col">
                       <div class="card card bg-danger-subtle">
                         <div class="card-body text-center px-9 pb-4">
@@ -174,6 +150,18 @@
                           <h6 class="fw-normal fs-3 mb-1">Khoá đào tạo nội bộ</h6>
                           <h3 class="mb-3 d-flex align-items-center justify-content-center gap-1"><?php echo $training_count?></h3>
                           <a href="../HRM/Training.php" class="btn btn-outline-danger m-1">Xem chi tiết</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card card bg-primary-subtle">
+                        <div class="card-body text-center px-9 pb-4">
+                          <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-primary flex-shrink-0 mb-3 mx-auto">
+                            <iconify-icon icon="mdi:account-wrench" class="fs-7 text-white"></iconify-icon>
+                          </div>
+                          <h6 class="fw-normal fs-3 mb-1">Tài khoản nhân viên</h6>
+                          <h3 class="mb-3 d-flex align-items-center justify-content-center gap-1"><?php echo $account_count ?></h3>
+                          <a href="../HRM/Account.php" class="btn btn-outline-primary m-1">Xem chi tiết</a>
                         </div>
                       </div>
                     </div>
@@ -213,9 +201,9 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                <h5 class="card-title">Quản lý Chuyên cần</h5>
+                                <h5 class="card-title">Quản lý giờ làm</h5>
                                 <p class="card-text">Danh sách ngày công,...</p>
-                                <a href="../HRM/Diligent.php" class="btn btn-outline-info">Chuyển tới Quản lý Chuyên cần </a>
+                                <a href="../HRM/Work_Time.php" class="btn btn-outline-info">Chuyển tới Quản lý giờ làm </a>
                                 </div>
                             </div>
                         </div>

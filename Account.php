@@ -2,7 +2,7 @@
     include_once '../HRM/dbConnect.php';
     include_once '../HRM/Session.php';
     include_once '../HRM/Login_Info.php';
-    
+
     $username = '';
     $staff_name = '';
     $staff_id = '';
@@ -45,7 +45,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quản lý tài khoản</title>
-  <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/Logo.png" style="width: 32px;" />
+  <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/HRM_Favicon.png" style="width: 32px;" />
   <link rel="stylesheet" href="../HRM/src/assets/css/styles.min.css" />
   <link rel="stylesheet" href="../HRM/src/assets/css/ov_style.css">
 </head>
@@ -60,7 +60,7 @@
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="../HRM/Homepage.php" class="text-nowrap logo-img">
-          <img src="../HRM/src/assets/images/logos/Logo.png" alt="" /, style="width: 150px; transform: translateX(25%);">
+          <img src="../HRM/src/assets/images/logos/HRM_Text.png" alt="" /, style="width: 150px; transform: translateX(25%);">
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>
@@ -94,9 +94,9 @@
             </a>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link" href="../HRM/Diligent.php" aria-expanded="false">
+            <a class="sidebar-link" href="../HRM/Work_Time.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
-              <span class="hide-menu">Quản lý chuyên cần</span>
+              <span class="hide-menu">Quản lý giờ làm</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -133,18 +133,6 @@
                         <span class="text-success fs-11"><?php echo $role?></span>                                              
                         </div>
                     </div>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-user fs-6"></i>
-                      <p class="mb-0 fs-3">My Profile</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-mail fs-6"></i>
-                      <p class="mb-0 fs-3">My Account</p>
-                    </a>
-                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
-                      <i class="ti ti-list-check fs-6"></i>
-                      <p class="mb-0 fs-3">My Task</p>
-                    </a>
                     <a href="./Sign_In.php" class="btn btn-outline-info mx-3 mt-2 d-block">Đăng xuất</a>
                   </div>
                 </div>
