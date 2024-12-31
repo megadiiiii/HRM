@@ -1,17 +1,8 @@
-<?php 
-    include_once '../HRM/dbConnect.php';
-
-    $username = $_GET['username'];
-    $staff_name = '';
-
-    $sql_admin = "SELECT `staff_name` FROM `account` WHERE username = '$username'";
-    $result_admin = mysqli_query($con, $sql_admin);
-
-    // Kiểm tra kết quả truy vấn
-    if ($result_admin && mysqli_num_rows($result_admin) > 0) {
-        $row = mysqli_fetch_assoc($result_admin);
-        $staff_name = $row['staff_name']; // Lấy giá trị staff_name
-    }
+<?php
+  include_once "../HRM/dbConnect.php";
+  include_once "../HRM/Data_Count.php";
+  include_once '../HRM/Session.php';
+  include_once '../HRM/Login_Info.php';
 ?>
 <!doctype html>
 <html lang="en">
@@ -104,9 +95,8 @@
                     <div class="d-flex align-items-center mb-3 pb-3 border-bottom gap-6">
                         <img src="../HRM/src/assets/images/profile/user-1.jpg" class="rounded-circle" width="56" height="56" alt="matdash-img">
                         <div>
-                        <h5 class="mb-0 fs-12"> <?php echo $staff_name?></h5>
-                        <p class="mb-0 text-dark"> <?php echo $username?></p>
-                        <span class="text-success fs-11">Admin</span>                        
+                        <h5 class="mb-0 fs-12"><?php echo $username?></h5>
+                        <span class="text-success fs-11"><?php echo $role?></span>                                              
                         </div>
                     </div>
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
@@ -133,54 +123,108 @@
       <div class="body-wrapper-inner">
         <div class="container-fluid">
           <div class="alert alert-info" role="alert">
-              <b>Chào mừng <?php echo $staff_name?> đến với Hệ thống Quản lí Nhân sự - HRM!</b>
+              <b>Chào mừng đến với Hệ thống Quản lý Nhân sự - HRM!</b>
           </div>
             <!-- NỘI DUNG PAGE TỪ ĐÂY -->
+             <div class="card">
+                <div class="card-body">
+                <div class="row flex-nowrap">
+                    <div class="col">
+                      <div class="card card bg-primary-subtle">
+                        <div class="card-body text-center px-9 pb-4">
+                          <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-primary flex-shrink-0 mb-3 mx-auto">
+                            <iconify-icon icon="mdi:account-wrench" class="fs-7 text-white"></iconify-icon>
+                          </div>
+                          <h6 class="fw-normal fs-3 mb-1">Tài khoản nhân viên</h6>
+                          <h3 class="mb-3 d-flex align-items-center justify-content-center gap-1"><?php echo $account_count ?></h3>
+                          <a href="../HRM/Account.php" class="btn btn-outline-primary m-1">Xem chi tiết</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card card bg-info-subtle">
+                        <div class="card-body text-center px-9 pb-4">
+                          <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-info flex-shrink-0 mb-3 mx-auto">
+                            <iconify-icon icon="ic:baseline-people" class="fs-7 text-white"></iconify-icon>
+                          </div>
+                          <h6 class="fw-normal fs-3 mb-1">Tổng số nhân viên</h6>
+                          <h3 class="mb-3 d-flex align-items-center justify-content-center gap-1"><?php echo $staff_count?></h3>
+                          <a href="../HRM/Staff.php" class="btn btn-outline-info m-1">Xem chi tiết</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card card bg-success-subtle">
+                        <div class="card-body text-center px-9 pb-4">
+                          <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-secondary flex-shrink-0 mb-3 mx-auto">
+                            <iconify-icon icon="mingcute:department-fill" class="fs-7 text-white"></iconify-icon>
+                          </div>
+                            <h6 class="fw-normal fs-3 mb-1">Tổng số phòng ban</h6>
+                            <h3 class="mb-3 d-flex align-items-center justify-content-center gap-1"><?php echo $department_count?></h3>
+                            <a href="../HRM/Staff.php" class="btn btn-outline-success m-1">Xem chi tiết</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card card bg-danger-subtle">
+                        <div class="card-body text-center px-9 pb-4">
+                          <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-danger flex-shrink-0 mb-3 mx-auto">
+                            <iconify-icon icon="oui:training" class="fs-7 text-white"></iconify-icon>
+                          </div>
+                          <h6 class="fw-normal fs-3 mb-1">Khoá đào tạo nội bộ</h6>
+                          <h3 class="mb-3 d-flex align-items-center justify-content-center gap-1"><?php echo $training_count?></h3>
+                          <a href="../HRM/Training.php" class="btn btn-outline-danger m-1">Xem chi tiết</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">  
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                <h5 class="card-title">Quản lí nhân viên</h5>
+                                <h5 class="card-title">Quản lý nhân viên</h5>
                                 <p class="card-text">Danh sách nhân viên, Thông tin nhân viên,...</p>
-                                <a href="../HRM/Staff.php" class="btn btn-outline-info">Chuyển tới Quản lí Nhân viên</a>
+                                <a href="../HRM/Staff.php" class="btn btn-outline-info">Chuyển tới Quản lý Nhân viên</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                <h5 class="card-title">Quản lí Phòng ban</h5>
+                                <h5 class="card-title">Quản lý Phòng ban</h5>
                                 <p class="card-text">Danh sách phòng ban, Mã phòng ban,...</p>
-                                <a href="../HRM/Department.php" class="btn btn-outline-info">Chuyển tới Quản lí Phòng ban</a>
+                                <a href="../HRM/Department.php" class="btn btn-outline-info">Chuyển tới Quản lý Phòng ban</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                <h5 class="card-title">Quản lí Đào tạo nhân sự</h5>
+                                <h5 class="card-title">Quản lý Đào tạo nhân sự</h5>
                                 <p class="card-text">Danh sách khoá đào tạo nhân sự, ...</p>
-                                <a href="../HRM/Training.php" class="btn btn-outline-info">Chuyển tới Quản lí Đào tạo Nhân sự</a>
+                                <a href="../HRM/Training.php" class="btn btn-outline-info">Chuyển tới Quản lý Đào tạo Nhân sự</a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                <h5 class="card-title">Quản lí Chuyên cần</h5>
+                                <h5 class="card-title">Quản lý Chuyên cần</h5>
                                 <p class="card-text">Danh sách ngày công,...</p>
-                                <a href="../HRM/Diligent.php" class="btn btn-outline-info">Chuyển tới Quản lí Chuyên cần </a>
+                                <a href="../HRM/Diligent.php" class="btn btn-outline-info">Chuyển tới Quản lý Chuyên cần </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-body">
-                                <h5 class="card-title">Quản lí Tài khoản</h5>
+                                <h5 class="card-title">Quản lý Tài khoản</h5>
                                 <p class="card-text">Danh sách Tài khoản, Mã Tài khoản,...</p>
-                                <a href="../HRM/Account.php" class="btn btn-outline-info">Chuyển tới Quản lí Tài khoản</a>
+                                <a href="../HRM/Account.php" class="btn btn-outline-info">Chuyển tới Quản lý Tài khoản</a>
                                 </div>
                             </div>
                         </div>

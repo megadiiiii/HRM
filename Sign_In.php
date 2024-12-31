@@ -1,24 +1,30 @@
-<?php 
-  include_once '../HRM/dbConnect.php';
+<?php
+session_start();
+include_once "../HRM/dbConnect.php";
 
-  $username = '';
-  $password = '';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = mysqli_real_escape_string($con, $_POST['username']);
+    $password = mysqli_real_escape_string($con, $_POST['password']);
 
-  if(isset($_POST['btnLogin'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    // Kiểm tra trong cơ sở dữ liệu
+    $sql = "SELECT * FROM account WHERE username = '$username' AND password = '$password'";
+    $result = mysqli_query($con, $sql);
 
-    //Login Check
-    $sql_login = "SELECT * FROM `account` WHERE username = '$username' AND password = '$password'";
-    $result = mysqli_query($con, $sql_login);
+    if ($result && mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
 
-    if(mysqli_num_rows($result) > 0) {
-      // Login successful
-      header("Location: Homepage.php?username=" . urlencode($username));    } else {
-      // Login failed
-      echo "<script>alert('Sai tên đăng nhập hoặc mật khẩu, vui lòng kiểm tra lại!')</script>";
+        // Lưu thông tin vào session
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['staff_name'] = $user['staff_name'];
+        $_SESSION['role'] = $user['role'];
+
+        // Chuyển hướng đến trang chủ
+        header("Location: Homepage.php");
+        exit();
+    } else {
+        echo "Sai tên đăng nhập hoặc mật khẩu!";
     }
-  }
+}
 ?>
 
 <!doctype html>

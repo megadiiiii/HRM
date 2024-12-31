@@ -1,7 +1,7 @@
 <?php 
     include_once '../HRM/dbConnect.php';
-
-  
+    include_once '../HRM/Session.php';
+    include_once '../HRM/Login_Info.php';
 ?>
 <!doctype html>
 <html lang="en">
@@ -93,9 +93,10 @@
                   <div class="message-body">
                     <div class="d-flex align-items-center mb-3 pb-3 border-bottom gap-6">
                         <img src="../HRM/src/assets/images/profile/user-1.jpg" class="rounded-circle" width="56" height="56" alt="matdash-img">
-                        <h5 class="mb-0 fs-12"> <?php echo $admin_name?></h5>
-                        <p class="mb-0 text-dark"> <?php echo $username?></p>
-                        <span class="text-success fs-11">Admin</span>                        
+                        <div>
+                        <h5 class="mb-0 fs-12"><?php echo $username?></h5>
+                        <span class="text-success fs-11"><?php echo $role?></span>                                              
+                        </div>
                     </div>
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-user fs-6"></i>
@@ -133,6 +134,15 @@
             </nav>
             <div class="card">
                 <div class="card-body">
+                  test
+                  <?php 
+                    echo "Table 1: $account_count<br>";
+                    echo "Table 2: $table2_count<br>";
+                    echo "Table 3: $table3_count<br>";
+                    echo "Table 4: $table4_count<br>";
+                    echo "Table 5: $table5_count<br>";
+                  ?>
+                  
                 </div>
             </div>
             <div class="card">

@@ -1,6 +1,8 @@
 <?php 
     include_once '../HRM/dbConnect.php';
-
+    include_once '../HRM/Session.php';
+    include_once '../HRM/Login_Info.php';
+    
     $staff_name = '';
     $staff_id = '';
     $username = '';
@@ -155,9 +157,10 @@
                   <div class="message-body">
                     <div class="d-flex align-items-center mb-3 pb-3 border-bottom gap-6">
                         <img src="../HRM/src/assets/images/profile/user-1.jpg" class="rounded-circle" width="56" height="56" alt="matdash-img">
-                        <h5 class="mb-0 fs-12"> <?php echo $admin_name?></h5>
-                        <p class="mb-0 text-dark"> <?php echo $username?></p>
-                        <span class="text-success fs-11">Admin</span>                        
+                        <div>
+                        <h5 class="mb-0 fs-12"><?php echo $username?></h5>
+                        <span class="text-success fs-11"><?php echo $role?></span>                                              
+                        </div>
                     </div>
                     <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-user fs-6"></i>
@@ -272,8 +275,8 @@
                     
                     <div class="form-actions">
                       <div class="card-body border-top">
-                        <button type="submit" name="btnSave" class="btn btn-secondary text-light">Cập nhật</button>
-                        <button type="submit" name="btnBack" class="btn bg-danger-subtle text-danger ms-6">Huỷ</button>
+                        <button type="submit" name="btnSave" class="btn btn-info text-light">Cập nhật</button>
+                        <button type="submit" name="btnBack" class="btn btn-danger ms-6">Huỷ</button>
                       </div>
                     </div>
                   </div>
