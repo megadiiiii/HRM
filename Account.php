@@ -233,6 +233,27 @@
                           <i class="ti ti-file-arrow-right"></i>
                           Xuất Excel
                         </button>
+                        <a href="javascript:void(0);" class="btn btn-info text-light ms-6" onclick="formToggle('importFrm');"><i class="plus"></i> Import</a>
+
+                      </form>
+                      </div>
+                      </div>
+                      <div class="form-actions">
+                    <div class="card-body border-top" id="importFrm" style="display: none;">
+                        <div class="row">                        
+                          <form action="Account_Import.php" method="post" enctype="multipart/form-data">
+                              <div class="col-md-6">
+                                  <div class="mb-3 has-danger">
+                                    <input type="file" class="form-control" name="file" accept=".csv">                              
+                                  </div>
+                                </div>                    
+                              <div class="col-md-6">
+                                <div class="mb-3 has-danger">
+                                  <input type="submit" class="btn btn-info text-light" name="importAccount" value="Import CSV">
+                                </div>
+                              </div>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -301,6 +322,16 @@
   <script src="../HRM/src/assets/libs/simplebar/dist/simplebar.js"></script>
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script>
+  function formToggle(ID){
+      var element = document.getElementById(ID);
+      if(element.style.display === "none"){
+          element.style.display = "block";
+      }else{
+          element.style.display = "none";
+      }
+  }
+  </script>
 </body>
 
 </html>

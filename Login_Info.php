@@ -3,6 +3,10 @@ $username = '';
 $staff_name = '';
 $role = '';
 
+$sql = "SELECT * FROM `department`";
+$data = mysqli_query($con, $sql);
+
+
 if (isset($_SESSION['username'])) {
   $username = $_SESSION['username'];
   $sql = "SELECT * FROM account WHERE username = '$username'";

@@ -315,7 +315,7 @@ if (isset($_GET['staff_id'])) {
     </div>
   </div>
   <script src="../HRM/src/assets/libs/jquery/dist/jquery.min.js"></script>
-  <script src="../HRM/src/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../HRM/src/assets/libs/bootstrap/dist/js/bootstrap.bundle.js"></script>
   <script src="../HRM/src/assets/js/sidebarmenu.js"></script>
   <script src="../HRM/src/assets/js/app.min.js"></script>
   <script src="../HRM/src/assets/libs/simplebar/dist/simplebar.js"></script>
@@ -323,4 +323,4 @@ if (isset($_GET['staff_id'])) {
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
 
-</html> 
+</html>   

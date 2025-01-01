@@ -17,7 +17,7 @@
     // Header
     $sheet->setCellValue("A2", "STT"); 
     $sheet->setCellValue("B2", "Mã khoá đào tạo");
-    $sheet->setCellValue("C2", "Tên khoá đào tạo");
+    $sheet->setCellValue("C2", "Tên khoá đào tạo"); 
     $sheet->setCellValue("D2", "Phòng");
     $sheet->setCellValue("E2", "Người đào tạo");
     $sheet->setCellValue("F2", "Đợt đào tạo");
@@ -41,6 +41,6 @@
     // Save   
     $writer = new Xlsx($speadsheet);
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment; filename="Danh_sach_dao_tao_nhan_su.xlsx"');
+    header('Content-Disposition: attachment; filename="Danh_sach_khoa_dao_tao.xlsx"');
     $writer->save('php://output');
 ?>

@@ -31,7 +31,7 @@
     }
     
     // Xử lý khi người dùng nhấn nút Lưu
-    if (isset($_POST['btnSave'])) {
+    if (isset($_POST['btnEdit'])) {
         $course_name = $_POST['course_name'];
         $course_date = $_POST['course_date'];
         $trainer = $_POST['trainer'];

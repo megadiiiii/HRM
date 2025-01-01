@@ -215,13 +215,15 @@
                             <label class="form-label">Trạng thái</label>
                               <select name="status" class="form-select" data-placeholder="Giói tính" tabindex="1">
                                 <option value="">--Chọn trạng thái--</option>
-                                <option value="Chuẩn bị đào tạo">Chuẩn bị đào tạo</option>
-                                <option value="Đang hoạt động">Đang đào tạo</option>
-                                <option value="Đã kết thúc">Đã hoàn thành</option>
-                                <option value="Dừng hoạt động">Huỷ đào tạo</option>
+                                <option value="Chưa bắt đầu">Chưa bắt đầu</option>
+                                <option value="Đang đào tạo">Đang đào tạo</option>
+                                <option value="Đã hoàn thành">Đã hoàn thành</option>
+                                <option value="Đã huỷ">Đã huỷ</option>
                             </select>
                           </div>
-                        </div>                        
+                        </div>  
+                      </div>
+
 
                         <!--/span-->
                       </div>
@@ -241,6 +243,27 @@
                           <i class="ti ti-file-arrow-right"></i>
                           Xuất Excel
                         </button>
+                        <a href="javascript:void(0);" class="btn btn-info text-light ms-6" onclick="formToggle('importFrm');"><i class="plus"></i> Import</a>
+
+                      </form>
+                      </div>
+                      </div>
+                      <div class="form-actions">
+                    <div class="card-body border-top" id="importFrm" style="display: none;">
+                        <div class="row">                        
+                          <form action="Training_Import.php" method="post" enctype="multipart/form-data">
+                              <div class="col-md-6">
+                                  <div class="mb-3 has-danger">
+                                    <input type="file" class="form-control" name="file" accept=".csv">                              
+                                  </div>
+                                </div>                    
+                              <div class="col-md-6">
+                                <div class="mb-3 has-danger">
+                                  <input type="submit" class="btn btn-info text-light" name="importTraining" value="Import CSV">
+                                </div>
+                              </div>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -316,6 +339,16 @@
   <script src="../HRM/src/assets/js/sidebarmenu.js"></script>
   <script src="../HRM/src/assets/js/app.min.js"></script>
   <script src="../HRM/src/assets/libs/simplebar/dist/simplebar.js"></script>
+  <script>
+  function formToggle(ID){
+      var element = document.getElementById(ID);
+      if(element.style.display === "none"){
+          element.style.display = "block";
+      }else{
+          element.style.display = "none";
+      }
+  }
+  </script>
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>

@@ -337,7 +337,7 @@ if (isset($_POST['btnAdd'])) {
                             <div class="col-md-6">
                               <div class="mb-3 has-danger">
                                 <label class="form-label">Hình ảnh nhân viên</label>
-                                <input type="file" class="form-control" name="profile_image" placeholder="Hình ảnh nhân viên">                              
+                                <input type="file" class="form-control" name="profile_image" placeholder="Hình ảnh nhân viên" accept=".jpg, .jpeg, .png">                              
                                 </div>
                             </div>                    
                             <!--/span-->
