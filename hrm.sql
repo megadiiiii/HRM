@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 31, 2024 at 09:02 PM
+-- Generation Time: Jan 01, 2025 at 10:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,9 +41,11 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`username`, `password`, `staff_name`, `role`, `staff_id`, `department`) VALUES
+('1', '1', '1', '1', '1', '1'),
 ('baodg_IT', '123456', 'Đinh Gia Bảo', 'Admin', 'ADM999', 'Phòng Bảo trì'),
 ('ducpa_IT', '123456', 'Phạm Anh Đức', 'Trưởng phòng', 'ADM666', 'Phòng IT'),
 ('huynq_IT', '123456', 'Nguyễn Quốc Huy', 'Admin', 'ADM158', 'Phòng IT'),
+('test', '123456', 'test', '1', '1', '1'),
 ('truongpm_IT', '123456', 'Phùng Minh Trường', 'Admin', 'ADM589', 'Phòng IT');
 
 -- --------------------------------------------------------
@@ -64,6 +66,8 @@ CREATE TABLE `department` (
 --
 
 INSERT INTO `department` (`department_id`, `department`, `floor`, `status`) VALUES
+('1', '1', '6', 'Đang hoạt động'),
+('2', '2', '2', 'Dừng hoạt động'),
 ('D001', 'Phòng Nhân sự', 'Tầng 3', 'Đang hoạt động'),
 ('D002', 'Phòng Kỹ thuật', 'Tầng 2', 'Đang hoạt động'),
 ('D003', 'Phòng Kế toán', 'Tầng 4', 'Đang hoạt động'),
@@ -104,7 +108,7 @@ CREATE TABLE `staff` (
 INSERT INTO `staff` (`staff_id`, `staff_name`, `dob`, `gender`, `department`, `position`, `address`, `email`, `phone`, `start_date`, `status`, `profile_image`) VALUES
 ('ST001', 'Nguyen Van A', '2024-12-02', 'Nam', 'Phòng Thiết kế', 'Trưởng phòng', '', '', '', '2024-12-24', 'Đã nghỉ việc', '../HRM/Upload/ST001-Nguyen Van A.jpg'),
 ('ST002', 'Tran Thi B', '1985-09-20', 'Nam', 'Phòng Kế toán', 'Nhân viên/Kỹ thuật viên', '45 Tran Hung Dao, District 3', 'tranthib@gmail.com', '0923456789', '2022-05-15', 'Đang làm việc', '../HRM/Upload/ST002-Tran Thi B.jpg'),
-('ST003', 'Pham Van C', '1992-12-10', 'Nam', 'Phòng Pháp lý', 'Trưởng phòng', '78 Nguyen Trai, District 5', 'phamvanc@gmail.com', '0934567890', '2021-07-20', 'Đang làm việc', 'profile_c.jpg'),
+('ST003', 'Pham Van C', '1992-12-10', 'Nam', 'Phòng Pháp lý', 'Trưởng phòng', '78 Nguyen Trai, District 5', 'phamvanc@gmail.com', '0934567890', '2021-07-20', 'Đang làm việc', '../HRM/Upload/ST003-Pham Van C.jpg'),
 ('ST005', 'Hoang Van E', '1995-06-18', 'Nam', 'Phòng Đào tạo Nội bộ', 'Nhân viên/Kỹ thuật viên', '56 Hai Ba Trung, District 2', 'hoangvane@gmail.com', '0956789012', '2019-02-01', 'Đang làm việc', '../HRM/Upload/ST005-Hoang Van E.jpg'),
 ('viet69.do', 'Trường', '0000-00-00', 'Nam', 'Phòng Kỹ thuật', 'Nhân viên/Kỹ thuật viên', '', '', '', '0000-00-00', 'Đang làm việc', '../HRM/Upload/viet69.do-Trường.jpg');
 
@@ -128,10 +132,21 @@ CREATE TABLE `training` (
 --
 
 INSERT INTO `training` (`course_id`, `course_name`, `trainer`, `department`, `course_date`, `status`) VALUES
-('1', '1', '3', 'Phòng Kế toán', '2024-12-10', 'Đang đào tạo'),
+('1', '1', '1', 'Phòng Kế toán', '2024-11-06', 'Đã hoàn thành'),
+('2', '2', '2', '2', '0000-00-00', '2'),
 ('20359', '1724', '12212', 'Phòng Marketing', '2024-12-12', 'Đã huỷ'),
-('C001', 'Kỹ năng lãnh đạo', 'Nguyễn Văn A', 'Quản lý', '2024-01-10', 'Đã hoàn thành'),
-('JS013', 'Javascript', 'Tester', 'Phòng IT', '2024-08-07', 'Chưa bắt đầu');
+('C001', 'Python Basics', 'John Doe', 'Phòng IT', '2025-01-15', 'Đã hoàn thành'),
+('C002', 'Advanced Excel', 'Jane Smith', 'Phòng Sản xuất', '2025-02-10', 'Đang đào tạo'),
+('C003', 'Data Analysis', 'Alan Turing', 'Phòng Nghiên cứu', '2025-03-05', 'Chưa bắt đầu'),
+('C004', 'Digital Marketing', 'Marie Curie', 'Phòng Marketing', '2025-04-20', 'Đã hủy'),
+('C005', 'Team Leadership', 'Elon Musk', 'Phòng IT', '2025-05-10', 'Đã hoàn thành'),
+('Cx', 'Lập trình C', 'Nguyễn Văn A', 'Phòng IT', '2025-01-01', 'Đã kết thúc'),
+('JS013', 'Javascript', 'Tester', 'Phòng IT', '2024-08-07', 'Chưa bắt đầu'),
+('S001', 'Nguyen Van A', 'Phòng IT', 'Nhân viên', '0000-00-00', '8'),
+('S002', 'Le Thi B', 'Phòng Sản xuất', 'Trưởng phòng', '0000-00-00', '7'),
+('S003', 'Tran Van C', 'Phòng Nghiên cứu', 'Nhân viên', '0000-00-00', '9'),
+('S004', 'Pham Thi D', 'Phòng Marketing', 'Nhân viên', '0000-00-00', '8'),
+('S005', 'Hoang Van E', 'Phòng IT', 'Trưởng phòng', '0000-00-00', '6');
 
 -- --------------------------------------------------------
 
@@ -153,7 +168,15 @@ CREATE TABLE `work_time` (
 --
 
 INSERT INTO `work_time` (`staff_id`, `staff_name`, `department`, `position`, `workday`, `working_hours`) VALUES
-('35', '134', 'Phòng Kế toán', 'Trưởng phòng', '24', 'Part-time: 10h-14h');
+('35', 'Lê Hoàng Long', 'Phòng IT', 'Nhân viên/Kỹ thuật viên', '24', 'Full-time: 6h-14h'),
+('36', 'Nguyễn Thị Hồng', 'Phòng IT', 'Nhân viên/Kỹ thuật viên', '24', 'Full-time: 14h-22h'),
+('37', 'Nguyễn Văn Hùng', 'Phòng IT', 'Nhân viên/Kỹ thuật viên', '24', 'Part-time: 10h-14h'),
+('38', 'Nguyễn Thị Hương', 'Phòng IT', 'Nhân viên/Kỹ thuật viên', '24', 'Part-time: 10h-14h'),
+('S001', 'Nguyen Van A', 'Phòng IT', 'Nhân viên', '28', '8'),
+('S002', 'Le Thi B', 'Phòng Sản xuất', 'Trưởng phòng', '20', '7'),
+('S003', 'Tran Van C', 'Phòng Nghiên cứu', 'Nhân viên', '20', '9'),
+('S004', 'Pham Thi D', 'Phòng Marketing', 'Nhân viên', '25', '8'),
+('S005', 'Hoang Van E', 'Phòng IT', 'Trưởng phòng', '21', '6');
 
 --
 -- Indexes for dumped tables
