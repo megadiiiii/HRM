@@ -3,6 +3,7 @@ include_once 'dbConnect.php';
 include_once '../HRM/Session.php';
 include_once '../HRM/Login_Info.php';
 
+// Khởi tạo giá trị mặc định
 $staff_id = '';
 $staff_name = '';
 $dob = '';
@@ -10,95 +11,74 @@ $gender = '';
 $department = '';
 $position = '';
 $start_date = '';
-$address = '';
 $email = '';
 $phone = '';
 $status = '';
-$profile_image = '';
+$penalty = '';
+$reason = '';
+$profile_image= '';
 
-if (isset($_POST['btnAdd'])) {
-    $staff_id = $_POST['staff_id'];
-    $staff_name = $_POST['staff_name'];
-    $dob = $_POST['dob'];
-    $gender = $_POST['gender'];
-    $department = $_POST['department'];
-    $position = $_POST['position'];
-    $start_date = $_POST['start_date'];
-    $address = $_POST['address'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $status = $_POST['status'];
-    // cho anh vao uploads
-    if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
-        $upload_dir = '../HRM/Upload/';
-    
-        // Lấy thông tin staff_id và staff_name (giả sử bạn nhận từ POST)
-        $staff_id = isset($_POST['staff_id']) ? $_POST['staff_id'] : '';
-        $staff_name = isset($_POST['staff_name']) ? $_POST['staff_name'] : '';
-        
-        // Kiểm tra staff_id và staff_name không rỗng
-        if (empty($staff_id) || empty($staff_name)) {
-            echo "<script>alert('Vui lòng cung cấp staff_id và staff_name!');</script>";
-            $profile_image = null;
-        } else {
-            // Xử lý tên file
-            $file_extension = strtolower(pathinfo($_FILES['profile_image']['name'], PATHINFO_EXTENSION));
-            $file_name = $staff_id . '-' . $staff_name . '.' . $file_extension; 
-            $target_file = $upload_dir . $file_name;
-    
-            // Kiểm tra và tạo thư mục nếu chưa tồn tại
-            if (!file_exists($upload_dir)) {
-                mkdir($upload_dir, 0777, true); // Tạo thư mục với quyền ghi
-            }
-    
-            // Kiểm tra định dạng tệp (ví dụ: chỉ cho phép JPG, PNG)
-            $allowed_extensions = ['jpg', 'jpeg', 'png'];
-    
-            if (!in_array($file_extension, $allowed_extensions)) {
-                echo "<script>alert('Định dạng tệp không hợp lệ! Chỉ chấp nhận JPG, PNG.');</script>";
-                $profile_image = null;
-            } else {
-                // Di chuyển tệp đến thư mục đích
-                if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $target_file)) {
-                    $profile_image = $target_file;
-                } else {
-                    echo "<script>alert('Lỗi khi tải lên tệp. Vui lòng thử lại!');</script>";
-                    $profile_image = null;
-                }
-            }
-        }
+// Kiểm tra xem có nhận được staff_id không
+if (isset($_GET['staff_id'])) {
+    $staff_id = $_GET['staff_id'];
+
+    // Lấy thông tin nhân viên từ cơ sở dữ liệu
+    $query = "SELECT * FROM staff WHERE staff_id = '$staff_id'";
+    $result = mysqli_query($con, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+
+        // Gán các giá trị từ cơ sở dữ liệu
+        $staff_name = $row['staff_name'];
+        $dob = $row['dob'];
+        $gender = $row['gender'];
+        $department = $row['department'];
+        $position = $row['position'];
+        $start_date = $row['start_date'];
+        $email = $row['email'];
+        $phone = $row['phone'];
+        $status = $row['status'];
+        $profile_image = $row['profile_image'];
     } else {
-        $profile_image = null;
-    }
-    
-    // check xem co chua
-    $check = "SELECT * FROM staff WHERE `staff_id` = '$staff_id'";
-    $result = mysqli_query($con, $check);
-    if (mysqli_num_rows($result) > 0) {
-        echo "<script>alert('Mã nhân viên đã tồn tại. Vui lòng kiểm tra.');</script>";
-    } else {
-        // lenh de them vao database
-        $sql = "INSERT INTO `staff`(`staff_id`, `staff_name`, `dob`, `gender`, `department`, `position`, `address`, `email`, `phone`, `start_date`, `status`, `profile_image`) 
-                VALUES ('$staff_id','$staff_name','$dob','$gender','$department','$position','$address','$email','$phone','$start_date','$status','$profile_image')";
-        if (mysqli_query($con, $sql)) {
-            header("Location: ../HRM/Staff.php");
-        } 
-    }
-}    
-    if (isset($_POST["btnBack"])) {
+        echo "<script>alert('Nhân viên không tồn tại!');</script>";
         header("Location: ../HRM/Staff.php");
     }
+}
+
+if (isset($_POST['btnAdd'])) {
+  $staff_id = $_POST['staff_id'];
+  $penalty = $_POST['penalty'];
+  $reason = $_POST['reason']; 
+  $sql_check = "SELECT * FROM `discipline`";
+  $result_check = mysqli_query($con, $sql_check);
+
+      $sql_insert = "INSERT INTO `discipline`(`staff_id`, `penalty`, `reason`) VALUES ('$staff_id', '$penalty','$reason')";
+      $data = mysqli_query($con, $sql_insert);
+      if ($data) {
+          echo "<script>alert('Thêm thông tin kỷ luật thành công!'); window.location='Discipline.php';</script>";
+      } else {
+          echo "<script>alert('Thêm thông tin kỷ luật thất bại!')</script>";
+      }
+}
+if (isset($_POST['btnBack'])) {
+  header('location: ../HRM/Staff.php');
+}
+
 
     $sql = "SELECT * FROM department";
     $data = mysqli_query($con, $sql);
+
+    
 ?>
+
 <!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quản lý tài khoản</title>
+  <title>Quản lý nhân viên</title>
   <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/HRM_Favicon.png" style="width: 32px;" />
   <link rel="stylesheet" href="../HRM/src/assets/css/styles.min.css" />
   <link rel="stylesheet" href="../HRM/src/assets/css/ov_style.css">
@@ -152,14 +132,13 @@ if (isset($_POST['btnAdd'])) {
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
               <span class="hide-menu">Quản lý giờ làm</span>
               </a>
-            </li>            
+            </li>
             <li class="sidebar-item">
             <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
               <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
               <span class="hide-menu">Kỷ luật</span>
               </a>
             </li>
-
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
               <iconify-icon icon="mdi:account-wrench"></iconify-icon>
@@ -214,47 +193,64 @@ if (isset($_POST['btnAdd'])) {
                         </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="../HRM/Staff.php" class="text-info d-flex align-items-center">
-                        Quản lý nhân viên
+                        <a href="../HRM/Discipline.php" class="text-info d-flex align-items-center">
+                        Kỷ luật
                         </a>
                     </li>
-                    <li class="breadcrumb-item active text-info " aria-current="page">Thêm nhân viên mới</li>
+                    <li class="breadcrumb-item active text-info " aria-current="page">Kỷ luật nhân viên</li>
                 </ol>
             </nav> 
-            <div class="card">
-                <form method="post" enctype="multipart/form-data">
-                  <div>
+            <div class="row">                
+                <div class="col-lg-4">
+                  <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title">Thêm nhân viên mới</h4>
-                      <div class="row">
+                      <h5 class="card-title fw-semibold"> <?php echo $staff_name ?></h5>
+                      <p class="card-subtitle mb-0 lh-base"> <?php echo $staff_id ?></p>
+                      <p class="card-subtitle mb-0 lh-base"> <?php echo $department ?></p>
+                      <p class="card-subtitle mb-0 lh-base"> <?php echo $position ?></p>
+    
+                      <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="py-4 my-1">
+                                <img src="<?php echo $profile_image; ?>" alt="Hình ảnh nhân viên" style="max-width: 300px" class="rounded">
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-8">
+                  <form method="POST">
+                  <div class="card">
+                    <div class="card-body">
+                    <h5 class="card-title fw-semibold">Thông tin nhân viên</h5>
+                      <div class="row pt-3">
                           <div class="col-md-6">
                             <div class="mb-3 has-danger">
                               <label class="form-label">Mã nhân viên</label>
-                              <input type="text" name="staff_id" class="form-control form-control-danger" placeholder="Mã nhân viên">
+                              <input type="text" name="staff_id" class="form-control" value="<?php echo $staff_id; ?>" readonly>
                             </div>
                           </div>
                           <!--/span-->
                         <div class="col-md-6">
                           <div class="mb-3">
                             <label class="form-label">Họ và tên</label>
-                            <input type="text" name="staff_name" class="form-control" placeholder="Họ và tên">
+                            <input type="text" name="staff_name" class="form-control" placeholder="Họ và tên" value="<?php echo "$staff_name" ?>" readonly>
                           </div>
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="mb-3 has-danger">
                             <label class="form-label">Ngày, tháng, năm sinh</label>
-                            <input type="date" name="dob" class="form-control form-control-danger" placeholder="Tên đăng nhập">
+                            <input type="date" name="dob" class="form-control form-control-danger" value="<?php echo $dob; ?>" readonly>
+
                           </div>
                         </div>                    
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="mb-3">
                             <label class="form-label">Giới tính</label>
-                            <select name="gender" class="form-select" data-placeholder="Giói tính" tabindex="1">
-                              <option value="">--Chọn giới tính--</option>
-                              <option value="Nam">Nam</option>
-                              <option value="Nữ" >Nữ</option>
+                            <input type="text" name="gender" class="form-control form-control-danger" value="<?php echo $gender; ?>" readonly>
                             </select>
                           </div>
                         </div>
@@ -265,106 +261,78 @@ if (isset($_POST['btnAdd'])) {
                         <div class="col-md-6">
                           <div class="mb-3">
                             <label class="form-label">Phòng ban</label>
-                            <select name="department" class="form-select" data-placeholder="Choose a Category" tabindex="1">
-                            <?php 
-                                if(isset($data)&&mysqli_num_rows($data)>0){
-                                    while($row=mysqli_fetch_assoc($data)){
-                            ?>
-                                        <option value="<?php echo $row['department'] ?>" <?php if($department==$row['department']) echo 'selected' ?>>
-                                            <?php echo $row['department'] ?>
-                                        </option>
-                            <?php
-                                    }
-                                }
-                            ?>    
-                            </select>
+                            <input type="text" name="department" class="form-control form-control-danger" value="<?php echo $department; ?>" readonly>
                           </div>
                         </div>
                         <!--/span-->
                         <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Vị trí</label>
-                            <select name="position" class="form-select"tabindex="1">
-                                <option value="">--Chọn vị trí--</option>
-                                <option value="Giám đốc" <?php if($position == 'Giám đốc') echo 'selected'; ?>>Giám đốc</option>
-                                <option value="Admin" <?php if($position == 'Admin') echo 'selected'; ?>>Admin</option>
-                                <option value="Trưởng phòng" <?php if($position == 'Trưởng phòng') echo 'selected'; ?>>Trưởng phòng</option>
-                                <option value="Nhân viên/Kỹ thuật viên" <?php if($position == 'Nhân viên/Kỹ thuật viên') echo 'selected'; ?>>Nhân viên/Kỹ thuật viên</option>
+                            <input type="text" name="position" class="form-control form-control-danger" value="<?php echo $position; ?>" readonly>
                             </select>
                           </div>
                         </div>
                         <!--/span-->
                       </div>
                       
-                      <div class="row">
-                          <div class="col-md-6">
-                              <div class="mb-3">
-                                  <label class="form-label">Địa chỉ</label>
-                                  <input type="text" name="address" class="form-control" placeholder="Địa chỉ">
-                                </div>
-                            </div>
+                      <div class="row">                        
                             <!--/span-->
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Email</label>
-                                    <input type="email" name="email" class="form-control" placeholder="Email">
+                                    <input type="email" name="email" class="form-control" placeholder="Email" value="<?php echo "$email" ?>" readonly>
                                 </div>
                             </div>
-                            <!--/span-->
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <label class="form-label">Số điện thoại</label>
+                            <input type="text" name="phone" class="form-control" placeholder="Số điện thoại" value="<?php echo "$phone" ?>" readonly>
+                          </div>
                         </div>
-
+                        </div>
+                        <!--/span-->
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label class="form-label">Số điện thoại</label>
-                                    <input type="text" name="phone" class="form-control" placeholder="Số điện thoại">
-                                </div>
-                            </div>
-                            <!--/span-->
                             <div class="col-md-6">
                               <div class="mb-3 has-danger">
                                 <label class="form-label">Ngày bắt đầu làm việc</label>
-                                <input type="date" name="start_date" class="form-control form-control-danger" placeholder="Ngày bắt đầu làm việc">
+                                <input type="date" name="start_date" class="form-control form-control-danger" placeholder="Ngày bắt đầu làm việc" value="<?php echo isset($start_date) ? $start_date : ''; ?>" readonly>
                               </div>
                             </div>                    
                             <!--/span-->
-                        </div>
-
-                        <div class="row">
-                        <div class="col-md-6">
-                          <div class="mb-3">
-                            <label class="form-label">Trạng thái</label>
-                            <select name="status" class="form-select" data-placeholder="Giói tính" tabindex="1">
-                              <option value="Đang làm việc">Đang làm việc</option>
-                              <option value="Đã nghỉ việc">Đã nghỉ việc</option>
-                            </select>
-                          </div>
-                        </div>
-                            <!--/span-->
                             <div class="col-md-6">
-                              <div class="mb-3 has-danger">
-                                <label class="form-label">Hình ảnh nhân viên</label>
-                                <input type="file" class="form-control" name="profile_image" placeholder="Hình ảnh nhân viên" accept=".jpg, .jpeg, .png">                              
-                                </div>
-                            </div>                    
-                            <!--/span-->
+                              <div class="mb-3">
+                                <label class="form-label">Hình thức kỷ luật</label>
+                                <select name="penalty" class="form-select" data-placeholder="Hình thức" tabindex="1">
+                                    <option value="Khiển trách">Khiển trách</option>
+                                    <option value="Cảnh cáo">Cảnh cáo</option>
+                                    <option value="Cách chức">Cách chức</option>
+                                    <option value="Sa thải">Sa thải</option>
+                                </select>
+                              </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <div class="card-body border-top">
-                            <button type="submit" name="btnAdd" class="btn btn-info text-light">Thêm mới</button>
-                            <button type="submit" name="btnBack" class="btn btn-danger ms-6">Huỷ</button>
+                            <div class="row">                              
+                              <div class="col-md-12">
+                                <label class="form-label">Lý do kỉ luật</label>
+                                <textarea name="reason" class="form-control" rows="3" ></textarea>
+                              </div>
+                            </div>  
+                            
                         </div>
+                      <div class="form-actions">
+                        <div class="card-body border-top">                          
+                          <button type="submit" name="btnAdd" class="btn btn-info text-light">Kỷ luật</button>
+                          <button type="submit" name="btnBack" class="btn btn-danger ms-6">Huỷ</button>
+                        </div>
+                      </div>
+                      </form>
                     </div>
-                  </div>
-                </form>
-              </div>
+            </div>
       </div>
     </div>
   </div>
   <script src="../HRM/src/assets/libs/jquery/dist/jquery.min.js"></script>
-  <script src="../HRM/src/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../HRM/src/assets/libs/bootstrap/dist/js/bootstrap.bundle.js"></script>
   <script src="../HRM/src/assets/js/sidebarmenu.js"></script>
   <script src="../HRM/src/assets/js/app.min.js"></script>
   <script src="../HRM/src/assets/libs/simplebar/dist/simplebar.js"></script>
@@ -372,4 +340,4 @@ if (isset($_POST['btnAdd'])) {
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </body>
 
-</html> 
+</html>   

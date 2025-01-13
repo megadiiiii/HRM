@@ -107,6 +107,12 @@
               </a>
             </li>
             <li class="sidebar-item">
+            <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
+              <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
+              <span class="hide-menu">Kỷ luật</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
               <iconify-icon icon="mdi:account-wrench"></iconify-icon>
               <span class="hide-menu">Quản lý tài khoản</span>
@@ -196,8 +202,8 @@
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="mb-3 has-danger">
-                            <label class="form-label">Người đào tạo</label>
-                            <input type="text" name="trainer" class="form-control form-control-danger" placeholder="Người đào tạo">
+                            <label class="form-label">Người được đào tạo</label>
+                            <input type="text" name="staff_name" class="form-control form-control-danger" placeholder="Người đào tạo">
                           </div>
                         </div>
                         <!--/span-->

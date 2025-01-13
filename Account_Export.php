@@ -19,9 +19,7 @@
     $sheet->setCellValue("B2", "Tên nhân viên");
     $sheet->setCellValue("C2", "Tên đăng nhập");
     $sheet->setCellValue("D2", "Mật khẩu");
-    $sheet->setCellValue("E2", "Mã nhân viên");
-    $sheet->setCellValue("F2", "Phòng");
-    $sheet->setCellValue("G2", "Quyền tài khoản");
+    $sheet->setCellValue("E2", "Quyền tài khoản");
 
     // Data
     $rowCount = 3;
@@ -31,9 +29,7 @@
         $sheet->setCellValue("B" . $rowCount, $data["staff_name"]);
         $sheet->setCellValue("C" . $rowCount, $data["username"]);
         $sheet->setCellValue("D" . $rowCount, $data["password"]);
-        $sheet->setCellValue("E" . $rowCount, $data["staff_id"]);
-        $sheet->setCellValue("F" . $rowCount, $data["department"]);
-        $sheet->setCellValue("G" . $rowCount, $data["role"]);
+        $sheet->setCellValue("E" . $rowCount, $data["role"]);
         $rowCount++;
         $no++;
     }

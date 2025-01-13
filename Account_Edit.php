@@ -4,10 +4,8 @@
     include_once '../HRM/Login_Info.php';
 
     $staff_name = '';
-    $staff_id = '';
     $username = '';
     $password = '';
-    $department = '';
     $role = '';
 
     if (isset($_GET['username'])) {
@@ -19,10 +17,8 @@
     
         if ($row = mysqli_fetch_assoc($result_select)) {
             $staff_name = $row['staff_name'];
-            $staff_id = $row['staff_id'];
             $username = $row['username'];
             $password = $row['password'];
-            $department = $row['department'];
             $role = $row['role'];
         } else {
             echo "<script>alert('Không tìm thấy nhân viên!'); window.location='List.php';</script>";
@@ -33,17 +29,13 @@
     // Xử lý khi người dùng nhấn nút Lưu
     if (isset($_POST['btnSave'])) {
         $staff_name = $_POST['staff_name'];
-        $staff_id = $_POST['staff_id'];
         $password = $_POST['password'];
-        $department = $_POST['department'];
         $role = $_POST['role'];
     
         // Cập nhật thông tin sinh viên
         $sql_update = "UPDATE account 
                        SET `staff_name` = '$staff_name',
-                           `staff_id` = '$staff_id',
                            `password` = '$password',
-                           `department` = '$department',
                            `role` = '$role'
                        WHERE username = '$username'";
     
@@ -129,6 +121,12 @@
               </a>
             </li>
             <li class="sidebar-item">
+            <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
+              <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
+              <span class="hide-menu">Khen thưởng - Kỷ luật</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
               <iconify-icon icon="mdi:account-wrench"></iconify-icon>
               <span class="hide-menu">Quản lý tài khoản</span>
@@ -200,14 +198,7 @@
                             <label class="form-label">Họ và tên</label>
                             <input type="text" name="staff_name" class="form-control" placeholder="Họ và tên" value="<?php echo $staff_name?>">
                           </div>
-                        </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                          <div class="mb-3 has-danger">
-                            <label class="form-label">Mã nhân viên</label>
-                            <input type="text" name="staff_id" class="form-control form-control-danger" placeholder="Mã nhân viên" value="<?php echo $staff_id?>">
-                          </div>
-                        </div>
+                        </div>                        
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="mb-3 has-danger">
@@ -223,29 +214,6 @@
                           </div>
                         </div>
                         <!--/span-->
-                      </div>
-
-                      <!--/row-->
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="mb-3">
-                            <label class="form-label">Phòng ban</label>
-                            <select name="department" class="form-select" data-placeholder="Choose a Category" tabindex="1">
-                            <?php 
-                                  if(isset($data)&&mysqli_num_rows($data)>0){
-                                      while($row=mysqli_fetch_assoc($data)){
-                              ?>
-                                          <option value="<?php echo $row['department'] ?>" <?php if($department==$row['department']) echo 'selected' ?>>
-                                              <?php echo $row['department'] ?>
-                                          </option>
-                              <?php
-                                      }
-                                  }
-                              ?>   
-                            </select>
-                          </div>
-                        </div>
-                        <!--/span-->
                         <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Quyền tài khoản</label>
@@ -257,8 +225,9 @@
                             </select>
                           </div>
                         </div>
-                        <!--/span-->
                       </div>
+
+                      <!--/row-->
                     </div>
                     
                     <div class="form-actions">

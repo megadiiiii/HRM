@@ -97,6 +97,12 @@
               </a>
             </li>
             <li class="sidebar-item">
+            <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
+              <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
+              <span class="hide-menu">Khen thưởng - Kỷ luật</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
               <iconify-icon icon="mdi:account-wrench"></iconify-icon>
               <span class="hide-menu">Quản lý tài khoản</span>

@@ -8,7 +8,9 @@
     $speadsheet = new Spreadsheet();
     $sheet = $speadsheet->getActiveSheet();
     
-    $sql_export = "SELECT * FROM `training`";
+    $sql_export = "SELECT * FROM `training`
+                LEFT JOIN `course` ON `course`.`course_id` = `training`.`course_id`
+                LEFT JOIN `staff` ON `staff`.`staff_id` = `training`.`staff_id`";
     $data_export = mysqli_query($con, $sql_export);
 
     // Title
@@ -18,10 +20,11 @@
     $sheet->setCellValue("A2", "STT"); 
     $sheet->setCellValue("B2", "Mã khoá đào tạo");
     $sheet->setCellValue("C2", "Tên khoá đào tạo"); 
-    $sheet->setCellValue("D2", "Phòng");
-    $sheet->setCellValue("E2", "Người đào tạo");
-    $sheet->setCellValue("F2", "Đợt đào tạo");
-    $sheet->setCellValue("G2", "Trạng thái");
+    $sheet->setCellValue("D2", "Người được đào tạo");
+    $sheet->setCellValue("E2", "Mã nhân viên");
+    $sheet->setCellValue("F2", "Phòng");
+    $sheet->setCellValue("G2", "Đợt đào tạo");
+    $sheet->setCellValue("H2", "Trạng thái");
 
     // Data
     $rowCount = 3;
@@ -30,10 +33,11 @@
         $sheet->setCellValue("A" . $rowCount, $no); 
         $sheet->setCellValue("B" . $rowCount, $data["course_id"]);
         $sheet->setCellValue("C" . $rowCount, $data["course_name"]);
-        $sheet->setCellValue("D" . $rowCount, $data["department"]);
-        $sheet->setCellValue("E" . $rowCount, $data["trainer"]);
-        $sheet->setCellValue("F" . $rowCount, $data["course_date"]);
-        $sheet->setCellValue("G" . $rowCount, $data["status"]);
+        $sheet->setCellValue("D" . $rowCount, $data["staff_name"]);
+        $sheet->setCellValue("E" . $rowCount, $data["staff_id"]);
+        $sheet->setCellValue("F" . $rowCount, $data["department"]);
+        $sheet->setCellValue("G" . $rowCount, $data["course_date"]);
+        $sheet->setCellValue("H" . $rowCount, $data["status"]);
         $rowCount++;
         $no++;
     }

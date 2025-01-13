@@ -3,25 +3,31 @@
     include_once '../HRM/Session.php';
     include_once '../HRM/Login_Info.php';
 
-    $trainer = '';
-    $course_name = '';
-    $course_id = '';
-    $status = '';
-    $department = '';
-    
-    if(isset($_POST['btnSearch'])) {
-        $trainer = $_POST['trainer'];
-        $course_name = $_POST['course_name'];
-        $course_id = $_POST['course_id'];
-        $department = $_POST['department'];
-        $status = $_POST['status'];
-    }        
+  $course_name = '';
+  $course_id = '';
+  $staff_name = '';
+  $course_date = '';
+  $department = '';
+  $course_status = '';
+
+if (isset($_POST['btnSearch'])) {
+    $course_name = $_POST['course_name'];
+    $course_id = $_POST['course_id'];
+    $staff_name = $_POST['staff_name'];
+    $department = $_POST['department']; 
+    $course_status = $_POST['course_status'];
+}       
         // Search SQL
-        $sql_search = "SELECT * FROM `training` WHERE `trainer` LIKE '%$trainer%' 
-                                                AND `course_name` LIKE '%$course_name%'        
-                                                AND `course_id` LIKE '%$course_id%'        
-                                                AND `status` LIKE '%$status%'        
-                                                AND `department` LIKE '%$department%'";
+        $sql_search = "SELECT * FROM `training`
+                LEFT JOIN `course` ON `course`.`course_id` = `training`.`course_id`
+                LEFT JOIN `staff` ON `staff`.`staff_id` = `training`.`staff_id`
+                WHERE `course`.`course_name` LIKE '%$course_name%'
+                AND `course`.`course_id` LIKE '%$course_id%'
+                AND (`course`.`course_date` LIKE '%$course_date%' OR '$course_date' = '')
+                AND `course`.`course_status` LIKE '%$course_status%'
+                AND `staff`.`staff_name` LIKE '%$staff_name%'
+                AND `staff`.`department` LIKE '%$department%'";
+
         $data_search = mysqli_query($con, $sql_search);
 
     if(isset($_POST['btnAdd'])) {
@@ -97,6 +103,12 @@
             <a class="sidebar-link" href="../HRM/Work_Time.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
               <span class="hide-menu">Quản lý giờ làm</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+            <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
+              <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
+              <span class="hide-menu">Khen thưởng - Kỷ luật</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -178,8 +190,8 @@
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="mb-3 has-danger">
-                            <label class="form-label">Người đào tạo</label>
-                            <input type="text" name="trainer" class="form-control form-control-danger" placeholder="Người đào tạo" >
+                            <label class="form-label">Người được đào tạo</label>
+                            <input type="text" name="staff_name" class="form-control form-control-danger" placeholder="Người đào tạo" >
                           </div>
                         </div>
                         
@@ -279,8 +291,9 @@
                               <th scope="col">STT</th>
                               <th scope="col">Mã đào tạo</th>
                               <th scope="col">Tên khoá đào tạo</th>
+                              <th scope="col">Người được đào tạo</th>
+                              <th scope="col">Mã nhân viên</th>
                               <th scope="col">Phòng</th>
-                              <th scope="col">Người đào tạo</th>
                               <th scope="col">Ngày đào tạo</th>
                               <th scope="col">Trạng thái</th>
                               <th scope="col">Chức năng</th>
@@ -296,16 +309,17 @@
                                     <td><?php echo $i++ ?></td>
                                     <td><?php echo $row['course_id'] ?></td>
                                     <td><?php echo $row['course_name'] ?></td>
+                                    <td><?php echo $row['staff_name'] ?></td>
+                                    <td><?php echo $row['staff_id'] ?></td>
                                     <td><?php echo $row['department'] ?></td>
-                                    <td><?php echo $row['trainer'] ?></td>
                                     <td><?php echo $row['course_date'] ?></td>
                                     <td class="<?php 
-                                        echo $row['status'] == 'Đã hoàn thành' ? 'text-success' : 
-                                            ($row['status'] == 'Đang đào tạo' ? 'text-info' : 
-                                            ($row['status'] == 'Chưa bắt đầu' ? 'text-primary' : 
-                                            ($row['status'] == 'Đã hủy' ? 'text-danger' : 'text-danger')));
+                                      echo $row['course_status'] == 'Đã hoàn thành' ? 'text-success' : 
+                                            ($row['course_status'] == 'Đang đào tạo' ? 'text-info' : 
+                                            ($row['course_status'] == 'Chưa bắt đầu' ? 'text-primary' : 
+                                            ($row['course_status'] == 'Đã hủy' ? 'text-danger' : 'text-danger')));
                                     ?>">
-                                        <?php echo $row['status']; ?>
+                                        <?php echo $row['course_status']; ?>
                                     </td>
 
 
@@ -313,7 +327,7 @@
                                         <a class="btn btn-warning" href="Training_Edit.php?course_id=<?php echo $row['course_id']; ?>">
                                           <i class="ti ti-edit"></i>
                                         </a>
-                                        <a class="btn btn-danger" href="Training_Del.php?course_id=<?php echo $row['course_id']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa khoá đào tạo này?')">
+                                        <a class="btn btn-danger" href="Training_Del.php?course_id=<?php echo $row['course_id']; ?>&staff_id=<?php echo $row['staff_id']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa khoá đào tạo này?')">
                                           <i class="ti ti-trash"></i>
                                         </a>
                                     </td>

@@ -42,4 +42,5 @@
         $row = $result_work_time->fetch_assoc();
         $work_time_count = $row['total_rows'];
     }
+    
 ?>

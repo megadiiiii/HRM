@@ -4,18 +4,14 @@
     include_once '../HRM/Login_Info.php';
 
     $staff_name = '';
-    $staff_id = '';
     $username = '';
     $password = '';
-    $department = '';
     $role = '';
 
     if (isset($_POST['btnAdd'])) {
         $staff_name = $_POST['staff_name'];
-        $staff_id = $_POST['staff_id'];
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $department = $_POST['department'];
         $role = $_POST['role'];
     
         // Kiểm tra trùng lặp username
@@ -26,8 +22,8 @@
             echo "<script>alert('Tên đăng nhập đã tồn tại! Vui lòng kiểm tra lại.')</script>";
         } else {
             // Chèn dữ liệu vào bảng account
-            $sql_insert = "INSERT INTO `account`(`username`, `password`, `staff_name`, `role`, `staff_id`, `department`) 
-                            VALUES ('$username','$password','$staff_name','$role','$staff_id','$department')";
+            $sql_insert = "INSERT INTO `account`(`username`, `password`, `staff_name`, `role`) 
+                            VALUES ('$username','$password','$staff_name','$role')";
             $data = mysqli_query($con, $sql_insert);
     
             if ($data) {
@@ -107,6 +103,12 @@
               </a>
             </li>
             <li class="sidebar-item">
+            <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
+              <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
+              <span class="hide-menu">Khen thưởng - Kỷ luật</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
               <iconify-icon icon="mdi:account-wrench"></iconify-icon>
               <span class="hide-menu">Quản lý tài khoản</span>
@@ -182,13 +184,6 @@
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="mb-3 has-danger">
-                            <label class="form-label">Mã nhân viên</label>
-                            <input type="text" name="staff_id" class="form-control form-control-danger" placeholder="Mã nhân viên">
-                          </div>
-                        </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                          <div class="mb-3 has-danger">
                             <label class="form-label">Tên đăng nhập</label>
                             <input type="text" name="username" class="form-control form-control-danger" placeholder="Tên đăng nhập">
                           </div>
@@ -198,30 +193,6 @@
                           <div class="mb-3 has-danger">
                             <label class="form-label">Mật khẩu</label>
                             <input type="text" name="password" class="form-control form-control-danger" placeholder="Mật khẩu">
-                          </div>
-                        </div>
-                        <!--/span-->
-                      </div>
-
-                      <!--/row-->
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="mb-3">
-                            <label class="form-label">Phòng ban</label>
-                            <select name="department" class="form-select" data-placeholder="Choose a Category" tabindex="1">
-                              <option value="">--Chọn phòng ban--</option>
-                              <?php 
-                                  if(isset($data)&&mysqli_num_rows($data)>0){
-                                      while($row=mysqli_fetch_assoc($data)){
-                              ?>
-                                          <option value="<?php echo $row['department'] ?>" <?php if($department==$row['department']) echo 'selected' ?>>
-                                              <?php echo $row['department'] ?>
-                                          </option>
-                              <?php
-                                      }
-                                  }
-                              ?>   
-                            </select>
                           </div>
                         </div>
                         <!--/span-->
@@ -237,7 +208,6 @@
                             </select>
                           </div>
                         </div>
-                        <!--/span-->
                       </div>
                     </div>
                     

@@ -114,6 +114,12 @@ if (isset($_GET['staff_id'])) {
               </a>
             </li>
             <li class="sidebar-item">
+            <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
+              <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
+              <span class="hide-menu">Khen thưởng - Kỷ luật</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
               <iconify-icon icon="mdi:account-wrench"></iconify-icon>
               <span class="hide-menu">Quản lý tài khoản</span>
@@ -288,27 +294,32 @@ if (isset($_GET['staff_id'])) {
                                 <label class="form-label">Trạng thái</label>
                                 <input type="text" name="status" class="form-control form-control-danger" value="<?php echo $status; ?>" readonly>
                                 </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Chức năng</label>
-                                <div class="group">
-                                    <a class="btn btn-info" href="Staff.php">
-                                        <iconify-icon icon="mingcute:back-fill"></iconify-icon>
-                                        Quay lại
-                                    </a>
-                                    <a class="btn btn-warning ms-6" href="Staff_Edit.php?staff_id=<?php echo $row['staff_id']; ?>">
-                                        <i class="ti ti-edit"></i>
-                                        Chỉnh sửa
-                                    </a>
-                                    <a class="btn btn-danger ms-6" href="Staff_Del.php?staff_id=<?php echo $row['staff_id']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa nhân viên này?')">
-                                        <i class="ti ti-trash"></i>
-                                        Xoá 
-                                    </a>
-                                </div>
                             </div>
                         </div>
-                    </div>
+                      <div class="form-actions">
+                        <div class="card-body border-top">
+                          <a class="btn btn-info" href="Staff.php">
+                            <iconify-icon icon="mingcute:back-fill"></iconify-icon>
+                            Quay lại
+                          </a>
+                          <a class="btn btn-info ms-6" href="Staff_Discipline.php?staff_id=<?php echo $row['staff_id']; ?>">
+                          <i class="ti ti-edit"></i>
+                            Kỷ luật
+                          </a>
+                          <a class="btn btn-info ms-6" href="Staff_Training.php?staff_id=<?php echo $row['staff_id']; ?>">
+                          <i class="ti ti-edit"></i>
+                            Cử đi đào tạo
+                          </a>
+                          <a class="btn btn-warning ms-6" href="Staff_Edit.php?staff_id=<?php echo $row['staff_id']; ?>">
+                            <i class="ti ti-edit"></i>
+                            Chỉnh sửa
+                          </a>
+                          <a class="btn btn-danger ms-6" href="Staff_Del.php?staff_id=<?php echo $row['staff_id']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa nhân viên này?')">
+                            <i class="ti ti-trash"></i>
+                            Xoá 
+                            </a>
+                        </div>
+                      </div>
                 </div>
             </div>
       </div>

@@ -5,23 +5,17 @@
 
     $username = '';
     $staff_name = '';
-    $staff_id = '';
     $role = '';
-    $department = '';
     
     if(isset($_POST['btnSearch'])) {
         $username = $_POST['username'];
         $staff_name = $_POST['staff_name'];
-        $staff_id = $_POST['staff_id'];
-        $department = $_POST['department'];
         $role = $_POST['role'];
     }        
         // Search SQL
         $sql_search = "SELECT * FROM `account` WHERE `username` LIKE '%$username%' 
                                                 AND `staff_name` LIKE '%$staff_name%'        
-                                                AND `staff_id` LIKE '%$staff_id%'        
-                                                AND `role` LIKE '%$role%'        
-                                                AND `department` LIKE '%$department%'";
+                                                AND `role` LIKE '%$role%'";
         $data_search = mysqli_query($con, $sql_search);
 
     if(isset($_POST['btnAdd'])) {
@@ -32,8 +26,6 @@
         header('location: ../HRM/Account_Export.php');
     }
 
-    $sql = "SELECT * FROM `department`";
-    $data = mysqli_query($con, $sql);
 
     mysqli_close($con);
 
@@ -97,6 +89,12 @@
             <a class="sidebar-link" href="../HRM/Work_Time.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
               <span class="hide-menu">Quản lý giờ làm</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+            <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
+              <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
+              <span class="hide-menu">Kỷ luật</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -167,14 +165,7 @@
                             <label class="form-label">Họ và tên</label>
                             <input type="text" name="staff_name" class="form-control" placeholder="Họ và tên" >
                           </div>
-                        </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                          <div class="mb-3 has-danger">
-                            <label class="form-label">Mã nhân viên</label>
-                            <input type="text" name="staff_id" class="form-control form-control-danger" placeholder="Mã nhân viên" >
-                          </div>
-                        </div>
+                        </div>                        
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="mb-3 has-danger">
@@ -183,26 +174,6 @@
                           </div>
                       </div>
 
-                        <div class="col-md-6">
-                          <div class="mb-3">
-                            <label class="form-label">Phòng ban</label>
-                            <select name="department" class="form-select" data-placeholder="Choose a Category" tabindex="1" >
-                              <option value="">--Chọn phòng ban--</option>
-                              <?php 
-                                if(isset($data) && mysqli_num_rows($data) > 0) {
-                                    while($row = mysqli_fetch_assoc($data)) {
-                                ?>
-                                        <option value="<?php echo $row['department']; ?>">
-                                            <?php echo $row['department']; ?>
-                                        </option>
-                                <?php
-                                    }
-                                }
-                              ?>
-                            </select>
-                          </div>
-                        </div>
-                        <!--/span-->
                         <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Quyền tài khoản</label>
@@ -270,8 +241,6 @@
                               <th scope="col">Tên nhân viên</th>
                               <th scope="col">Tên đăng nhập</th>
                               <th scope="col">Mật khẩu</th>
-                              <th scope="col">Mã nhân viên</th>
-                              <th scope="col">Phòng</th>
                               <th scope="col">Quyền tài khoản</th>
                               <th scope="col">Chức năng</th>
                           </tr>
@@ -287,8 +256,6 @@
                                     <td><?php echo $row['staff_name'] ?></td>
                                     <td><?php echo $row['username'] ?></td>
                                     <td><?php echo $row['password'] ?></td>
-                                    <td><?php echo $row['staff_id'] ?></td>
-                                    <td><?php echo $row['department'] ?></td>
                                     <td><?php echo $row['role'] ?></td>
                                     <td>
                                         <a class="btn btn-warning" href="Account_Edit.php?username=<?php echo $row['username']; ?>">
