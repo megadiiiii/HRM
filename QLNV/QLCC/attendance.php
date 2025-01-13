@@ -71,8 +71,6 @@ mysqli_close($con);
           <th>Vị trí</th>
           <th>Trạng thái</th>
           <th>Ngày</th>
-          <th>Giờ vào</th>
-          <th>Giờ ra</th>
           <th>Trạng thái chấm công</th>
           <th>Chấm công</th>
         </tr>
