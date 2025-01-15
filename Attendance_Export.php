@@ -8,11 +8,14 @@
     $speadsheet = new Spreadsheet();
     $sheet = $speadsheet->getActiveSheet();
     
-    $sql_export = "SELECT * FROM `work_time`";
+    $sql_export = "SELECT * 
+                    FROM `attendance`
+                    LEFT JOIN `staff` AS s ON `s`.`staff_id` = `attendance`.`staff_id`
+                    LEFT JOIN `salary` AS sal ON `s`.`salary_level` = `sal`.`salary_level`";
     $data_export = mysqli_query($con, $sql_export);
 
     // Title
-    $sheet->setCellValue("A1", "DANH SÁCH GIỜ LÀM VIỆC");
+    $sheet->setCellValue("A1", "DANH SÁCH CHẤM CÔNG");
 
     // Header
     $sheet->setCellValue("A2", "STT"); 
@@ -20,8 +23,8 @@
     $sheet->setCellValue("C2", "Tên nhân viên");
     $sheet->setCellValue("D2", "Phòng");
     $sheet->setCellValue("E2", "Vị trí");
-    $sheet->setCellValue("F2", "Số ngày làm việc");
-    $sheet->setCellValue("G2", "Ca làm việc");
+    $sheet->setCellValue("F2", "Trạng thái");
+    $sheet->setCellValue("G2", "Ngày chấm công");
 
     // Data
     $rowCount = 3;
@@ -30,10 +33,10 @@
         $sheet->setCellValue("A" . $rowCount, $no); 
         $sheet->setCellValue("B" . $rowCount, $data["staff_id"]);
         $sheet->setCellValue("C" . $rowCount, $data["staff_name"]);
-        $sheet->setCellValue("D" . $rowCount, $data["department"]);
-        $sheet->setCellValue("E" . $rowCount, $data["position"]);
-        $sheet->setCellValue("F" . $rowCount, $data["workday"]);
-        $sheet->setCellValue("G" . $rowCount, $data["working_hours"]);
+        $sheet->setCellValue("D". $rowCount, $data["department"]);
+        $sheet->setCellValue("E". $rowCount, $data["position"]);
+        $sheet->setCellValue("F". $rowCount, $data["checkin_status"]);
+        $sheet->setCellValue("G". $rowCount, $data["checkin_date"]);
         $rowCount++;
         $no++;
     }
@@ -41,6 +44,6 @@
     // Save   
     $writer = new Xlsx($speadsheet);
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment; filename="Danh_sach_gio_lam_viec.xlsx"');
+    header('Content-Disposition: attachment; filename="Danh_sach_cham_cong.xlsx"');
     $writer->save('php://output');
 ?>

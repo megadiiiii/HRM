@@ -33,18 +33,18 @@
 
     if (mysqli_num_rows($result_check_attendance) > 0) {
     // Nếu đã có bản ghi, thông báo lỗi
-    $message = "<p class='text-danger'>Nhân viên $staff_id đã được chấm công vào ngày $checkin_date.</p>";
-    } else {
+    echo "<script>alert('Nhân viên $staff_id đã được chấm công vào ngày $checkin_date. Vui lòng kiểm tra lại')</script>";
+  } else {
     // Nếu chưa có bản ghi, thêm mới
     $worked = ($checkin_status === 'Có mặt') ? 1 : 0;
     $sql_insert = "INSERT INTO attendance (staff_id, checkin_date, checkin_status, worked) 
         VALUES ('$staff_id', '$checkin_date', '$checkin_status', $worked)";
     if (mysqli_query($con, $sql_insert)) {
-        $message = "<p class='text-success'>Chấm công thành công cho nhân viên $staff_id vào ngày $checkin_date.</p>";
-        } else {
-            $message = "<p class='text-danger'>Lỗi chấm công: " . mysqli_error($con) . "</p>";
-            }
-        }
+      echo "<script>alert('Chấm công thành công cho nhân viên $staff_id vào ngày $checkin_date.')</script>";
+    } else {
+      echo "<script>alert('Lỗi chấm công')</script>";
+      }
+    }
     }
     
     if(isset($_POST['btnSearch'])) {
@@ -63,16 +63,12 @@
                         AND `s`.`department` LIKE '%$department%'";
         $data_search = mysqli_query($con, $sql_search);
 
-    if(isset($_POST['btnCheckin'])) {
-        header('location: ../HRM/Checkin.php');
+    if(isset($_POST['btnSalary'])) {
+        header('location: ../HRM/Attendance_Salary.php');
     }
-
-    if(isset($_POST['btnExportExcel'])) {
-      header('location: ../HRM/Checkin.php');
-    }
-
+    
     if(isset($_POST['btnHistory'])) {
-      header('location: ../HRM/Work_time.php');
+      header('location: ../HRM/Attendance.php');
     }
   $sql = "SELECT * FROM `department`";
   $data = mysqli_query($con, $sql);
@@ -137,7 +133,7 @@
           <li class="sidebar-item">
             <a class="sidebar-link" href="../HRM/Work_Time.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
-              <span class="hide-menu">Quản lý giờ làm</span>
+              <span class="hide-menu">Quản lý chuyên cần</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -199,161 +195,96 @@
                         <i class="ti ti-home fs-4 mt-1"></i>
                         </a>
                     </li>
+                    <li class="breadcrumb-item">
+                        <a href="../HRM/Work_time.php" class="text-info d-flex align-items-center">
+                        Quản lý chuyên cần
+                        </a>
+                    </li>
                     <li class="breadcrumb-item active text-info " aria-current="page">Chấm công</li>
+
                 </ol>
             </nav>
             <div class="row">
                 <div class="card">
-                <form method="post">
-                  <div>
-                    <div class="card-body">
-                      <h4 class="card-title">Chấm công</h4>
-                      <div class="row pt-3">
-                        <div class="col-md-6">
-                          <div class="mb-3">
-                            <label class="form-label">Họ và tên</label>
-                            <input type="text" name="staff_name" class="form-control" placeholder="Họ và tên" >
-                          </div>
-                        </div>                        
-                        <!--/span-->
-                        <div class="col-md-6">
-                          <div class="mb-3 has-danger">
-                            <label class="form-label">Mã nhân viên</label>
-                            <input type="text" name="staff_id" class="form-control" placeholder="Tên đăng nhập" >
-                          </div>
-                        </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Ngày chấm công</label>
-                                <input type="date" name="checkin_date" class="form-control form-control-danger">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Trạng thái</label>
-                            <select name="checkin_status" class="form-select"tabindex="1">
-                                <option value="">--Chọn trạng thái--</option>
-                                <option value="Có mặt">Có mặt</option>
-                                <option value="Vắng mặt">Vắng mặt</option>
-                            </select>
-                          </div>
-                        </div>
-
-                        <div class="col-md-6">
-                          <div class="mb-3">
-                            <label class="form-label">Phòng ban</label>
-                            <select name="department" class="form-select" data-placeholder="Choose a Category" tabindex="1">
-                              <option value="">--Chọn phòng ban--</option>
-                              <?php 
-                                  if(isset($data)&&mysqli_num_rows($data)>0){
-                                    while($row=mysqli_fetch_assoc($data)){
+                  <form method="post">
+                  <div class="card-body">
+                  <h5 class="card-title mb-6">Chấm công</h5>
+                  <div class="table-responsive mb-4 border rounded-1">  
+                    <table class="table table-hover mb-0 align-middle">
+                    <thead class="table-info">
+                        <tr>
+                            <th scope="col">Mã nhân viên</th>
+                            <th scope="col">Tên nhân viên</th>
+                            <th scope="col">Phòng</th>
+                            <th scope="col">Vị trí</th>
+                            <th scope="col">Ngày chấm công</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Chấm công</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      
+                          <?php if (mysqli_num_rows($result_staff) > 0): ?>
+                          <?php $i = 1; // Initialize the counter ?>
+                          <?php while ($row = mysqli_fetch_assoc($result_staff)): ?>
+                              <?php                                
+                              // Truy vấn tổng số ngày công từ bảng attendance
+                              $sql_worked = "SELECT IFNULL(SUM(worked), 0) AS total_worked 
+                                                  FROM attendance 
+                                                  WHERE staff_id = '" . $row['staff_id'] . "'";
+                              $result_worked = mysqli_query($con, $sql_worked);
+                              $worked = mysqli_fetch_assoc($result_worked)['total_worked'];
                               ?>
-                                          <option value="<?php echo $row['department'] ?>" <?php if($department==$row['department']) echo 'selected' ?>>
-                                              <?php echo $row['department'] ?>
-                                          </option>
-                              <?php
-                                      }
-                                    }
-                                    ?>   
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="form-actions">
+                              <tr>
+                              <td><?php echo $row['staff_id']; ?></td>
+                              <td><?php echo $row['staff_name']; ?></td>
+                              <td><?php echo $row['department']; ?></td>
+                              <td><?php echo $row['position']; ?></td>
+                              <form method="POST">
+                                  <td>
+                                  <input type="date" name="checkin_date" class="form-control" value="<?php echo date('dd-mm-yyyy'); ?>">
+                                  </td>
+                                  <td>
+                                  <select name="checkin_status" class="form-select">
+                                      <option value="Có mặt">Có mặt</option>
+                                      <option value="Vắng">Vắng</option>
+      
+                                  </select>
+                                  </td>
+                                  <td>
+                                  <input type="hidden" name="staff_id" value="<?php echo $row['staff_id']; ?>">
+                                  <button type="submit" name="btnSubmit" class="btn btn-info btn-sm">
+                                      <i class="ti ti-circle-plus"></i>
+                                  </button>
+                                  </td>
+                              </form>
+                              </tr>
+                          <?php endwhile; ?>
+                          <?php else: ?>
+                          <tr>
+                              <td colspan="8" class="text-center">Không có nhân viên nào để hiển thị.</td>
+                          </tr>
+                          <?php endif; ?>
+                      </tbody>
+                  </table>
+                </div>  
+                  <div class="form-actions">
                       <div class="card-body border-top">
-                        <button type="submit" name="btnSearch" class="btn btn-info text-light">
-                          <i class="ti ti-search"></i>
-                          Tìm kiếm
-                        </button>
                         <button type="submit" name="btnHistory" class="btn btn-info text-light ms-6">
                           <i class="ti ti-search"></i>
                           Lịch sử chấm công
-                        </button>
-                        <button type="submit" name="btnExportExcel" class="btn btn-info text-light ms-6">
-                          <i class="ti ti-file-arrow-right"></i>
-                          Xuất Excel
-                        </button>
+                        </button>                        
                         <!-- <a href="javascript:void(0);" class="btn btn-info text-light ms-6" onclick="formToggle('importFrm');"><i class="plus"></i> Import</a> -->
+                        <button type="submit" name="btnSalary" class="btn btn-info text-light ms-6">
+                          <i class="ti ti-file-arrow-right"></i>
+                          Xem bảng lương tạm tính
+                        </button>
+                      </div>
+                    </div>
 
-                      </form>
-                      </div>
-                      </div>
-                  </div>
                 </form>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                    <h5 class="card-title">Danh sách tài khoản</h5>
-                    <div class="table-responsive mb-4 border rounded-1">  
-                      <table class="table table-hover mb-0 align-middle">
-                      <thead class="table-info">
-                          <tr>
-                              <th scope="col">Mã nhân viên</th>
-                              <th scope="col">Tên nhân viên</th>
-                              <th scope="col">Phòng</th>
-                              <th scope="col">Vị trí</th>
-                              <th scope="col">Ngày chấm công</th>
-                              <th scope="col">Trạng thái</th>
-                              <th scope="col">Chấm công</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                        
-                            <?php if (mysqli_num_rows($result_staff) > 0): ?>
-                            <?php $i = 1; // Initialize the counter ?>
-                            <?php while ($row = mysqli_fetch_assoc($result_staff)): ?>
-                                <?php                                
-                                // Truy vấn tổng số ngày công từ bảng attendance
-                                $sql_worked = "SELECT IFNULL(SUM(worked), 0) AS total_worked 
-                                                    FROM attendance 
-                                                    WHERE staff_id = '" . $row['staff_id'] . "'";
-                                $result_worked = mysqli_query($con, $sql_worked);
-                                $worked = mysqli_fetch_assoc($result_worked)['total_worked'];
-                                ?>
-                                <tr>
-                                <td><?php echo $row['staff_id']; ?></td>
-                                <td><?php echo $row['staff_name']; ?></td>
-                                <td><?php echo $row['department']; ?></td>
-                                <td><?php echo $row['position']; ?></td>
-                                <form method="POST">
-                                    <td>
-                                    <input type="date" name="checkin_date" class="form-control" value="<?php echo date('dd-mm-yyyy'); ?>">
-                                    </td>
-                                    <td>
-                                    <select name="checkin_status" class="form-select">
-                                        <option value="Có mặt">Có mặt</option>
-                                        <option value="Vắng">Vắng</option>
-
-                                    </select>
-                                    </td>
-                                    <td>
-                                    <input type="hidden" name="staff_id" value="<?php echo $row['staff_id']; ?>">
-                                    <button type="submit" name="btnSubmit" class="btn btn-info btn-sm">
-                                        <i class="ti ti-circle-plus"></i>
-                                    </button>
-                                    </td>
-                                </form>
-                                </tr>
-                            <?php endwhile; ?>
-                            <?php else: ?>
-                            <tr>
-                                <td colspan="8" class="text-center">Không có nhân viên nào để hiển thị.</td>
-                            </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                  </div>  
-                </div>
-                </div>
               </div>
-        </div>
-      </div>
-    </div>
-  </div>
+            </div>
   <script src="../HRM/src/assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="../HRM/src/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../HRM/src/assets/js/sidebarmenu.js"></script>

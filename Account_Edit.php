@@ -115,9 +115,9 @@
               </a>
             </li>
             <li class="sidebar-item">
-            <a class="sidebar-link" href="../HRM/Work_Time.php" aria-expanded="false">
+            <a class="sidebar-link" href="../HRM/Attendance.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
-              <span class="hide-menu">Quản lý giờ làm</span>
+              <span class="hide-menu">Quản lý chuyên cần</span>
               </a>
             </li>
             <li class="sidebar-item">

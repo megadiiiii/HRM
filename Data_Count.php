@@ -5,7 +5,7 @@
     $staff_count = 0;
     $department_count = 0;
     $training_count = 0;
-    $work_time_count = 0;
+    $discipline_count = 0;
     
     // Truy vấn đếm số hàng cho từng bảng và gán vào biến
     $sql_account = "SELECT COUNT(*) AS total_rows FROM account";
@@ -36,11 +36,11 @@
         $training_count = $row['total_rows'];
     }
     
-    $sql_work_time = "SELECT COUNT(*) AS total_rows FROM work_time";
-    $result_work_time = $con->query($sql_work_time);
-    if ($result_work_time) {
-        $row = $result_work_time->fetch_assoc();
-        $work_time_count = $row['total_rows'];
+    $sql_discipline = "SELECT COUNT(*) AS total_rows FROM discipline";
+    $result_discipline = $con->query($sql_discipline);
+    if ($result_discipline) {
+        $row = $result_discipline->fetch_assoc();
+        $discipline_count = $row['total_rows'];
     }
     
 ?>

@@ -15,6 +15,7 @@ $email = '';
 $phone = '';
 $status = '';
 $profile_image = '';
+$salary_level = '';
 
 if (isset($_POST['btnAdd'])) {
     $staff_id = $_POST['staff_id'];
@@ -28,6 +29,7 @@ if (isset($_POST['btnAdd'])) {
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $status = $_POST['status'];
+    $salary_level = $_POST['salary_level'];
     // cho anh vao uploads
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
         $upload_dir = '../HRM/Upload/';
@@ -148,9 +150,9 @@ if (isset($_POST['btnAdd'])) {
               </a>
             </li>
             <li class="sidebar-item">
-            <a class="sidebar-link" href="../HRM/Work_Time.php" aria-expanded="false">
+            <a class="sidebar-link" href="../HRM/Attendance.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
-              <span class="hide-menu">Quản lý giờ làm</span>
+              <span class="hide-menu">Quản lý chuyên cần</span>
               </a>
             </li>            
             <li class="sidebar-item">

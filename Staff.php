@@ -91,9 +91,9 @@
               </a>
             </li>
             <li class="sidebar-item">
-            <a class="sidebar-link" href="../HRM/Work_Time.php" aria-expanded="false">
+            <a class="sidebar-link" href="../HRM/Attendance.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
-              <span class="hide-menu">Quản lý giờ làm</span>
+              <span class="hide-menu">Quản lý chuyên cần</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -228,7 +228,7 @@
                           <i class="ti ti-file-arrow-right"></i>
                           Xuất Excel
                         </button>
-                        <a href="javascript:void(0);" class="btn btn-info text-light ms-6" onclick="formToggle('importFrm');"><i class="plus"></i> Import</a>
+                        <!-- <a href="javascript:void(0);" class="btn btn-info text-light ms-6" onclick="formToggle('importFrm');"><i class="plus"></i> Import</a> -->
 
                       </form>
                       </div>

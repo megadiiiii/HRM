@@ -1,53 +1,36 @@
-<?php 
-    include_once '../HRM/dbConnect.php';
-    include_once '../HRM/Session.php';
-    include_once '../HRM/Login_Info.php';
+<?php
+include_once 'dbConnect.php'; // Kết nối cơ sở dữ liệu
+include_once '../HRM/Session.php';
+include_once '../HRM/Login_Info.php';
 
-    $staff_name = '';
-    $username = '';
-    $password = '';
-    $role = '';
+// Truy vấn dữ liệu từ bảng staff, attendance và salary
+    $sql_list = "SELECT staff.staff_id, staff.staff_name, staff.department, staff.position, staff.salary_level,
+        SUM(attendance.worked) AS total_worked_days,
+        (SUM(attendance.worked) * salary.salary) AS actual_salary
+        FROM staff
+        LEFT JOIN attendance ON staff.staff_id = attendance.staff_id
+        LEFT JOIN salary ON staff.salary_level = salary.salary_level
+        GROUP BY staff.staff_id, staff.staff_name, staff.department, staff.position, staff.salary_level, salary.salary;";
+    $data_list = mysqli_query($con, $sql_list);
+  
+    if (isset($_POST['btnBack'])) {
+      header('location: ../HRM/Attendance.php');
+    }
 
-    if (isset($_POST['btnAdd'])) {
-        $staff_name = $_POST['staff_name'];
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $role = $_POST['role'];
-    
-        // Kiểm tra trùng lặp username
-        $sql_check = "SELECT * FROM `account` WHERE `username` = '$username'";
-        $result_check = mysqli_query($con, $sql_check);
-    
-        if (mysqli_num_rows($result_check) > 0) {
-            echo "<script>alert('Tên đăng nhập đã tồn tại! Vui lòng kiểm tra lại.')</script>";
-        } else {
-            // Chèn dữ liệu vào bảng account
-            $sql_insert = "INSERT INTO `account`(`username`, `password`, `staff_name`, `role`) 
-                            VALUES ('$username','$password','$staff_name','$role')";
-            $data = mysqli_query($con, $sql_insert);
-    
-            if ($data) {
-                echo "<script>alert('Thêm thông tài khoản thành công!'); window.location='Account.php';</script>";
-            } else {
-                echo "<script>alert('Thêm thông tài khoản thất bại!')</script>";
-            }
-        }
-
-      }
-      if (isset($_POST['btnBack'])) {
-        header('location: ../HRM/Account.php');
-      }
-
-      $sql = "SELECT * FROM department";
-      $data = mysqli_query($con, $sql);
+    if (isset($_POST['btnExportExcel'])) {
+      header('location: ../HRM/Attendance_Salary_Export.php');
+    }
+// Xử lý thông báo
+$message = "";
 ?>
+
 <!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quản lý tài khoản</title>
+  <title>Bảng lương tạm tính</title>
   <link rel="shortcut icon" type="image/png" href="../HRM/src/assets/images/logos/HRM_Favicon.png" style="width: 32px;" />
   <link rel="stylesheet" href="../HRM/src/assets/css/styles.min.css" />
   <link rel="stylesheet" href="../HRM/src/assets/css/ov_style.css">
@@ -74,8 +57,8 @@
           <ul id="sidebarnav">
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Homepage.php" aria-expanded="false">
-              <iconify-icon icon="material-symbols:home-outline"></iconify-icon>
-              <span class="hide-menu">Trang chủ</span>
+                <iconify-icon icon="material-symbols:home"></iconify-icon>
+                <span class="hide-menu">Trang chủ</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -94,9 +77,9 @@
               <a class="sidebar-link" href="../HRM/Training.php" aria-expanded="false">
               <iconify-icon icon="oui:training"></iconify-icon>
               <span class="hide-menu">Quản lý đào tạo nhân sự</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
+            </a>
+          </li>
+          <li class="sidebar-item">
             <a class="sidebar-link" href="../HRM/Attendance.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
               <span class="hide-menu">Quản lý chuyên cần</span>
@@ -111,7 +94,7 @@
             <li class="sidebar-item">
               <a class="sidebar-link" href="../HRM/Account.php" aria-expanded="false">
               <iconify-icon icon="mdi:account-wrench"></iconify-icon>
-              <span class="hide-menu">Quản lý tài khoản</span>
+              <span class="hide-menu">Bảng lương tạm tính</span>
               </a>
             </li>
           </ul>
@@ -142,7 +125,7 @@
                         <span class="text-success fs-11"><?php echo $role?></span>                                              
                         </div>
                     </div>
-                    <a href="./Sign_In.php" class="btn btn-outline-secondary mx-3 mt-2 d-block">Đăng xuất</a>
+                    <a href="./Sign_In.php" class="btn btn-outline-info mx-3 mt-2 d-block">Đăng xuất</a>
                   </div>
                 </div>
               </li>
@@ -162,64 +145,75 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="../HRM/Account.php" class="text-info d-flex align-items-center">
-                        Quản lý tài khoản
+                        <a href="../HRM/Attendance.php" class="text-info d-flex align-items-center">
+                            Quản lý chuyên cần
                         </a>
                     </li>
-                    <li class="breadcrumb-item active text-info " aria-current="page">Tạo tài khoản</li>
+                    <li class="breadcrumb-item active text-info " aria-current="page">Bảng lương tạm tính</li>
                 </ol>
-            </nav> 
-            <div class="card">
-                <form method="post">
-                  <div>
+            </nav>
+            <div class="row">
+              <form method="post">            
+                <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title">Tạo mới tài khoản</h4>
-                      <div class="row pt-3">
-                        <div class="col-md-6">
-                          <div class="mb-3">
-                            <label class="form-label">Họ và tên</label>
-                            <input type="text" name="staff_name" class="form-control" placeholder="Họ và tên">
-                          </div>
-                        </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                          <div class="mb-3 has-danger">
-                            <label class="form-label">Tên đăng nhập</label>
-                            <input type="text" name="username" class="form-control form-control-danger" placeholder="Tên đăng nhập">
-                          </div>
-                        </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                          <div class="mb-3 has-danger">
-                            <label class="form-label">Mật khẩu</label>
-                            <input type="text" name="password" class="form-control form-control-danger" placeholder="Mật khẩu">
-                          </div>
-                        </div>
-                        <!--/span-->
-                        <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Quyền tài khoản</label>
-                            <select name="role" class="form-select"tabindex="1">
-                                <option value="">--Chọn quyền tài khoản--</option>
-                                <option value="Giám đốc">Giám đốc</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Trưởng phòng">Trưởng phòng</option>
-                                <option value="Nhân viên/Kỹ thuật viên">Nhân viên/Kỹ thuật viên</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                      <div class="card-body border-top">
-                        <button type="submit" name="btnAdd" class="btn btn-info text-light">Cập nhật</button>
-                        <button type="submit" name="btnBack" class="btn btn-danger ms-6">Huỷ</button>
-                      </div>
+                    <h5 class="card-title">Bảng lương tạm tính</h5>
+                                          <div class="table-responsive mb-4 border rounded-1">  
+                        <table class="table table-hover mb-0 align-middle">
+                        <thead class="table-info">
+                            <tr>
+                                <th scope="col">STT</th>
+                                <th scope="col">Mã nhân viên</th>
+                                <th scope="col">Tên nhân viên</th>
+                                <th scope="col">Phòng</th>
+                                <th scope="col">Vị trí</th>
+                                <th scope="col">Bậc lương</th>
+                                <th scope="col">Tổng số ngày công</th>
+                                <th scope="col">Lương tạm tính</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                          if (isset($data_list) && mysqli_num_rows($data_list) > 0) {
+                          $i = 1;
+                          while ($row = mysqli_fetch_array($data_list)) {
+                          ?>
+                              <tr>
+                                      <td><?php echo $i++ ?></td>
+                                      <td><?php echo $row['staff_id'] ?></td>
+                                      <td><?php echo $row['staff_name'] ?></td>
+                                      <td><?php echo $row['department'] ?></td>
+                                      <td><?php echo $row['position'] ?></td>
+                                      <td><?php echo $row['salary_level'] ? $row['salary_level'] : "Chưa có"; ?></td>
+                                      <td><?php echo $row['total_worked_days'] ? $row['total_worked_days'] : "0"; ?></td>
+                                      <td><?php echo $row['actual_salary'] ? number_format($row['actual_salary'], 0, ',', '.') : "0"; ?></td>                              </tr>
+                          <?php
+                                  }
+                              } else {
+                                  echo "<tr><td colspan='10'>Không tìm thấy dữ liệu</td></tr>";
+                              }
+                          ?>
+                        </tbody>
+                        </table>
+                  </div>  
+                </div>
+                <div class="form-actions">
+                    <div class="card-body border-top">
+                        <button type="submit" name="btnExportExcel" class="btn btn-info text-light ms-6">
+                            Xuất Excel
+                        </button>
+                        <button type="submit" name="btnBack" class="btn btn-info ms-6">Quay lại</button>
+                        <!-- <a href="javascript:void(0);" class="btn btn-info text-light ms-6" onclick="formToggle('importFrm');"><i class="plus"></i> Import</a> -->
+
+                    </form>
+                </div>
+            </div>
+
                     </div>
                   </div>
                 </form>
+                </div>
               </div>
+        </div>
       </div>
     </div>
   </div>
@@ -230,6 +224,16 @@
   <script src="../HRM/src/assets/libs/simplebar/dist/simplebar.js"></script>
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script>
+  function formToggle(ID){
+      var element = document.getElementById(ID);
+      if(element.style.display === "none"){
+          element.style.display = "block";
+      }else{
+          element.style.display = "none";
+      }
+  }
+  </script>
 </body>
 
-</html> 
+</html>

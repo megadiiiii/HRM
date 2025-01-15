@@ -60,9 +60,9 @@
               </a>
             </li>
             <li class="sidebar-item">
-            <a class="sidebar-link" href="../HRM/Work_Time.php" aria-expanded="false">
+            <a class="sidebar-link" href="../HRM/Attendance.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
-              <span class="hide-menu">Quản lý giờ làm</span>
+              <span class="hide-menu">Quản lý chuyên cần</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -153,7 +153,7 @@
                           <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-danger flex-shrink-0 mb-3 mx-auto">
                             <iconify-icon icon="oui:training" class="fs-7 text-white"></iconify-icon>
                           </div>
-                          <h6 class="fw-normal fs-3 mb-1">Khoá đào tạo nội bộ</h6>
+                          <h6 class="fw-normal fs-3 mb-1">Nhân viên đang được đào tạo</h6>
                           <h3 class="mb-3 d-flex align-items-center justify-content-center gap-1"><?php echo $training_count?></h3>
                           <a href="../HRM/Training.php" class="btn btn-outline-danger m-1">Xem chi tiết</a>
                         </div>
@@ -207,9 +207,9 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                <h5 class="card-title">Quản lý giờ làm</h5>
+                                <h5 class="card-title">Quản lý chuyên cần</h5>
                                 <p class="card-text">Danh sách ngày công,...</p>
-                                <a href="../HRM/Work_Time.php" class="btn btn-outline-info">Chuyển tới Quản lý giờ làm </a>
+                                <a href="../HRM/Attendance.php" class="btn btn-outline-info">Chuyển tới Quản lý chuyên cần </a>
                                 </div>
                             </div>
                         </div>

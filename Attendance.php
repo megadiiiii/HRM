@@ -25,16 +25,27 @@
                     LEFT JOIN `staff` AS s ON `s`.`staff_id` = `attendance`.`staff_id`
                     LEFT JOIN `salary` AS sal ON `s`.`salary_level` = `sal`.`salary_level`
                     WHERE `s`.`staff_name` LIKE '%$staff_name%'
+                    AND `s`.`staff_id` LIKE '%$staff_id%'
+                    AND checkin_status LIKE '%$checkin_status%'
+                    AND checkin_date LIKE '%$checkin_date%'
                     AND `s`.`department` LIKE '%$department%'";
         $data_search = mysqli_query($con, $sql_search);
 
     if(isset($_POST['btnCheckin'])) {
-        header('location: ../HRM/Checkin.php');
+        header('location: ../HRM/Attendance_Checkin.php');
+    }
+
+    if(isset($_POST['btnBack'])) {
+        header('location: ../HRM/Attendance.php');
     }
 
     if(isset($_POST['btnExportExcel'])) {
-      header('location: ../HRM/Checkin.php');
-  }
+      header('location: ../HRM/Attendance_Export.php');
+    }
+
+    if(isset($_POST['btnSalary'])) {
+      header('location: ../HRM/Attendance_Salary.php');
+    }
   $sql = "SELECT * FROM `department`";
   $data = mysqli_query($con, $sql);
 
@@ -97,7 +108,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-            <a class="sidebar-link" href="../HRM/Work_time.php" aria-expanded="false">
+            <a class="sidebar-link" href="../HRM/Attendance.php" aria-expanded="false">
               <iconify-icon icon="ph:calendar-bold"></iconify-icon>
               <span class="hide-menu">Quản lý chuyên cần</span>
               </a>
@@ -155,15 +166,15 @@
         <div class="container-fluid">
             <!-- NỘI DUNG PAGE TỪ ĐÂY -->
             <nav aria-label="breadcrumb" class="mb-3">
-                <ol class="breadcrumb bg-info-subtle-light px-3 py-2 rounded">
+              <ol class="breadcrumb bg-info-subtle-light px-3 py-2 rounded">
                     <li class="breadcrumb-item">
                         <a href="../HRM/Homepage.php" class="text-info d-flex align-items-center">
                         <i class="ti ti-home fs-4 mt-1"></i>
                         </a>
                     </li>
                     <li class="breadcrumb-item active text-info " aria-current="page">Quản lý chuyên cần</li>
-                </ol>
-            </nav>
+                </ol>            
+              </nav>
             <div class="card">
                 <form method="post">
                   <div>
@@ -239,7 +250,7 @@
                           Xuất Excel
                         </button>
                         <!-- <a href="javascript:void(0);" class="btn btn-info text-light ms-6" onclick="formToggle('importFrm');"><i class="plus"></i> Import</a> -->
-                        <button type="submit" name="btnExportExcel" class="btn btn-info text-light ms-6">
+                        <button type="submit" name="btnSalary" class="btn btn-info text-light ms-6">
                           <i class="ti ti-file-arrow-right"></i>
                           Xem bảng lương tạm tính
                         </button>
@@ -250,20 +261,6 @@
                       </div>
                       <div class="form-actions">
                     <div class="card-body border-top" id="importFrm" style="display: none;">
-                        <div class="row">                        
-                          <form action="Work_time_Import.php" method="post" enctype="multipart/form-data">
-                              <div class="col-md-6">
-                                  <div class="mb-3 has-danger">
-                                    <input type="file" class="form-control" name="file" accept=".csv">                              
-                                  </div>
-                                </div>                    
-                              <div class="col-md-6">
-                                <div class="mb-3 has-danger">
-                                  <input type="submit" class="btn btn-info text-light" name="importwork_time" value="Import CSV">
-                                </div>
-                              </div>
-                          </form>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -271,7 +268,7 @@
                 </div>
                 <div class="card"> 
                   <div class="card-body">
-                      <h5 class="card-title">Danh sách tài khoản</h5>
+                      <h5 class="card-title mb-6">Lịch sử chấm công</h5>
                       <div class="table-responsive mb-4 border rounded-1">  
                         <table class="table table-hover mb-0 align-middle">
                         <thead class="table-info">
@@ -307,7 +304,7 @@
                               }
                           ?>
                         </tbody>
-                      </table>
+                        </table>
                   </div>
                 </div>
                 </div>  
