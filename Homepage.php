@@ -143,7 +143,7 @@
                           </div>
                             <h6 class="fw-normal fs-3 mb-1">Tổng số phòng ban</h6>
                             <h3 class="mb-3 d-flex align-items-center justify-content-center gap-1"><?php echo $department_count?></h3>
-                            <a href="../HRM/Staff.php" class="btn btn-outline-success m-1">Xem chi tiết</a>
+                            <a href="../HRM/Department.php" class="btn btn-outline-success m-1">Xem chi tiết</a>
                           </div>
                         </div>
                       </div>
@@ -209,7 +209,7 @@
                                 <div class="card-body">
                                 <h5 class="card-title">Quản lý chuyên cần</h5>
                                 <p class="card-text">Danh sách ngày công,...</p>
-                                <a href="../HRM/Attendance.php" class="btn btn-outline-info">Chuyển tới Quản lý chuyên cần </a>
+                                <a href="../HRM/Attendance.php" class="btn btn-outline-info">Chuyển tới Quản lý chuyên cần</a>
                                 </div>
                             </div>
                         </div>

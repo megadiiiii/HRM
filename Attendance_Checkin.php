@@ -247,7 +247,7 @@
                                   <td>
                                   <select name="checkin_status" class="form-select">
                                       <option value="Có mặt">Có mặt</option>
-                                      <option value="Vắng">Vắng</option>
+                                      <option value="Vắng mặt">Vắng mặt</option>
       
                                   </select>
                                   </td>

@@ -225,7 +225,7 @@ if (isset($_POST['btnSearch'])) {
                         <div class="col-md-6">
                           <div class="mb-3">
                             <label class="form-label">Trạng thái</label>
-                              <select name="status" class="form-select" data-placeholder="Giói tính" tabindex="1">
+                              <select name="course_status" class="form-select" data-placeholder="Giói tính" tabindex="1">
                                 <option value="">--Chọn trạng thái--</option>
                                 <option value="Chưa bắt đầu">Chưa bắt đầu</option>
                                 <option value="Đang đào tạo">Đang đào tạo</option>
