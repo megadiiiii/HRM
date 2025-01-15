@@ -13,7 +13,7 @@ $result = mysqli_query($con, $sql);
 // Kiểm tra xem có dữ liệu hay không
 if (mysqli_num_rows($result) == 0) {
     // Nếu không có dữ liệu chấm công, cập nhật số ngày công về 0 cho tất cả nhân viên
-    $update_sql = "UPDATE staff SET worked_days = 0 WHERE status = 'Đang làm việc'";
+    $update_sql = "UPDATE attendance SET worked = 0 WHERE status = 'Đang làm việc'";
     mysqli_query($con, $update_sql);
 }
 

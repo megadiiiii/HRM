@@ -1,5 +1,5 @@
 <?php
-include_once 'dbConnect.php'; // Kết nối cơ sở dữ liệu
+include_once 'dbConnect.php'; // Kết nối cơ sở dữ liệuCó mặt
 
 // Lấy danh sách tất cả nhân viên có trạng thái "Đang làm việc"
 $sql_staff = "SELECT staff_id, staff_name, department, position 
@@ -14,7 +14,7 @@ $message = "";
 if (isset($_POST['btnSubmit'])) {
     $staff_id = $_POST['staff_id'];
     $attendance_date = $_POST['attendance_date'];
-    $status = $_POST['status'];
+    $attendance_status = $_POST['attendance_status'];
 
     // Kiểm tra nếu bản ghi đã tồn tại trong bảng attendance
     $sql_check_attendance = "SELECT * FROM attendance WHERE staff_id = '$staff_id' AND attendance_date = '$attendance_date'";
@@ -25,9 +25,9 @@ if (isset($_POST['btnSubmit'])) {
         $message = "<p class='text-danger'>Nhân viên $staff_id đã được chấm công vào ngày $attendance_date.</p>";
     } else {
         // Nếu chưa có bản ghi, thêm mới
-        $worked = ($status === 'Có mặt') ? 1 : 0;
+        $worked = ($attendance_status === 'Có mặt') ? 1 : 0;
         $sql_insert = "INSERT INTO attendance (staff_id, attendance_date, attendance_status, worked) 
-                       VALUES ('$staff_id', '$attendance_date', '$status', $worked)";
+                       VALUES ('$staff_id', '$attendance_date', '$attendance_status', $worked)";
         if (mysqli_query($con, $sql_insert)) {
             $message = "<p class='text-success'>Chấm công thành công cho nhân viên $staff_id vào ngày $attendance_date.</p>";
         } else {
@@ -78,11 +78,11 @@ if (isset($_POST['btnSubmit'])) {
           <?php while ($row = mysqli_fetch_assoc($result_staff)): ?>
             <?php
               // Truy vấn tổng số ngày công từ bảng attendance
-              $sql_worked_days = "SELECT IFNULL(SUM(worked), 0) AS total_worked 
+              $sql_worked = "SELECT IFNULL(SUM(worked), 0) AS total_worked 
                                   FROM attendance 
                                   WHERE staff_id = '" . $row['staff_id'] . "'";
-              $result_worked_days = mysqli_query($con, $sql_worked_days);
-              $worked_days = mysqli_fetch_assoc($result_worked_days)['total_worked'];
+              $result_worked = mysqli_query($con, $sql_worked);
+              $worked = mysqli_fetch_assoc($result_worked)['total_worked'];
             ?>
             <tr>
               <td><?php echo $row['staff_id']; ?></td>
@@ -94,10 +94,10 @@ if (isset($_POST['btnSubmit'])) {
                   <input type="date" name="attendance_date" class="form-control" value="<?php echo date('dd-mm-yyyy'); ?>">
                 </td>
                 <td>
-                  <select name="status" class="form-select">
+                  <select name="attendance_status" class="form-select">
                     <option value="Có mặt">Có mặt</option>
                     <option value="Vắng">Vắng</option>
-                    <option value="Nghỉ">Nghỉ</option>
+
                   </select>
                 </td>
                 <td>
@@ -105,7 +105,7 @@ if (isset($_POST['btnSubmit'])) {
                   <button type="submit" name="btnSubmit" class="btn btn-primary btn-sm">Chấm công</button>
                 </td>
               </form>
-              <td><?php echo $worked_days; ?></td>
+              <td><?php echo $worked; ?></td>
             </tr>
           <?php endwhile; ?>
         <?php else: ?>
