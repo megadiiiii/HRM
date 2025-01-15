@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 15, 2025 at 03:30 AM
+-- Generation Time: Jan 15, 2025 at 03:51 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -69,11 +69,13 @@ CREATE TABLE `attendance` (
 --
 
 INSERT INTO `attendance` (`staff_id`, `staff_name`, `department`, `position`, `attendance_date`, `attendance_status`, `worked`) VALUES
-('ST002', 'Tran Thi B', 'Phòng Kế toán', 'Nhân viên/Kỹ thuật viên', '0000-00-00', '0', 0),
+('ST002', 'Tran Thi B', 'Phòng Kế toán', 'Nhân viên/Kỹ thuật viên', '0000-00-00', 'uini', 0),
 ('ST002', '', '', '', '2025-01-06', '0', 0),
+('ST002', '', '', '', '2025-01-10', 'PRESENT', 1),
 ('ST002', '', '', '', '2025-01-12', '0', 1),
 ('ST002', '', '', '', '2025-01-13', '0', 1),
 ('ST003', 'Pham Van C', 'Phòng Pháp lý', 'Trưởng phòng', '0000-00-00', '0', 0),
+('ST003', '', '', '', '2024-12-03', 'PRESENT', 1),
 ('ST003', '', '', '', '2025-01-12', '0', 1),
 ('ST003', '', '', '', '2025-01-13', '0', 1),
 ('ST005', 'Hoang Van E', 'Phòng Đào tạo Nội bộ', 'Nhân viên/Kỹ thuật viên', '0000-00-00', '0', 0),

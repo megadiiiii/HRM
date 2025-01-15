@@ -2,10 +2,10 @@
 include_once 'dbConnect.php'; // Kết nối cơ sở dữ liệu
 
 // Lấy danh sách tất cả nhân viên có trạng thái "Đang làm việc"
-$sql_employees = "SELECT staff_id, staff_name, department, position 
+$sql_staff = "SELECT staff_id, staff_name, department, position 
                   FROM staff
                   WHERE status = 'Đang làm việc'";
-$result_employees = mysqli_query($con, $sql_employees);
+$result_staff = mysqli_query($con, $sql_staff);
 
 // Biến lưu thông báo
 $message = "";
@@ -25,7 +25,7 @@ if (isset($_POST['btnSubmit'])) {
         $message = "<p class='text-danger'>Nhân viên $staff_id đã được chấm công vào ngày $attendance_date.</p>";
     } else {
         // Nếu chưa có bản ghi, thêm mới
-        $worked = ($status === 'PRESENT') ? 1 : 0;
+        $worked = ($status === 'Có mặt') ? 1 : 0;
         $sql_insert = "INSERT INTO attendance (staff_id, attendance_date, attendance_status, worked) 
                        VALUES ('$staff_id', '$attendance_date', '$status', $worked)";
         if (mysqli_query($con, $sql_insert)) {
@@ -74,8 +74,8 @@ if (isset($_POST['btnSubmit'])) {
         </tr>
       </thead>
       <tbody>
-        <?php if (mysqli_num_rows($result_employees) > 0): ?>
-          <?php while ($row = mysqli_fetch_assoc($result_employees)): ?>
+        <?php if (mysqli_num_rows($result_staff) > 0): ?>
+          <?php while ($row = mysqli_fetch_assoc($result_staff)): ?>
             <?php
               // Truy vấn tổng số ngày công từ bảng attendance
               $sql_worked_days = "SELECT IFNULL(SUM(worked), 0) AS total_worked 
@@ -91,13 +91,13 @@ if (isset($_POST['btnSubmit'])) {
               <td><?php echo $row['position']; ?></td>
               <form method="POST">
                 <td>
-                  <input type="date" name="attendance_date" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+                  <input type="date" name="attendance_date" class="form-control" value="<?php echo date('dd-mm-yyyy'); ?>">
                 </td>
                 <td>
                   <select name="status" class="form-select">
-                    <option value="PRESENT">Có mặt</option>
-                    <option value="ABSENT">Vắng</option>
-                    <option value="LEAVE">Nghỉ</option>
+                    <option value="Có mặt">Có mặt</option>
+                    <option value="Vắng">Vắng</option>
+                    <option value="Nghỉ">Nghỉ</option>
                   </select>
                 </td>
                 <td>
