@@ -12,9 +12,14 @@ $result = mysqli_query($con, $sql);
 
 // Kiểm tra xem có dữ liệu hay không
 if (mysqli_num_rows($result) == 0) {
-    // Nếu không có dữ liệu chấm công, cập nhật số ngày công về 0 cho tất cả nhân viên
-    $update_sql = "UPDATE attendance SET worked = 0 WHERE status = 'Đang làm việc'";
+    // Nếu không có dữ liệu chấm công, hiển thị thông báo
+    $message = "Không có lịch sử chấm công.";
+    // Cập nhật số ngày công về 0 cho tất cả nhân viên trong trường hợp không có dữ liệu
+    $update_sql = "UPDATE attendance SET worked = 0 ";
     mysqli_query($con, $update_sql);
+} else {
+    // Nếu có dữ liệu, hiển thị bảng chấm công
+    $message = ""; // Không cần thông báo lỗi
 }
 
 mysqli_close($con);
