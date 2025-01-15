@@ -6,24 +6,27 @@
     $course_name = '';
     $course_date = '';
     $course_id = '';
-    $trainer = '';
+    $staff_name = '';
     $department = '';
-    $status = '';
+    $course_status = '';
 
     if (isset($_GET['course_id'])) {
         $course_id = $_GET['course_id'];
     
         // Lấy thông tin sinh viên từ cơ sở dữ liệu
-        $sql_select = "SELECT * FROM Training WHERE course_id = '$course_id'";
+        $sql_select = "SELECT * FROM `training`
+        LEFT JOIN `course` ON `course`.`course_id` = `training`.`course_id`
+        LEFT JOIN `staff` ON `staff`.`staff_id` = `training`.`staff_id`
+        WHERE `course`.`course_id` = '$course_id'";
         $result_select = mysqli_query($con, $sql_select);
     
         if ($row = mysqli_fetch_assoc($result_select)) {
             $course_name = $row['course_name'];
             $course_date = $row['course_date'];
             $course_id = $row['course_id'];
-            $trainer = $row['trainer'];
+            $staff_name = $row['staff_name'];
             $department = $row['department'];
-            $status = $row['status'];
+            $course_status = $row['course_status'];
         } else {
             echo "<script>alert('Không tìm thấy khoá đào tạo!'); window.location='List.php';</script>";
             exit();
@@ -34,18 +37,16 @@
     if (isset($_POST['btnEdit'])) {
         $course_name = $_POST['course_name'];
         $course_date = $_POST['course_date'];
-        $trainer = $_POST['trainer'];
+        $staff_name = $_POST['staff_name'];
         $department = $_POST['department'];
-        $status = $_POST['status'];
+        $course_status = $_POST['course_status'];
     
         // Cập nhật thông tin sinh viên
-        $sql_update = "UPDATE Training 
+        $sql_update = "UPDATE course 
                        SET `course_name` = '$course_name',
                            `course_date` = '$course_date',
-                           `trainer` = '$trainer',
-                           `department` = '$department',
-                           `status` = '$status'
-                       WHERE course_id = '$course_id'";
+                           `course_status` = '$course_status'
+                       WHERE `course`.`course_id` = '$course_id'";
     
         $data = mysqli_query($con, $sql_update);
     
@@ -131,7 +132,7 @@
             <li class="sidebar-item">
             <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
               <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
-              <span class="hide-menu">Khen thưởng - Kỷ luật</span>
+              <span class="hide-menu">Kỷ luật</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -224,8 +225,8 @@
                         <!--/span-->
                         <div class="col-md-6">
                           <div class="mb-3 has-danger">
-                            <label class="form-label">Người đào tạo</label>
-                            <input type="text" name="trainer" class="form-control form-control-danger" placeholder="Người đào tạo" value="<?php echo $trainer; ?>">
+                            <label class="form-label">Người được đào tạo</label>
+                            <input type="text" name="staff_name" class="form-control form-control-danger" placeholder="Người được đào tạo" value="<?php echo $staff_name; ?>">
                           </div>
                         </div>
                         <!--/span-->
@@ -256,11 +257,11 @@
                         <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">Trạng thái</label>
-                            <select name="status" class="form-select"tabindex="1">
-                                <option value="Đã hoàn thành" <?php if($status == 'Đã hoàn thành') echo 'selected'; ?>>Đã hoàn thành</option>
-                                <option value="Đang đào tạo" <?php if($status == 'Đang đào tạo') echo 'selected'; ?>>Đang đào tạo</option>
-                                <option value="Chưa bắt đầu" <?php if($status == 'Chưa bắt đầu') echo 'selected'; ?>>Chưa bắt đầu</option>
-                                <option value="Đã hủy" <?php if($status == 'Đã hủy') echo 'selected'; ?>>Đã hủy</option>
+                            <select name="course_status" class="form-select"tabindex="1">
+                                <option value="Đã hoàn thành" <?php if($course_status == 'Đã hoàn thành') echo 'selected'; ?>>Đã hoàn thành</option>
+                                <option value="Đang đào tạo" <?php if($course_status == 'Đang đào tạo') echo 'selected'; ?>>Đang đào tạo</option>
+                                <option value="Chưa bắt đầu" <?php if($course_status == 'Chưa bắt đầu') echo 'selected'; ?>>Chưa bắt đầu</option>
+                                <option value="Đã hủy" <?php if($course_status == 'Đã hủy') echo 'selected'; ?>>Đã hủy</option>
                             </select>
                           </div>
                         </div>

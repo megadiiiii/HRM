@@ -37,7 +37,7 @@
         $sheet->setCellValue("E" . $rowCount, $data["staff_id"]);
         $sheet->setCellValue("F" . $rowCount, $data["department"]);
         $sheet->setCellValue("G" . $rowCount, $data["course_date"]);
-        $sheet->setCellValue("H" . $rowCount, $data["status"]);
+        $sheet->setCellValue("H" . $rowCount, $data["course_status"]);
         $rowCount++;
         $no++;
     }

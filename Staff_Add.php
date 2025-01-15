@@ -78,10 +78,10 @@ if (isset($_POST['btnAdd'])) {
         echo "<script>alert('Mã nhân viên đã tồn tại. Vui lòng kiểm tra.');</script>";
     } else {
         // lenh de them vao database
-        $sql = "INSERT INTO `staff`(`staff_id`, `staff_name`, `dob`, `gender`, `department`, `position`, `address`, `email`, `phone`, `start_date`, `status`, `profile_image`) 
-                VALUES ('$staff_id','$staff_name','$dob','$gender','$department','$position','$address','$email','$phone','$start_date','$status','$profile_image')";
+        $sql = "INSERT INTO `staff`(`staff_id`, `staff_name`, `dob`, `gender`, `department`, `position`, `address`, `email`, `phone`, `start_date`, `status`, `profile_image`, `salary_level`) 
+                VALUES ('$staff_id','$staff_name','$dob','$gender','$department','$position','$address','$email','$phone','$start_date','$status','$profile_image', '$salary_level')";
         if (mysqli_query($con, $sql)) {
-            header("Location: ../HRM/Staff.php");
+          echo "<script>alert('Thêm thông tin thành công'); window.location.href='../HRM/Staff.php';</script>";
         } 
     }
 }    
@@ -337,6 +337,19 @@ if (isset($_POST['btnAdd'])) {
                             <select name="status" class="form-select" data-placeholder="Giói tính" tabindex="1">
                               <option value="Đang làm việc">Đang làm việc</option>
                               <option value="Đã nghỉ việc">Đã nghỉ việc</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="mb-3">
+                            <label class="form-label">Bậc lương</label>
+                            <select name="salary_level" class="form-select" data-placeholder="Giói tính" tabindex="1">
+                              <option value="">-Chọn bậc lương-</option>
+                              <option value="Bậc 1">Bậc 1</option>
+                              <option value="Bậc 2">Bậc 2</option>
+                              <option value="Bậc 3">Bậc 3</option>
+                              <option value="Bậc 4">Bậc 4</option>
+                              <option value="Bậc 5">Bậc 5</option>
                             </select>
                           </div>
                         </div>

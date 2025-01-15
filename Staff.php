@@ -99,7 +99,7 @@
             <li class="sidebar-item">
             <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
               <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
-              <span class="hide-menu">Khen thưởng - Kỷ luật</span>
+              <span class="hide-menu">Kỷ luật</span>
               </a>
             </li>
             <li class="sidebar-item">

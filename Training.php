@@ -108,7 +108,7 @@ if (isset($_POST['btnSearch'])) {
             <li class="sidebar-item">
             <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
               <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
-              <span class="hide-menu">Khen thưởng - Kỷ luật</span>
+              <span class="hide-menu">Kỷ luật</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -255,7 +255,6 @@ if (isset($_POST['btnSearch'])) {
                           <i class="ti ti-file-arrow-right"></i>
                           Xuất Excel
                         </button>
-                        <a href="javascript:void(0);" class="btn btn-info text-light ms-6" onclick="formToggle('importFrm');"><i class="plus"></i> Import</a>
 
                       </form>
                       </div>
@@ -344,7 +343,10 @@ if (isset($_POST['btnSearch'])) {
                 </div>
                 </div>
               </div>
+            </div>
+          </div>
         </div>
+        </div>  
       </div>
     </div>
   </div>

@@ -68,7 +68,7 @@
             <li class="sidebar-item">
             <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
               <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
-              <span class="hide-menu">Khen thưởng - Kỷ luật</span>
+              <span class="hide-menu">Kỷ luật</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -216,9 +216,9 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                <h5 class="card-title">Khen thưởng - Kỷ luật</h5>
-                                <p class="card-text">Danh sách Khen thưởng - Kỷ luật,...</p>
-                                <a href="../HRM/Discipline.php" class="btn btn-outline-info">Chuyển tới Khen thưởng - Kỷ luật</a>
+                                <h5 class="card-title">Kỷ luật</h5>
+                                <p class="card-text">Danh sách Kỷ luật,...</p>
+                                <a href="../HRM/Discipline.php" class="btn btn-outline-info">Chuyển tới Kỷ luật</a>
                                 </div>
                             </div>
                         </div>

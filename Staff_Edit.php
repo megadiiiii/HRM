@@ -17,6 +17,7 @@ $email = '';
 $phone = '';
 $status = '';
 $profile_image = '';
+$salary_level = '';
 
 // Kiểm tra xem có nhận được staff_id không
 if (isset($_GET['staff_id'])) {
@@ -41,6 +42,7 @@ if (isset($_GET['staff_id'])) {
         $phone = $row['phone'];
         $status = $row['status'];
         $profile_image = $row['profile_image'];
+        $salary_level = $row['salary_level'];
     } else {
         echo "<script>alert('Nhân viên không tồn tại!');</script>";
         header("Location: ../HRM/Staff.php");
@@ -59,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $status = $_POST['status'];
+    $salary_level = $_POST['salary_level'];
 
     // Xử lý hình ảnh nếu có tải lên
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
@@ -115,6 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             `phone` = '$phone',
             `start_date` = '$start_date',
             `status` = '$status',
+            `salary_level` = '$salary_level',
             `profile_image` = IF('$profile_image' != '', '$profile_image', `profile_image`)
             WHERE `staff_id` = '$staff_id'";
 
@@ -216,7 +220,7 @@ if (isset($_POST['btnPreview'])) {
             <li class="sidebar-item">
             <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
               <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
-              <span class="hide-menu">Khen thưởng - Kỷ luật</span>
+              <span class="hide-menu">Kỷ luật</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -418,6 +422,19 @@ if (isset($_POST['btnPreview'])) {
                                 </select>
                               </div>
                             </div>
+                                <!--/span-->
+                              <div class="col-md-6">
+                                <div class="mb-3">
+                                <label class="form-label">Bậc lương</label>
+                                <select name="salary_level" class="form-select" data-placeholder="Giói tính" tabindex="1">
+                                  <option value="Bậc 1" <?php if($salary_level == 'Bậc 1') echo 'selected'; ?>>Bậc 1</option>
+                                  <option value="Bậc 2" <?php if($salary_level == 'Bậc 2') echo 'selected'; ?>>Bậc 2</option>
+                                  <option value="Bậc 3" <?php if($salary_level == 'Bậc 3') echo 'selected'; ?>>Bậc 3</option>
+                                  <option value="Bậc 4" <?php if($salary_level == 'Bậc 4') echo 'selected'; ?>>Bậc 4</option>
+                                  <option value="Bậc 5" <?php if($salary_level == 'Bậc 5') echo 'selected'; ?>>Bậc 5</option>
+                                </select>
+                                </div>
+                              </div>
                                 <!--/span-->
                                 <div class="col-md-6">
                                     <div class="mb-3 has-danger">

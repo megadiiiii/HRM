@@ -16,6 +16,7 @@ $email = '';
 $phone = '';
 $status = '';
 $profile_image = '';
+$salary_level = '';
 
 // Kiểm tra xem có nhận được staff_id không
 if (isset($_GET['staff_id'])) {
@@ -40,6 +41,7 @@ if (isset($_GET['staff_id'])) {
         $phone = $row['phone'];
         $status = $row['status'];
         $profile_image = $row['profile_image'];
+        $salary_level = $row['salary_level'];
     } else {
         echo "<script>alert('Nhân viên không tồn tại!');</script>";
         header("Location: ../HRM/Staff.php");
@@ -116,7 +118,7 @@ if (isset($_GET['staff_id'])) {
             <li class="sidebar-item">
             <a class="sidebar-link" href="../HRM/Discipline.php" aria-expanded="false">
               <iconify-icon icon="mingcute:warning-fill"></iconify-icon>
-              <span class="hide-menu">Khen thưởng - Kỷ luật</span>
+              <span class="hide-menu">Kỷ luật</span>
               </a>
             </li>
             <li class="sidebar-item">
@@ -294,6 +296,12 @@ if (isset($_GET['staff_id'])) {
                                 <label class="form-label">Trạng thái</label>
                                 <input type="text" name="status" class="form-control form-control-danger" value="<?php echo $status; ?>" readonly>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="mb-3">
+                              <label class="form-label">Bậc lương</label>
+                              <input type="text" name="salary_level" class="form-control" value="<?php echo "$salary_level" ?>" readonly>
+                              </div>
                             </div>
                         </div>
                       <div class="form-actions">

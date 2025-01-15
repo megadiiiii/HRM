@@ -26,7 +26,8 @@
     $sheet->setCellValue("I2", "Email");
     $sheet->setCellValue("J2", "Số điện thoại");
     $sheet->setCellValue("K2", "Ngày vào làm");
-    $sheet->setCellValue("L2", "Trạng thái");
+    $sheet->setCellValue("L2", "Bậc lương");
+    $sheet->setCellValue("M2", "Trạng thái");
 
     // Data
     $rowCount = 3;
@@ -43,7 +44,8 @@
         $sheet->setCellValue("I" . $rowCount, $data["email"]);
         $sheet->setCellValue("J" . $rowCount, $data["phone"]);
         $sheet->setCellValue("K" . $rowCount, $data["start_date"]);
-        $sheet->setCellValue("L" . $rowCount, $data["status"]);
+        $sheet->setCellValue("L". $rowCount, $data["salary_level"]);
+        $sheet->setCellValue("M" . $rowCount, $data["status"]);
         $rowCount++;
         $no++;
     }

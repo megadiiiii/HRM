@@ -34,8 +34,6 @@ if(isset($_POST['importAccount'])){
                     $password  = trim($line_arr[1]); 
                     $staff_name  = trim($line_arr[2]); 
                     $role  = trim($line_arr[3]);
-                    $staff_id  = trim($line_arr[4]);
-                    $department = trim($line_arr[5]); 
                      
                     // Check whether member already exists in the database with the same course_id 
                     $prevQuery = "SELECT * FROM Account WHERE username = '".$username."'"; 
@@ -45,15 +43,13 @@ if(isset($_POST['importAccount'])){
                         // Update member data in the database 
                         $con->query("UPDATE account 
                        SET `staff_name` = '$staff_name',
-                           `staff_id` = '$staff_id',
                            `password` = '$password',
-                           `department` = '$department',
                            `role` = '$role'
                        WHERE username = '$username'"); 
                     }else{ 
                         // Insert member data in the database 
-                        $con->query("INSERT INTO `account`(`username`, `password`, `staff_name`, `role`, `staff_id`, `department`) 
-                            VALUES ('$username','$password','$staff_name','$role','$staff_id','$department')"); 
+                        $con->query("INSERT INTO `account`(`username`, `password`, `staff_name`, `role`,) 
+                            VALUES ('$username','$password','$staff_name','$role'"); 
                     } 
                 } 
             } 
