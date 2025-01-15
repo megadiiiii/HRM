@@ -1,10 +1,10 @@
 <?php
-include_once 'dbConnect.php'; // Kết nối cơ sở dữ liệuCó mặt
+include_once 'dbConnect.php'; // Kết nối cơ sở dữ liệu
 
 // Lấy danh sách tất cả nhân viên có trạng thái "Đang làm việc"
 $sql_staff = "SELECT staff_id, staff_name, department, position 
-                  FROM staff
-                  WHERE status = 'Đang làm việc'";
+              FROM staff
+              WHERE status = 'Đang làm việc'";
 $result_staff = mysqli_query($con, $sql_staff);
 
 // Biến lưu thông báo
@@ -13,23 +13,23 @@ $message = "";
 // Xử lý chấm công
 if (isset($_POST['btnSubmit'])) {
     $staff_id = $_POST['staff_id'];
-    $attendance_date = $_POST['attendance_date'];
-    $attendance_status = $_POST['attendance_status'];
+    $checkin_date = $_POST['attendance_date']; // Cột đã đổi thành checkin_date
+    $checkin_status = $_POST['attendance_status']; // Cột đã đổi thành checkin_status
 
     // Kiểm tra nếu bản ghi đã tồn tại trong bảng attendance
-    $sql_check_attendance = "SELECT * FROM attendance WHERE staff_id = '$staff_id' AND attendance_date = '$attendance_date'";
+    $sql_check_attendance = "SELECT * FROM attendance WHERE staff_id = '$staff_id' AND checkin_date = '$checkin_date'";
     $result_check_attendance = mysqli_query($con, $sql_check_attendance);
 
     if (mysqli_num_rows($result_check_attendance) > 0) {
         // Nếu đã có bản ghi, thông báo lỗi
-        $message = "<p class='text-danger'>Nhân viên $staff_id đã được chấm công vào ngày $attendance_date.</p>";
+        $message = "<p class='text-danger'>Nhân viên $staff_id đã được chấm công vào ngày $checkin_date.</p>";
     } else {
         // Nếu chưa có bản ghi, thêm mới
-        $worked = ($attendance_status === 'Có mặt') ? 1 : 0;
-        $sql_insert = "INSERT INTO attendance (staff_id, attendance_date, attendance_status, worked) 
-                       VALUES ('$staff_id', '$attendance_date', '$attendance_status', $worked)";
+        $worked = ($checkin_status === 'Có mặt') ? 1 : 0;
+        $sql_insert = "INSERT INTO attendance (staff_id, checkin_date, checkin_status, worked) 
+                       VALUES ('$staff_id', '$checkin_date', '$checkin_status', $worked)";
         if (mysqli_query($con, $sql_insert)) {
-            $message = "<p class='text-success'>Chấm công thành công cho nhân viên $staff_id vào ngày $attendance_date.</p>";
+            $message = "<p class='text-success'>Chấm công thành công cho nhân viên $staff_id vào ngày $checkin_date.</p>";
         } else {
             $message = "<p class='text-danger'>Lỗi chấm công: " . mysqli_error($con) . "</p>";
         }
@@ -56,7 +56,7 @@ if (isset($_POST['btnSubmit'])) {
     <!-- Thêm nút "Lịch sử chấm công" và "Tính Lương" -->
     <div class="d-flex justify-content-between mb-4">
       <a href="attendance_history.php" class="btn btn-info">Xem Lịch Sử Chấm Công</a>
-      <a href="staff_salary.php" class="btn btn-success">Tính Lương</a>
+      <a href="bacluong.php" class="btn btn-success">Tính Lương</a>
     </div>
 
     <!-- Bảng danh sách nhân viên -->
@@ -79,8 +79,8 @@ if (isset($_POST['btnSubmit'])) {
             <?php
               // Truy vấn tổng số ngày công từ bảng attendance
               $sql_worked = "SELECT IFNULL(SUM(worked), 0) AS total_worked 
-                                  FROM attendance 
-                                  WHERE staff_id = '" . $row['staff_id'] . "'";
+                             FROM attendance 
+                             WHERE staff_id = '" . $row['staff_id'] . "'";
               $result_worked = mysqli_query($con, $sql_worked);
               $worked = mysqli_fetch_assoc($result_worked)['total_worked'];
             ?>
@@ -91,13 +91,12 @@ if (isset($_POST['btnSubmit'])) {
               <td><?php echo $row['position']; ?></td>
               <form method="POST">
                 <td>
-                  <input type="date" name="attendance_date" class="form-control" value="<?php echo date('dd-mm-yyyy'); ?>">
+                  <input type="date" name="attendance_date" class="form-control" value="<?php echo date('Y-m-d'); ?>">
                 </td>
                 <td>
                   <select name="attendance_status" class="form-select">
                     <option value="Có mặt">Có mặt</option>
                     <option value="Vắng">Vắng</option>
-
                   </select>
                 </td>
                 <td>
