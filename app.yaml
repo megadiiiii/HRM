@@ -1,15 +1,23 @@
 runtime: php83
+env: standard
 
 handlers:
 # Serve a directory as a static resource.
-- url: /stylesheets
-  static_dir: stylesheets
+- url: src\assets\js
+  static_dir: js
+# Serve a directory as a static resource.
+- url: src\assets\css
+  static_dir: css
+# Serve a directory as a static resource.
+- url: src\assets\scss
+  static_dir: scss
+# Serve a directory as a static resource.
+- url: src\assets\images
+  static_dir: images
+# Serve a directory as a static resource.
+- url: src\assets\libs
+  static_dir: libs
 
-
-# Serve images as static resources.
-- url: /(.+\.(gif|png|jpg))$
-  static_files: \1
-  upload: .+\.(gif|png|jpg)$
 
 # Serve your app through a front controller at index.php or public/index.php.
 - url: .*
