@@ -174,18 +174,6 @@
                           </div>
                       </div>
 
-                        <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Quyền tài khoản</label>
-                            <select name="role" class="form-select"tabindex="1" >
-                                <option value="">--Chọn quyền tài khoản--</option>
-                                <option value="Giám đốc">Giám đốc</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Trưởng phòng">Trưởng phòng</option>
-                                <option value="Nhân viên">Nhân viên/Kỹ thuật viên</option>
-                            </select>
-                          </div>
-                        </div>
                         <!--/span-->
                       </div>
                     </div>
@@ -261,7 +249,7 @@
                                         <a class="btn btn-warning" href="Account_Edit.php?username=<?php echo $row['username']; ?>">
                                           <i class="ti ti-edit"></i>
                                         </a>
-                                        <a class="btn btn-danger" href="Account_Del.php?username=<?php echo $row['username']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?')">
+                                        <a class="btn btn-danger" href="Account_Del.php?username=?$staff_name<?php echo $row['username']; ?><?php echo $row['staff_name']; ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?')">
                                           <i class="ti ti-trash"></i>
                                         </a>
                                     </td>

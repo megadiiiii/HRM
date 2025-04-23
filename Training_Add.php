@@ -14,7 +14,6 @@
         $course_name = $_POST['course_name'];
         $course_date = $_POST['course_date'];
         $course_id = $_POST['course_id'];
-        $trainer = $_POST['trainer'];
         $department = $_POST['department'];
         $status = $_POST['status'];
     
@@ -27,7 +26,7 @@
         } else {
             // Chèn dữ liệu vào bảng Training
             $sql_insert = "INSERT INTO `Training`(`course_id`, `trainer`, `course_name`, `status`, `course_date`, `department`) 
-                            VALUES ('$course_id','$trainer','$course_name','$status','$course_date','$department')";
+                            VALUES ('$course_id','0','$course_name','$status','$course_date','$department')";
             $data = mysqli_query($con, $sql_insert);
     
             if ($data) {
@@ -200,12 +199,7 @@
                           </div>
                         </div>
                         <!--/span-->
-                        <div class="col-md-6">
-                          <div class="mb-3 has-danger">
-                            <label class="form-label">Người được đào tạo</label>
-                            <input type="text" name="staff_name" class="form-control form-control-danger" placeholder="Người đào tạo">
-                          </div>
-                        </div>
+                        
                         <!--/span-->
                       </div>
 
