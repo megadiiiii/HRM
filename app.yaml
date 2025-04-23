@@ -3,17 +3,8 @@ env: standard
 
 handlers:
   # Tài nguyên tĩnh (assets, img, css, js)
-  - url: /assets
-    static_dir: assets
-
-  - url: /img
-    static_dir: img
-
-  - url: /css
-    static_dir: css
-
-  - url: /js
-    static_dir: js
+  - url: /hrm
+    static_dir: hrm
 
   # Xử lý tất cả các yêu cầu còn lại cho các file PHP (trừ các file tĩnh)
   - url: /.*  
