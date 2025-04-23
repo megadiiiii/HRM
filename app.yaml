@@ -1,24 +1,20 @@
-runtime: php83
+runtime: php73
 env: standard
 
 handlers:
-# Serve a directory as a static resource.
-- url: src\assets\js
-  static_dir: js
-# Serve a directory as a static resource.
-- url: src\assets\css
-  static_dir: css
-# Serve a directory as a static resource.
-- url: src\assets\scss
-  static_dir: scss
-# Serve a directory as a static resource.
-- url: src\assets\images
-  static_dir: images
-# Serve a directory as a static resource.
-- url: src\assets\libs
-  static_dir: libs
+  # Tài nguyên tĩnh (assets, img, css, js)
+  - url: /assets
+    static_dir: assets
 
+  - url: /img
+    static_dir: img
 
-# Serve your app through a front controller at index.php or public/index.php.
-- url: .*
-  script: auto
+  - url: /css
+    static_dir: css
+
+  - url: /js
+    static_dir: js
+
+  # Xử lý tất cả các yêu cầu còn lại cho các file PHP (trừ các file tĩnh)
+  - url: /.*  
+    script: auto
